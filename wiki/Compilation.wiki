@@ -122,4 +122,4 @@ make
 popd
 }}}
 
-For installation read the ManualInstallation
+For installation read the [ManualInstallation Manual].

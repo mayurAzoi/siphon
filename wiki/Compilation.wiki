@@ -14,7 +14,7 @@ Add your content here.
 Get [http://pjsip.org PjSIP] from subversion repository:
 
 {{{
-svn checkout http://svn.pjsip.org/repos/pjproject/trunk
+svn checkout http://svn.pjsip.org/repos/pjproject/trunk pjproject
 }}}
 
 ==Compilation==
@@ -31,3 +31,40 @@ _We need to add GSM codec, because when the pjmedia-codec library is build, the 
 ==Media device for ipod==
 
 Download [http://siphon.googlecode.com/files/ipodsound.c ipodsound.c], and save in _pjmedia/src/pjmedia_ directory.
+
+Complete _aconfigure.ac_ file at line 370 with:
+{{{
+  arm-apple-darwin*)
+	LIBS="$LIBS -framework CoreAudio -framework CoreServices -framework CoreFoundation -framework AudioToolbox -framework CarbonCore"
+	ac_pjmedia_snd=ipod
+	AC_MSG_RESULT([Checking sound device backend... AudioQueue])
+	;;
+}}}
+
+Generate configuration script
+{{{
+autoconf aconfigure.ac > aconfigure
+}}}
+
+Complete _os-auto.mak.in_ at line 92 with:
+{{{
+#
+
+# iPod/iPhone
+
+#
+
+ifeq ($(AC_PJMEDIA_SND),ipod)
+
+export SOUND_OBJS = ipodsound.o
+
+export CFLAGS += -DPJMEDIA_SOUND_IMPLEMENTATION=PJMEDIA_SOUND_IPOD_SOUND
+endif
+}}}
+
+Re-run configuration step with sound enabled:
+{{{
+./aconfigure --host=arm-apple-darwin8 \
+  --disable-speex-aec --disable-speex-codec \
+  --disable-l16-codec --disable-g722-codec  --disable-ilbc-codec
+}}}

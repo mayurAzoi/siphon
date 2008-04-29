@@ -12,11 +12,14 @@ Add your content here.
 
 Get PjSIP from subversion repository:
 
-`svn checkout http://svn.pjsip.org/repos/pjproject/trunk`
-
-Configure pjsip without codec except G711 and GSM
 {{{
-./aconfigure --host=arm-apple-darwin8 --disable-sound --disable-speex-aec --
-disable-l16-codec --disable-g722-codec --disable-speex-codec --disable-ilbc-code
-c
+svn checkout http://svn.pjsip.org/repos/pjproject/trunk
+}}}
+
+Configure pjsip without codec except G711 and GSM. For the moment, we don't use sound device.
+{{{
+./aconfigure --host=arm-apple-darwin8 \
+  --disable-sound \
+  --disable-speex-aec --disable-speex-codec \
+  --disable-l16-codec --disable-g722-codec  --disable-ilbc-codec
 }}}

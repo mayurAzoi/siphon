@@ -110,3 +110,16 @@ Put these pjsip library directories in the pjsip/lib path:
    * pjnath/lib
    * pjsip/lib
    * third_party/lib
+
+==Compilation==
+
+{{{
+pushd settings
+make
+popd
+pushd src
+make
+popd
+}}}
+
+For installation read the ManualInstallation

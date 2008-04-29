@@ -10,7 +10,7 @@ Add your content here.
 
 =PjSIP Compilation=
 
-Get PjSIP from subversion repository:
+Get [http://pjsip.org PjSIP] from subversion repository:
 
 {{{
 svn checkout http://svn.pjsip.org/repos/pjproject/trunk

@@ -32,7 +32,7 @@ Download [http://siphon.googlecode.com/files/ipodsound.c ipodsound.c], and save 
 Complete _aconfigure.ac_ file at line 370 with:
 {{{
   arm-apple-darwin*)
-	LIBS="$LIBS -framework CoreAudio -framework CoreServices -framework CoreFoundation -framework AudioToolbox -framework CarbonCore"
+	LIBS="$LIBS -framework CoreAudio -framework CoreFoundation -framework AudioToolbox -framework CarbonCore"
 	ac_pjmedia_snd=ipod
 	AC_MSG_RESULT([Checking sound device backend... AudioQueue])
 	;;

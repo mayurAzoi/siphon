@@ -40,16 +40,29 @@ Generate configuration script
 autoconf aconfigure.ac > aconfigure
 }}}
 
-Complete _os-auto.mak.in_ at line 92 with:
+Complete _os-auto.mak.in_ at line 92 with following lines:
 {{{
 #
 # iPod/iPhone
 #
 ifeq ($(AC_PJMEDIA_SND),ipod)
 export SOUND_OBJS = ipodsound.o
-export CFLAGS += -DPJMEDIA_SOUND_IMPLEMENTATION=PJMEDIA_SOUND_IPOD_SOUND
+INCLUDE_IPHONE=/path/of/iphone/sdk
+export CFLAGS += -DPJMEDIA_SOUND_IMPLEMENTATION=PJMEDIA_SOUND_IPOD_SOUND \
+	-D__COREAUDIO_USE_FLAT_INCLUDES__ \
+
+	-I$(INCLUDE_IPHONE)/AudioToolbox \
+
+	-I$(INCLUDE_IPHONE)/CoreAudio \
+
+	-I$(INCLUDE_IPHONE)/CarbonCore \
+	-I$(INCLUDE_IPHONE)/CoreFoundation
 endif
 }}}
+On Linux and Windows,you need use FLAT_INCLUDES, so you must define INCLUDE_IPHONE. This value defines the path of include directory of you iphone sdk.
+
+Maybe, you don't need FLAT_INCLUDES on MacOS X.
+
 
 ==Compilation==
 

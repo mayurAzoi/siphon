@@ -3,10 +3,7 @@
 
 = Introduction =
 
-Add your content here.
-
-
-= Details =
+This article describes the steps to generate Siphon.
 
 =PjSIP Compilation=
 
@@ -49,15 +46,10 @@ autoconf aconfigure.ac > aconfigure
 Complete _os-auto.mak.in_ at line 92 with:
 {{{
 #
-
 # iPod/iPhone
-
 #
-
 ifeq ($(AC_PJMEDIA_SND),ipod)
-
 export SOUND_OBJS = ipodsound.o
-
 export CFLAGS += -DPJMEDIA_SOUND_IMPLEMENTATION=PJMEDIA_SOUND_IPOD_SOUND
 endif
 }}}

@@ -23,3 +23,5 @@ Configure pjsip without codec except G711 and GSM. For the moment, we don't use 
   --disable-speex-aec --disable-speex-codec \
   --disable-l16-codec --disable-g722-codec  --disable-ilbc-codec
 }}}
+
+_We need to add GSM codec, because when the pjmedia-codec library is build, the *ar* command need object file to exit without failure._

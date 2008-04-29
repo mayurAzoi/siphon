@@ -27,8 +27,16 @@ _We need to add GSM codec, because when the pjmedia-codec library is build, the 
 
 ==Media device for ipod==
 
+===pjMedia===
 Download [http://siphon.googlecode.com/files/ipodsound.c ipodsound.c], and save in _pjmedia/src/pjmedia_ directory.
 
+Complete _config.h_ file in pjmedia/include/pjmedia at line 59 with:
+{{{
+/** Constant for AudioQueue sound backend. */
+#define PJMEDIA_SOUND_IPOD_SOUND	    3
+}}}
+
+===Configuration===
 Complete _aconfigure.ac_ file at line 370 with:
 {{{
   arm-apple-darwin*)

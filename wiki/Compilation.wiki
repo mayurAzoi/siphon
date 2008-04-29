@@ -28,6 +28,6 @@ Configure pjsip without codec except G711 and GSM. For the moment, we don't use 
 
 _We need to add GSM codec, because when the pjmedia-codec library is build, the *ar* command needs object file to exit without failure._
 
-==Add media device for ipod==
+==Media device for ipod==
 
-Download [http://siphon.googlecode.com/files/ipodsound.c ipodsound.c], and save in pjmedia/src/pjmedia directory.
+Download [http://siphon.googlecode.com/files/ipodsound.c ipodsound.c], and save in _pjmedia/src/pjmedia_ directory.

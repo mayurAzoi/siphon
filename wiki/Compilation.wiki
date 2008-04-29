@@ -50,16 +50,13 @@ export SOUND_OBJS = ipodsound.o
 INCLUDE_IPHONE=/path/of/iphone/sdk
 export CFLAGS += -DPJMEDIA_SOUND_IMPLEMENTATION=PJMEDIA_SOUND_IPOD_SOUND \
 	-D__COREAUDIO_USE_FLAT_INCLUDES__ \
-
 	-I$(INCLUDE_IPHONE)/AudioToolbox \
-
 	-I$(INCLUDE_IPHONE)/CoreAudio \
-
 	-I$(INCLUDE_IPHONE)/CarbonCore \
 	-I$(INCLUDE_IPHONE)/CoreFoundation
 endif
 }}}
-On Linux and Windows,you need use FLAT_INCLUDES, so you must define INCLUDE_IPHONE. This value defines the path of include directory of you iphone sdk.
+On Linux and Windows,you need use FLAT_INCLUDES, so you must define INCLUDE_IPHONE. This value defines the path of include directory of your iphone sdk.
 
 Maybe, you don't need FLAT_INCLUDES on MacOS X.
 

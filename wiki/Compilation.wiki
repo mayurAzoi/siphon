@@ -7,7 +7,7 @@ This article describes the steps to generate Siphon.
 
 =PjSIP Compilation=
 
-==Check out code==
+==Getting pjsip source code==
 Get [http://pjsip.org PjSIP] from subversion repository:
 
 {{{
@@ -79,3 +79,25 @@ make
 }}}
 
 _If you get an error with AVAILABLE_MAC_OS_X_VERSION_10_5_AND_LATER macro, you should update the AvailabilityMacros.h file in your sdk._
+
+=Siphon Compilation=
+
+==Getting siphon source code==
+
+Get Siphon from subversion repository:
+{{{
+svn checkout http://siphon.googlecode.com/svn/trunk/ siphon-read-only
+}}}
+
+==Installation pjsip==
+
+Put these pjsip include directories in the pjsip/include path:
+   * pjlib/include
+   * pjlib-util/include
+   * pjmedia/include
+   * pjsip/include
+Put these pjsip library directories in the pjsip/library path:
+   * pjlib/lib
+   * pjlib-util/lib
+   * pjmedia/lib
+   * pjsip/lib

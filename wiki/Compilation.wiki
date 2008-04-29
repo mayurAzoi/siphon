@@ -91,13 +91,22 @@ svn checkout http://siphon.googlecode.com/svn/trunk/ siphon-read-only
 
 ==Installation pjsip==
 
+Create directory to install pjsip in Siphon:
+{{{
+mkdir -p pjsip/include
+mkdir -p pjsip/lib
+}}}
+
 Put these pjsip include directories in the pjsip/include path:
    * pjlib/include
    * pjlib-util/include
    * pjmedia/include
+   * pjnath/include
    * pjsip/include
-Put these pjsip library directories in the pjsip/library path:
+Put these pjsip library directories in the pjsip/lib path:
    * pjlib/lib
    * pjlib-util/lib
    * pjmedia/lib
+   * pjnath/lib
    * pjsip/lib
+   * third_party/lib

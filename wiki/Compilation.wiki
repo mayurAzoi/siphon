@@ -60,9 +60,12 @@ Configure pjsip without codec except G711 and GSM:
   --disable-l16-codec --disable-g722-codec  --disable-ilbc-codec
 }}}
 
+
+_We need to add GSM codec, because when the pjmedia-codec library is build, the *ar* command needs object file to exit without failure._
+
 Generate:
 {{{
 make
 }}}
 
-_We need to add GSM codec, because when the pjmedia-codec library is build, the *ar* command needs object file to exit without failure._
+_If you get an error with AVAILABLE_MAC_OS_X_VERSION_10_5_AND_LATER macro, you should update the AvailabilityMacros.h file in your sdk._

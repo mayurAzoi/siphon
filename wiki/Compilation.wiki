@@ -14,7 +14,7 @@ Get PjSIP from subversion repository:
 
 `svn checkout http://svn.pjsip.org/repos/pjproject/trunk`
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Configure pjsip without codec except G711 and GSM
+{{{./aconfigure --host=arm-apple-darwin8 --disable-sound --disable-speex-aec --
+disable-l16-codec --disable-g722-codec --disable-speex-codec --disable-ilbc-code
+c}}}

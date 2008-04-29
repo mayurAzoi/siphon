@@ -63,7 +63,7 @@ Configure pjsip without codec except G711 and GSM:
 
 _We need to add GSM codec, because when the pjmedia-codec library is build, the *ar* command needs object file to exit without failure._
 
-Generate:
+Compile the libraries:
 {{{
 make
 }}}

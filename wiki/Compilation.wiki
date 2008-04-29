@@ -47,7 +47,7 @@ Complete _os-auto.mak.in_ at line 92 with following lines:
 #
 ifeq ($(AC_PJMEDIA_SND),ipod)
 export SOUND_OBJS = ipodsound.o
-INCLUDE_IPHONE=/path/of/iphone/sdk
+INCLUDE_IPHONE=/path/of/include/in/iphone/sdk
 export CFLAGS += -DPJMEDIA_SOUND_IMPLEMENTATION=PJMEDIA_SOUND_IPOD_SOUND \
 	-D__COREAUDIO_USE_FLAT_INCLUDES__ \
 	-I$(INCLUDE_IPHONE)/AudioToolbox \
@@ -56,7 +56,7 @@ export CFLAGS += -DPJMEDIA_SOUND_IMPLEMENTATION=PJMEDIA_SOUND_IPOD_SOUND \
 	-I$(INCLUDE_IPHONE)/CoreFoundation
 endif
 }}}
-On Linux and Windows,you need use FLAT_INCLUDES, so you must define INCLUDE_IPHONE. This value defines the path of include directory of your iphone sdk.
+On Linux and Windows,you need use FLAT_INCLUDES, so you must define INCLUDE_IPHONE. This value defines the path of include directory in your iphone sdk. It would be great to define automatically INCLUDE_IPHONE.
 
 Maybe, you don't need FLAT_INCLUDES on MacOS X.
 

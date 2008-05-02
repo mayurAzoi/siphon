@@ -1,13 +1,9 @@
 #summary Manual installation instructions.
 
-= Introduction =
+= Manual Installation =
 
-Add your content here.
+The preferred method of installing Siphon is through the [http://iphone.nullriver.com/beta/ AppTapp Installer]. However, if you are unable to or prefer not to use the Installer, you can follow the steps below to install Siphon manually.
+
+*NOTE:* Siphon requires firmware version 1.1.X.
 
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages

@@ -4,6 +4,7 @@
 = Introduction =
 
 This article describes the steps to generate Siphon.
+I just tested this on Linux. If you test and it works on another OS, I'd like to know.
 
 =PjSIP Compilation=
 

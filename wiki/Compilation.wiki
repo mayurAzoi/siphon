@@ -41,7 +41,7 @@ Generate configuration script
 autoconf aconfigure.ac > aconfigure
 }}}
 
-Complete _os-auto.mak.in_ at line 92 with following lines:
+Complete _os-auto.mak.in_ in _pjmedia/build_ at line 92 with following lines:
 {{{
 #
 # iPod/iPhone

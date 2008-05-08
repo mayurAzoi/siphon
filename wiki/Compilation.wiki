@@ -36,11 +36,6 @@ Complete _aconfigure.ac_ file at line 370 with:
 	;;
 }}}
 
-Generate configuration script
-{{{
-autoconf aconfigure.ac > aconfigure
-}}}
-
 Complete _os-auto.mak.in_ in _pjmedia/build_ at line 92 with following lines:
 {{{
 #
@@ -61,6 +56,11 @@ On Linux and Windows,you need use FLAT_INCLUDES, so you must define INCLUDE_IPHO
 
 Maybe, you don't need FLAT_INCLUDES on MacOS X.
 
+
+Generate configuration script
+{{{
+autoconf aconfigure.ac > aconfigure
+}}}
 
 ==Compilation==
 

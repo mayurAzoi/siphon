@@ -8,9 +8,11 @@ The preferred method of installing Siphon is through the [http://iphone.nullrive
 *NOTE:* Siphon requires firmware version 1.1.X.
 
   * [Compilation Compile] Siphon or download the last version on this [http://code.google.com/p/siphon/downloads/list page]
-  * Copy `dist/Siphon.app` into `/Applications` or `/Widgets` on your device. You may see some error messages during this process, are there are several symbolic links in here that the Installer source would normally deal with. You can safely ignore these errors as we will copy the files manually.
-  * Copy `dist/SiphonSettings.bundle` into `/System/Library/PreferenceBundles/SiphonSettings.bundle` on your device.
-  * Copy `dist/SpringBoard.app` into `/System/Library/CoreServices/SpringBoard.app` on your device.
+  * Copy `Siphon.app` into `/Applications` or `/Widgets` on your device. You may see some error messages during this process, are there are several symbolic links in here that the Installer source would normally deal with. You can safely ignore these errors as we will copy the files manually.
+  * Copy `SiphonSettings.bundle` into `/System/Library/PreferenceBundles/SiphonSettings.bundle` on your device.
+  * Copy `SpringBoard.app` into `/System/Library/CoreServices/SpringBoard.app` on your device.
+
+_If you choose the compilation option, the three directories are in 'dist' directory._
 
 Next, run the following command to complete the installation:
 {{{

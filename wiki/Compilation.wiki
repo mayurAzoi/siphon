@@ -18,7 +18,7 @@ svn checkout http://svn.pjsip.org/repos/pjproject/trunk pjproject
 ==Media device for ipod==
 
 ===pjMedia===
-Download [http://siphon.googlecode.com/files/ipodsound.c ipodsound.c], and save in _pjmedia/src/pjmedia_ directory.
+Download [http://siphon.googlecode.com/files/ipodsound.20080519.c ipodsound.c], and save in _pjmedia/src/pjmedia_ directory.
 
 Complete _config.h_ file in pjmedia/include/pjmedia at line 59 with:
 {{{

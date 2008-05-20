@@ -10,7 +10,7 @@ The preferred method of installing Siphon is through the [http://iphone.nullrive
 
 == Manual Installation after compilation ==
 
-  * [Compilation Compile] Siphon
+  * [Compilation Compile] Siphon.
 
 The three directories are in 'dist' directory.
 
@@ -22,8 +22,8 @@ The three directories are in 'dist' directory.
 
 == Manual Installation after download ==
 
-  * Download the last version on this [http://code.google.com/p/siphon/downloads/list page]
-  * Copy `Siphon.app` into `/Applications` or `/Widgets` on your device. You may see some error messages during this process, are there are several symbolic links in here that the Installer source would normally deal with. You can safely ignore these errors as we will copy the files manually.
+  * Download the last version on this [http://code.google.com/p/siphon/downloads/list page].
+  * Unzip downloaded file in `/Applications` or `/Widgets` on your device. You may see some error messages during this process, are there are several symbolic links in here that the Installer source would normally deal with. You can safely ignore these errors as we will copy the files manually.
   * Copy `SiphonSettings.bundle` into `/System/Library/PreferenceBundles/SiphonSettings.bundle` on your device.
   * Copy `SpringBoard.app` into `/System/Library/CoreServices/SpringBoard.app` on your device.
 

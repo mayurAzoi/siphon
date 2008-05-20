@@ -11,7 +11,7 @@ This article describes how uninstall manually Siphon.
 
 Start by remove Siphon settings from General Settings :
 {{{
-/Applications/Siphon.app/Siphon --installPrefBundle
+/Applications/Siphon.app/Siphon --removePrefBundle
 }}}
 
 Delete `Siphon.app` directory

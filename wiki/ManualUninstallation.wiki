@@ -18,7 +18,7 @@ Delete `Siphon.app` directory
 
 Delete `SiphonSettings.bundle` directory in `/System/Library/PreferenceBundles/`
 
-Delete files `Default_Siphon.png` and `FSO_Siphon.png` in `/System/Library/CoreServices/SpringBoard.app/`
+Delete `Default_Siphon.png` and `FSO_Siphon.png` in `/System/Library/CoreServices/SpringBoard.app/`
 
 Finally, restart the SpringBoard:
 {{{

@@ -1,4 +1,5 @@
 #summary Manual uninstallation instructions.
+#labels Phase-Deploy
 
 = Introduction =
 

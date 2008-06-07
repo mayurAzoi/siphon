@@ -54,7 +54,17 @@ endif
 }}}
 On Linux and Windows,you need use FLAT_INCLUDES, so you must define INCLUDE_IPHONE. This value defines the path of include directory in your iphone sdk. It would be great to define automatically INCLUDE_IPHONE.
 
-Maybe, you don't need FLAT_INCLUDES on MacOS X.
+On MacOS X, with official SDK, you need insert these lines:
+{{{
+#
+# iPod/iPhone
+#
+ifeq ($(AC_PJMEDIA_SND),ipod)
+export SOUND_OBJS = ipodsound.o
+export CFLAGS += -DPJMEDIA_SOUND_IMPLEMENTATION=PJMEDIA_SOUND_IPOD_SOUND
+endif
+}}}
+
 
 
 Generate configuration script

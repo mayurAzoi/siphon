@@ -2,12 +2,23 @@
 
 = Introduction =
 
-Add your content here.
+For the moment, Siphon is localized in :
+  * English
+  * French
 
+I began translation for :
+  * Spanish
+  * German
 
 = Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+You can help me to complete translation or add new language.
+
+For this, you must download *.strings* files at [http://code.google.com/p/siphon/source/browse/#svn/trunk/Siphon2/Resources location] in directories:
+  * en.lproj
+  * Settings.bundle/en.lproj
+
+You must translate the right part of sentences. For example,
+"Cancel" = "*Translation*";
+
+When the work is finished you should create an [http://code.google.com/p/siphon/issues/list issue], and upload the files.

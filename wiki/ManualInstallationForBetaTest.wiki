@@ -21,7 +21,7 @@ To install Siphon on iphone, you need to follow the steps :
 If you want to used an Ad-Hoc distribution developers need the device ID of your iPhone or iPod Touch. This ID allows to sign application for your device.
 
 There are several ways to get this information. The simplest is iTunes.
-iTunes display the Identifier if you click on the Serial Number (summary tab) after selecting the device in the source list.
+iTunes displays the Identifier if you click on "Serial Number" (summary tab) after selecting the device in the source list.
 
 Pressing Cmd+C (mac) or Ctrl+C (win) will copy the 40 characters hex string to the clipboard.
 

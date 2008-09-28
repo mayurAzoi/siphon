@@ -30,7 +30,7 @@ This versions adds:
  * New implementation of dialpad
    * display key down
    * manage '+' and ','
- * New translation (doesn't finished)
+ * New translation (not finish)
    * German
    * Italian
    * Spanish

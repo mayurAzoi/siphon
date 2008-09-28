@@ -8,6 +8,20 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 
 = Beta 5 =
 
+This version fixes:
+ - Sometimes the screen "appel terminé"/"call ended" stays display (issue 32)
+ - advanced parameters are read always (issue 33)
+ - crash when hang up (issue 34)
+ - implements DTMF with rfc 2833 before DTMF inband (issue 9 and issue 39)
+
+This version adds:
+ - somes error messages to understand why the connection isn't established.
+ - Siphon rings and vibrates when a call is received
+
+Problems known:
+ - No elements to know if Siphon is connected or not
+ - no history list 
+
 = Beta 4 =
 
 = Beta 3 =

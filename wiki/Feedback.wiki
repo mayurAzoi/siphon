@@ -11,22 +11,40 @@ This version is compiled for iPhone 2.1 and uses specific features of 2.1.
 
 This version fixes:
  * Sometimes the screen "appel terminé"/"call ended" stays display (issue 32)
- * advanced parameters are read always (issue 33)
- * crash when hang up (issue 34)
- * implements DTMF with rfc 2833 before DTMF inband (issue 9 and issue 39)
+ * Advanced parameters are read always (issue 33)
+ * Crash when hang up (issue 34)
+ * Implements DTMF with rfc 2833 before DTMF inband (issue 9 and issue 39)
 
 This version adds:
- * somes error messages to understand why the connection isn't established.
+ * Somes error messages to understand why the connection isn't established.
  * Siphon rings and vibrates when a call is received
 
 Problems known:
  * No elements to know if Siphon is connected or not
- * no history list 
+ * No history list
 
 = Beta 4 =
 
+This version is compiled for iPhone 2.1.
+This versions adds:
+ * New implementation of dialpad
+   * display key down
+   * manage '+' and ','
+ * New translation (doesn't finished)
+   * German
+   * Italian
+   * Spanish
+
 = Beta 3 =
 
+This version is compiled for iPhone 2.0
+This versions adds:
+ * Error messages,
+ * Proxy parameter
+
 = Beta 2 =
+
+This versions adds:
+ * NAT and STUN parameters
 
 = Beta 1 =

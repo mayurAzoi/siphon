@@ -29,4 +29,4 @@ If you want add your provider, please post a message in comments with the detail
 ||voipstunt||sip.voipstunt.com||300||||
 ||voipwise||sip.voipwise.com||300||||
 ||vyke||sip.vyke.com||1800||||
-||youfon||sip.youfon.net||3600|||| X||
+||youfon||sip.youfon.net||3600|| || X||

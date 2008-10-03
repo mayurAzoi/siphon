@@ -1,4 +1,5 @@
 #summary The table below describes the parameters of several SIP providers.
+#labels Phase-Deploy,Featured
 
 = Introduction =
 

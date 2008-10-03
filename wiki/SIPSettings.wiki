@@ -8,3 +8,5 @@ If you want add your provider, please post a message in comments with the detail
 = Details =
 ||*Provider*||*SIP Server*||*Reg.Timeout*||*STUN*||
 ||free||freephonie.net||1800||||
+||neuf||voip.wengo.fr ||55||||
+||[http://www.voipbuster.com/ VoIPBuster]||sip.voipbuster.com||1800||||

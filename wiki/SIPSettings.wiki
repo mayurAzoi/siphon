@@ -11,14 +11,22 @@ If you want add your provider, please post a message in comments with the detail
 ||free||freephonie.net||1800||||
 ||[http://www.freecall.com/en/index.html freecall]||sip.voiparound.com||55||||
 ||[http://www.inphonex.com/ InPhonex]||sip.inphonex.com||300||||
+||internetcalls||sip.internetcalls.com||1800||||
 ||[http://www.ippi.fr/ ippi]||ippi.fr||1800||||
+||justvoip||sip.justvoip.com||300||||
 ||netvoip||sip.netvoip.ch||1800||||
 ||neuf||voip.wengo.fr ||55||||
-||sipnet||sipnet.ru||3600|| ||X||
-||[http://www.sipphone.com/ SIPPhone]||sip.voipbuster.com||1800||||
+||sipcall||sip.backbone.ch||1800||||
+||sipdiscount||sip.sipdiscount.com||300||||
 ||[http://www.sipgate.de/ SipGate]||sipgate.de||600||||
+||sipnet||sipnet.ru||3600|| || X||
+||[http://www.sipphone.com/ SIPPhone]||sip.voipbuster.com||1800||||
 ||terrasip||terrasip.net||1800||||
 ||[http://www.voipbuster.com/ VoIPBuster]||proxy01.sipphone.com||1800||||
 ||[http://www.voipcheap.com/ voipcheap]||sip.voipcheap.com||1800||||
+||voipdiscount||sip.voipdiscount.com||300||||
 ||voipraider||sip.voipraider.com||1800||||
+||voipstunt||sip.voipstunt.com||300||||
+||voipwise||sip.voipwise.com||300||||
 ||vyke||sip.vyke.com||1800||||
+||youfon||sip.youfon.net||3600|||| X||

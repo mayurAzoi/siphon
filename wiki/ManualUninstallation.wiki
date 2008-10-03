@@ -1,5 +1,5 @@
 #summary Manual uninstallation instructions.
-#labels Phase-Deploy
+#labels Phase-Deploy,Deprecated
 
 = Introduction =
 

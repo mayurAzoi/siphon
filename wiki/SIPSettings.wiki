@@ -6,7 +6,7 @@ If you want add your provider, please post a message in comments with the detail
 
 
 = Details =
-|| *Provider* || *SIP Server*|*Reg.Timeout*|*STUN*|*NAT*|
+|| *Provider* || *SIP Server* || *Reg.Timeout* || *STUN* || *NAT* ||
 ||annatel||sip.annatel.net||300||stun.annatel.net||
 ||blueface||sip.blueface.ie||1800||||
 ||free||freephonie.net||1800||||

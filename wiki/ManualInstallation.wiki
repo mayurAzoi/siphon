@@ -1,5 +1,5 @@
 #summary Manual installation instructions.
-#labels Phase-Deploy,Featured
+#labels Phase-Deploy,Deprecated
 
 = Manual Installation =
 

@@ -1,5 +1,5 @@
 #summary Compilation guide.
-#labels Phase-Implementation,Featured
+#labels Phase-Implementation
 
 = Introduction =
 

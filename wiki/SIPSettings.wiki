@@ -1,0 +1,10 @@
+#summary The table below describes the parameters of several SIP providers.
+
+= Introduction =
+
+If you want add your provider, please post a message in comments with the details of your provider. 
+
+
+= Details =
+||*Provider*||*SIP Server*||*Reg.Timeout*||*STUN*||
+||free||freephonie.net||1800||||

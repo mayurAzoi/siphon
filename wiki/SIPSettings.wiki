@@ -22,6 +22,7 @@ If you want add your provider, please post a message in comments with the detail
 ||sipnet||sipnet.ru||3600|| || X||
 ||[http://www.sipphone.com/ SIPPhone]||sip.voipbuster.com||1800||||
 ||terrasip||terrasip.net||1800||||
+||videotron|| || ||||
 ||[http://www.voipbuster.com/ VoIPBuster]||proxy01.sipphone.com||1800||||
 ||[http://www.voipcheap.com/ voipcheap]||sip.voipcheap.com||1800||||
 ||voipdiscount||sip.voipdiscount.com||300||||

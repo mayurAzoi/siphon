@@ -1,4 +1,5 @@
 #summary Manual installation instructions for beta-test version.
+#labels Phase-QA,Featured
 
 = Manual Installation =
 

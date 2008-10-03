@@ -7,6 +7,7 @@ If you want add your provider, please post a message in comments with the detail
 
 = Details =
 ||*Provider*||*SIP Server*||*Reg.Timeout*||*STUN*||*NAT*||
+||annatel|| ||300||||
 ||blueface||sip.blueface.ie||1800||||
 ||free||freephonie.net||1800||||
 ||[http://www.freecall.com/en/index.html freecall]||sip.voiparound.com||55||||
@@ -14,6 +15,7 @@ If you want add your provider, please post a message in comments with the detail
 ||internetcalls||sip.internetcalls.com||1800||||
 ||[http://www.ippi.fr/ ippi]||ippi.fr||1800||||
 ||justvoip||sip.justvoip.com||300||||
+||keyyo|| || ||||
 ||netvoip||sip.netvoip.ch||1800||||
 ||neuf||voip.wengo.fr ||55||||
 ||sipcall||sip.backbone.ch||1800||||
@@ -22,7 +24,8 @@ If you want add your provider, please post a message in comments with the detail
 ||sipnet||sipnet.ru||3600|| || X||
 ||[http://www.sipphone.com/ SIPPhone]||sip.voipbuster.com||1800||||
 ||terrasip||terrasip.net||1800||||
-||videotron|| || ||||
+||videotron|| 70.82.254.4(sip20.videotron.com) || ||||
+||videotron|| 70.82.253.4(sip30.videotron.com) || ||||
 ||[http://www.voipbuster.com/ VoIPBuster]||proxy01.sipphone.com||1800||||
 ||[http://www.voipcheap.com/ voipcheap]||sip.voipcheap.com||1800||||
 ||voipdiscount||sip.voipdiscount.com||300||||

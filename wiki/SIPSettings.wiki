@@ -6,13 +6,19 @@ If you want add your provider, please post a message in comments with the detail
 
 
 = Details =
-||*Provider*||*SIP Server*||*Reg.Timeout*||*STUN*||
+||*Provider*||*SIP Server*||*Reg.Timeout*||*STUN*||*NAT*||
+||blueface||sip.blueface.ie||1800||||
 ||free||freephonie.net||1800||||
 ||[http://www.freecall.com/en/index.html freecall]||sip.voiparound.com||55||||
 ||[http://www.inphonex.com/ InPhonex]||sip.inphonex.com||300||||
 ||[http://www.ippi.fr/ ippi]||ippi.fr||1800||||
+||netvoip||sip.netvoip.ch||1800||||
 ||neuf||voip.wengo.fr ||55||||
+||sipnet||sipnet.ru||3600||||X||
 ||[http://www.sipphone.com/ SIPPhone]||sip.voipbuster.com||1800||||
 ||[http://www.sipgate.de/ SipGate]||sipgate.de||600||||
+||terrasip||terrasip.net||1800||||
 ||[http://www.voipbuster.com/ VoIPBuster]||proxy01.sipphone.com||1800||||
 ||[http://www.voipcheap.com/ voipcheap]||sip.voipcheap.com||1800||||
+||voipraider||sip.voipraider.com||1800||||
+||vyke||sip.vyke.com||1800||||

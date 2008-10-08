@@ -17,7 +17,7 @@ If you want add your provider, please post a message in comments with the detail
 ||internetcalls||sip.internetcalls.com||1800||||
 ||[http://www.ippi.fr/ ippi]||ippi.fr||1800||||
 ||justvoip||sip.justvoip.com||300||||
-||keyyo|| || ||||
+||keyyo|| keyyo.net || 3600 ||||
 ||netvoip||sip.netvoip.ch||1800||||
 ||neuf||voip.wengo.fr ||55||||
 ||morrotel||sip.morrotel.com||3600|| 

@@ -18,6 +18,13 @@ It seems DTMF with rfc 2833 doesn't work yet.
 
 I began to implement history of recent calls.
 
+New translation:
+ * Spanish
+ * Portuguese
+
+Translation not finished
+ * German
+ * Italian
 
 = Beta 5 =
 This version is compiled for iPhone 2.1 and uses specific features of 2.1.

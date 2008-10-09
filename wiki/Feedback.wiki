@@ -6,6 +6,19 @@ If you are a beta-testers of Siphon, you can describe the results of your tests 
 
 For problems and enhancements, you should add [http://code.google.com/p/siphon/issues/list issues].
 
+= Beta 6 =
+This version is compiled for iPhone 2.1 and uses specific features of 2.1.
+
+This version fixes:
+ * proxy parameter works (issue 13)
+ * freephonie network works (issue 44)
+ * iTunes Application Icon (issue 41)
+
+It seems DTMF with rfc 2833 doesn't work yet.
+
+I began to implement history of recent calls.
+
+
 = Beta 5 =
 This version is compiled for iPhone 2.1 and uses specific features of 2.1.
 

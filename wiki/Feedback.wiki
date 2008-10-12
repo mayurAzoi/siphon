@@ -6,6 +6,20 @@ If you are a beta-testers of Siphon, you can describe the results of your tests 
 
 For problems and enhancements, you should add [http://code.google.com/p/siphon/issues/list issues].
 
+= Beta 7 =
+
+Bugs/Enhnacement fixed :
+  * accept letter in number like 1800-My-APPLE (issue 50)
+  * pressing call twice with no number should act like redial. (issue 52)
+Translation complete
+  * English
+  * French
+  * Spanish
+  * German (Finished)
+  * Italian (Finished)
+  * Portuguese
+  * Danish
+
 = Beta 6 =
 This version is compiled for iPhone 2.1 and uses specific features of 2.1.
 

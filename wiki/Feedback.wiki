@@ -9,8 +9,11 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 = Beta 7 =
 
 AEC is activated.
+
 GSM Codec is added.
+
 I tested at home the DTMF tones rfc2833, and it seems it works.
+
 It seems there are some problems with provider using [http://www.iptel.org/ser SIP Express Router].
 
 Bugs/Enhancement fixed :

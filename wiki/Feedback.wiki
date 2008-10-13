@@ -15,11 +15,11 @@ Translation complete
   * English
   * French
   * Spanish
-  * German (Finished)
-  * Italian (Finished)
+  * German 
+  * Italian 
   * Portuguese
   * Danish
-
+Thanks for translation to David, Stefan, Patrick, Pedro, Jorge and Ferruccio
 = Beta 6 =
 This version is compiled for iPhone 2.1 and uses specific features of 2.1.
 

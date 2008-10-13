@@ -6,9 +6,14 @@ If you are a beta-testers of Siphon, you can describe the results of your tests 
 
 For problems and enhancements, you should add [http://code.google.com/p/siphon/issues/list issues].
 
-= Beta 7 (not published yet) =
+= Beta 7 =
 
-Bugs/Enhnacement fixed :
+AEC is activated.
+GSM Codec is added.
+I tested at home the DTMF tones rfc2833, and it seems it works.
+It seems there are some problems with provider using [http://www.iptel.org/ser SIP Express Router].
+
+Bugs/Enhancement fixed :
   * accept letter in number like 1800-My-APPLE (issue 50)
   * pressing call twice with no number should act like redial. (issue 52)
 Translation complete
@@ -19,7 +24,8 @@ Translation complete
   * Italian 
   * Portuguese
   * Danish
-Thanks for translation to David, Stefan, Patrick, Pedro, Jorge and Ferruccio
+Thanks for translation to David, Stefan, Patrick, Pedro, Jorge and Ferruccio.
+
 = Beta 6 =
 This version is compiled for iPhone 2.1 and uses specific features of 2.1.
 

@@ -9,8 +9,10 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 = Beta 8 (Not published yet) =
 
 Bugs fixed:
-  * closed session at the end
-  *   	Dialing single Digits works (issue 49)
+  * Closed session at the end
+  * Dialing single Digits works (issue 49)
+  * Version 1.0 of pjsip so dtmf should be work.
+  * Stun server and parameters are correctly used.
 
 = Beta 7 =
 

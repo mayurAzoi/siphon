@@ -12,7 +12,7 @@ Bugs fixed:
   * Closed session at the end
   * Dialing single Digits works (issue 49)
   * Version 1.0 of pjsip so dtmf should be work.
-  * Stun server and parameters are correctly used.
+  * Stun server and parameters are correctly used (issue 58).
 
 = Beta 7 =
 

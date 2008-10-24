@@ -9,8 +9,8 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 
 = Beta 9 =
 
-* Quality of sound should be good.
-* Remove icons of call history, because the work is not finished.
+ * Quality of sound should be good.
+ * Remove icons of call history, because the work is not finished.
 
 = Beta 8 =
 

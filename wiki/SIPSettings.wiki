@@ -9,6 +9,7 @@ If you want add your provider, please post a message in comments with the detail
 = Details =
 || *Provider* || *SIP Server* || *Reg.Timeout* || *STUN* || *NAT* || *Proxy* ||
 ||annatel||sip.annatel.net||300||stun.annatel.net||
+||bellshare||proxy.bellshare.com||1800
 ||blueface||sip.blueface.ie||1800||||
 ||free||freephonie.net||1800||||
 ||freephonie||172.17.20.241||1800|| || ||172.17.20.241||

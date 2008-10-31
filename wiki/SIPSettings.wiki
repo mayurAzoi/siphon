@@ -26,11 +26,11 @@ If you want add your provider, please post a message in comments with the detail
 ||sipdiscount||sip.sipdiscount.com||300||||
 ||[http://www.sipgate.de/ SipGate]||sipgate.de||600||||
 ||sipnet||sipnet.ru||3600|| || X||
-||[http://www.sipphone.com/ SIPPhone]||sip.voipbuster.com||1800||||
+||[http://www.sipphone.com/ SIPPhone]||proxy01.sipphone.com||1800||||
 ||terrasip||terrasip.net||1800||||
 ||videotron|| 70.82.254.4(sip20.videotron.com) ||600||||
 ||videotron|| 70.82.253.4(sip30.videotron.com) ||600||||
-||[http://www.voipbuster.com/ VoIPBuster]||proxy01.sipphone.com||1800||||
+||[http://www.voipbuster.com/ VoIPBuster]||sip.voipbuster.com||1800||||
 ||[http://www.voipcheap.com/ voipcheap]||sip.voipcheap.com||1800||||
 ||voipdiscount||sip.voipdiscount.com||300||||
 ||voipraider||sip.voipraider.com||1800||||

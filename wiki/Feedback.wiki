@@ -7,9 +7,15 @@ If you are a beta-testers of Siphon, you can describe the results of your tests 
 
 For problems and enhancements, you should add [http://code.google.com/p/siphon/issues/list issues].
 
+= Beta 10 (not published yet) =
+
+ * ring and ringback (issue 40, issue 56, issue 68)
+ * history of calls (issue 48)
+ * sound when you dials, if the iPhone is not on vibrate mode.
+
 = Beta 9 =
 
- * Quality of sound should be good now (few delay).
+ * Quality of sound should be good now (few delay, issue 54).
  * Remove icons of call history, because the work is not finished.
 
 = Beta 8 =

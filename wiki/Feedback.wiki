@@ -12,6 +12,7 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
  * ring and ringback (issue 40, issue 56, issue 68)
  * history of calls (issue 48)
  * sound when you dials, if the iPhone is not on vibrate mode.
+ * reorder favorites
 
 = Beta 9 =
 

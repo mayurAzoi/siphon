@@ -1,0 +1,10 @@
+#summary Foire aux questions.
+
+== Utilisation de Siphon ==
+
+=== Pourquoi Siphon ne fonctionne pas avec Skype ? ===
+=== Pourquoi il n'est pas possible de recevoir des appels lorsque Siphon n'est pas lancé ===
+
+== Siphon et les applications de l'iPhone ==
+=== Pourquoi les favoris de l'iPhone ne sont pas présents dans Siphon ? ===
+=== Pourquoi l'historique des appels ne sont pas combinés entre Siphon et l'application de téléphonie de l'iPhone ? ===

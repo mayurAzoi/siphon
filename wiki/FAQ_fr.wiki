@@ -17,4 +17,4 @@ Apple permet de partager le carnet d'adresse, par contre dans la version 2.0 et 
 
 === Pourquoi l'historique des appels ne sont pas combinés entre Siphon et l'application de téléphonie de l'iPhone ? ===
 
-Comme pour les favoris, Apple ne permet pas d'accéder à la liste des appels de l'iPhone ni de la compléter.
+Comme précédemment pour les favoris, Apple ne permet pas d'accéder à la liste des appels de l'iPhone ni de la compléter.

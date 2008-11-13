@@ -6,4 +6,4 @@
 
 == Siphon and iPhone's applications ==
 === Why Siphon doesn't use/display the favorites of iPhone? ===
-=== Why the recent calls of Siphon and MobilePhone are not shared?
+=== Why the recent calls of Siphon and MobilePhone are not shared? ===

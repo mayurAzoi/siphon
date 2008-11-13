@@ -1,8 +1,9 @@
 #summary Frequently Ask Questions.
 
 == Using of Siphon ==
-=== Why Siphon doesn't works with Skype ===
+=== Why Siphon doesn't work with Skype ===
 === Why Siphon doesn't allow to receive a call when it doesn't run ===
+=== Why Siphon doesn't work one 3G/EDGE network ? ===
 
 == Siphon and iPhone's applications ==
 === Why Siphon doesn't use/display the favorites of iPhone? ===

@@ -10,6 +10,12 @@ Skype utilise un protocole propriétaire qui ne repose pas sur le protocole SIP.
 
 Apple refuse (actuellement) qu'une application fonctionne en tache de fond. Aussi, lorsque l'application n'est pas lancée le serveur SIP de votre fournisseur ne connait pas votre iPhone.
 
+
+=== Pourquoi est-il impossible d'utiliser Siphon sur le réseau EDGE ou 3G ===
+
+La licence développeur interdit la création de logiciel SIP qui utiliserait le réseau 3G ou EDGE.
+Par ailleurs, de nombreux opérateurs de téléphonies mobiles interdisent dans leur contrat l'utilisation de la VoIP sur leur réseau.
+
 == Siphon et les applications de l'iPhone ==
 === Pourquoi les favoris de l'iPhone ne sont pas présents dans Siphon ? ===
 

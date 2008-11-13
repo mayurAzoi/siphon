@@ -1,0 +1,9 @@
+#summary Frequently Ask Questions.
+
+== Using of Siphon ==
+=== Why Siphon doesn't works with Skype ===
+=== Why Siphon doesn't allow to receive a call when it doesn't run ===
+
+== Siphon and iPhone's applications ==
+=== Why Siphon doesn't use/display the favorites of iPhone? ===
+=== Why the recent calls of Siphon and MobilePhone are not shared?

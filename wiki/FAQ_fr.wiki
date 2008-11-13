@@ -3,8 +3,18 @@
 == Utilisation de Siphon ==
 
 === Pourquoi Siphon ne fonctionne pas avec Skype ? ===
+
+Skype utilise un protocole propriétaire qui ne repose pas sur le protocole SIP.
+
 === Pourquoi il n'est pas possible de recevoir des appels lorsque Siphon n'est pas lancé ===
+
+Apple ne permet pas qu'une application fonctionne en tache de fond. Aussi, lorsque l'application n'est pas lancée le serveur SIP de votre fournisseur ne connait pas votre iPhone.
 
 == Siphon et les applications de l'iPhone ==
 === Pourquoi les favoris de l'iPhone ne sont pas présents dans Siphon ? ===
+
+Apple permet de partager le carnet d'adresse, par contre dans la version 2.0 et 2.1, il n'existe aucune fonction pour accéder aux numéros favoris que vous avez défini.
+
 === Pourquoi l'historique des appels ne sont pas combinés entre Siphon et l'application de téléphonie de l'iPhone ? ===
+
+Comme pour les favoris, Apple ne permet pas d'accéder à la liste des appels de l'iPhone ni de la compléter.

@@ -6,7 +6,7 @@
 
 Skype utilise un protocole propriétaire qui ne repose pas sur le protocole SIP. Or Siphon repose sur le protocole SIP.
 
-=== Pourquoi est-il impossible de recevoir des appels lorsque Siphon n'est pas affiché ===
+=== Pourquoi est-il impossible de recevoir des appels lorsque Siphon n'est pas affiché ? ===
 
 Apple refuse (actuellement) qu'une application fonctionne en tache de fond. Aussi, lorsque l'application n'est pas lancée le serveur SIP de votre fournisseur ne connait pas votre iPhone.
 

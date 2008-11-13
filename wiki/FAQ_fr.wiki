@@ -4,11 +4,11 @@
 
 === Pourquoi Siphon ne fonctionne pas avec Skype ? ===
 
-Skype utilise un protocole propriétaire qui ne repose pas sur le protocole SIP.
+Skype utilise un protocole propriétaire qui ne repose pas sur le protocole SIP. Or Siphon repose sur le protocole SIP.
 
 === Pourquoi il n'est pas possible de recevoir des appels lorsque Siphon n'est pas lancé ===
 
-Apple ne permet pas qu'une application fonctionne en tache de fond. Aussi, lorsque l'application n'est pas lancée le serveur SIP de votre fournisseur ne connait pas votre iPhone.
+Apple refuse (actuellement) qu'une application fonctionne en tache de fond. Aussi, lorsque l'application n'est pas lancée le serveur SIP de votre fournisseur ne connait pas votre iPhone.
 
 == Siphon et les applications de l'iPhone ==
 === Pourquoi les favoris de l'iPhone ne sont pas présents dans Siphon ? ===

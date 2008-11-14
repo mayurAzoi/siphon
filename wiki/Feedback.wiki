@@ -10,7 +10,7 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 = Beta 11 =
 
 Bugs fixed
- * crash for audio feedback of '**' key for windows users (issue 77)
+ * crash for audio feedback of _star_ key for windows users (issue 77)
 
 = Beta 10 =
 

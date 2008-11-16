@@ -2,9 +2,18 @@
 
 == Using of Siphon ==
 === Why Siphon doesn't work with Skype ===
+Skype uses a proprietary protocol that doesn't use SIP protocol. And Siphon uses SIP protocol.
+
 === Why Siphon doesn't allow to receive a call when it doesn't run ===
 === Why Siphon doesn't work one 3G/EDGE network ? ===
 
+
+=== Does Siphon use proxy server ? ===
+No, You are directly connected to your SIP provider.
+
 == Siphon and iPhone's applications ==
 === Why Siphon doesn't use/display the favorites of iPhone? ===
+Apple allow to share address book, but in iPhone OS 2.0 and 2.1, it doesn't existe API to obtain favorites.
+
 === Why the recent calls of Siphon and iPhone are not shared? ===
+Like previous question on favorites, Apple doesn't allow to manage the recent calls list.

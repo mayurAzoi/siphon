@@ -58,6 +58,9 @@ In _os_darwinos.h_ find and comment the following lines :
 
 Without this, you will get an error when you will compile, because socklen_t is redefined. 
 
+===pjlib/include/pj/config_site.h===
+It can be necessary to define some macro.
+
 ===pjmedia/build/os-auto.mak.in===
 In _os-auto.mak.in_, add the line with '+'
 {{{

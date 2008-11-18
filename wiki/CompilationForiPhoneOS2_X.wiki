@@ -59,6 +59,28 @@ In _os_darwinos.h_ find and comment the following lines :
 
 Without this, you will get an error when you will compile, because socklen_t is redefined. 
 
+===pjmedia/build/os-auto.mak.in===
+In _os-auto.mak.in_, add the line with '+'
+{{{
+ #   - ds:	    	Win32 DirectSound (dsound.c)
++#   - iphone:       iPhone AudioQueue (iphonesound.c)
+ #   - null:	    	Null sound device (nullsound.c)
+}}}
+
+Add the line below, for example between "Win 32 Direct Sound" and " Null Sound Device"
+
+{{{
+#
+# iPod/iPhone
+#
+ifeq ($(AC_PJMEDIA_SND),iphone)
+export SOUND_OBJS = iphonesound.o
+export CFLAGS += -DPJMEDIA_SOUND_IMPLEMENTATION=PJMEDIA_SOUND_IPHONE_SOUND
+endif
+
+}}}
+
+We have defined a new target for sound device.
 
 ==Configuration==
 

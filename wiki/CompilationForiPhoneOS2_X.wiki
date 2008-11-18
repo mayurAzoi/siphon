@@ -1,0 +1,26 @@
+#summary Compilation guide for iPhone OS 2.X.
+
+= Introduction =
+
+This article describes the steps to generate pjsip on Mac OS X 10.5.5
+
+
+= Details =
+
+==Getting pjsip source code==
+Get [http://pjsip.org PjSIP] from subversion repository:
+
+{{{
+svn checkout http://svn.pjsip.org/repos/pjproject/trunk pjproject
+}}}
+
+
+==Modify some files==
+===Media device for iPhone===
+
+===aconfigure.ac===
+
+==Configuration==
+
+==Compilation==
+

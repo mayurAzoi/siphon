@@ -20,7 +20,7 @@ svn checkout http://svn.pjsip.org/repos/pjproject/trunk pjproject
 
 ===aconfigure.ac===
 
-In aconfigure.ac file add the lines below displayed with '+'. Of course copy without '+' ;-)
+In _aconfigure.ac_ file add the lines below displayed with '+'. Of course copy without '+' ;-)
 
 {{{
  if test "$enable_sound" = "no"; then
@@ -36,6 +36,17 @@ In aconfigure.ac file add the lines below displayed with '+'. Of course copy wit
  	LIBS="$LIBS -framework CoreAudio -framework CoreServices -framework AudioUnit -framework AudioToolbox"
  	if test "`uname -r`" = "6.8"; then
 }}}
+
+===build/rules.mak===
+In _rules.mak_ modify, remove lines with '-' and add lines with '+':
+{{{
+ $(LIB): $(OBJDIRS) $(OBJS) $($(APP)_EXTRA_DEP)
+ 	if test ! -d $(LIBDIR); then $(subst @@,$(subst /,$(HOST_PSEP),$(LIBDIR)),$(HOST_MKDIR)); fi
+-	$(AR) $(LIB) $(OBJS)
+-	$(RANLIB) $(LIB)
++	$(RANLIB) -static -o $(LIB) $(OBJS)
+}}}
+
 
 ==Configuration==
 

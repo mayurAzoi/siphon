@@ -93,7 +93,7 @@ in _config.h_ add the lines below with '+':
 }}}
 
 ===pjmedia/src/pjmedia===
-
+For the moment I didn't upload iphonesound.c so we need to compile with null_sound.
 
 ==Configuration==
 Generate configuration script
@@ -133,7 +133,7 @@ export CPP="${DEV}/usr/bin/cpp"
 
 ./aconfigure --host=arm-apple-darwin9 --disable-speex-aec \
    --disable-speex-codec --disable-l16-codec --disable-g722-codec \
-   --disable-ilbc-codec --disable-ssl 
+   --disable-ilbc-codec --disable-ssl --disable-sound
 
 make dep
 make

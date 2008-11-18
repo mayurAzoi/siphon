@@ -107,7 +107,7 @@ autoconf aconfigure.ac > aconfigure
 ==Compilation==
 
 iPhone SDK doesn't provide some programs without version number, so we create symbolic link. We should test before create link, but we are very lazy.
-Copy the line below in file with name like _compile.sh_ in the root of pjsip.
+Copy the lines below in file with name like _compile.sh_ in the root of pjsip.
 
 {{{
 #!/bin/sh
@@ -142,5 +142,5 @@ make dep
 make
 }}}
 
-We don't forget to change access right to allow execution.
+We must not forget to change access right to allow execution.
 We can run _compile.sh_ after some minutes pjsip is compiled.

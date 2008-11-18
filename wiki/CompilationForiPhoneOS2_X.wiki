@@ -102,3 +102,42 @@ autoconf aconfigure.ac > aconfigure
 }}}
 
 ==Compilation==
+
+iPhone SDK doesn't provide some programs without version number, so we create symbolic link. We should test before create link, but we are very lazy.
+Copy the line below in file with name like _compile.sh_ in the root of pjsip.
+
+{{{
+#!/bin/sh
+
+export DEV=/Developer/Platforms/iPhoneOS.platform/Developer
+export SDK=${DEV}/SDKs/iPhoneOS2.1.sdk
+
+pushd ${DEV}/usr/bin
+ln -s arm-apple-darwin9-gcc-4.0.1 arm-apple-darwin9-gcc
+ln -s arm-apple-darwin9-g++-4.0.1 arm-apple-darwin9-g++
+ln -s ranlib arm-apple-darwin9-ranlib
+popd
+
+export PATH=${DEV}/usr/bin:${PATH}
+
+export CFLAGS="-O2 -arch armv6 \
+	-I${SDK}/usr/include \
+	-I${DEV}/usr/lib/gcc/arm-apple-darwin9/4.0.1/include \
+	-I/usr/include -F${SDK}/System/Library/Frameworks"
+
+export LDFLAGS="-O2 -arch armv6 \
+	-L${SDK}/usr/lib \
+	-F${SDK}/System/Library/Frameworks"
+
+export CPP="${DEV}/usr/bin/cpp"
+
+./aconfigure --host=arm-apple-darwin9 --disable-speex-aec \
+   --disable-speex-codec --disable-l16-codec --disable-g722-codec \
+   --disable-ilbc-codec --disable-ssl 
+
+make dep
+make
+}}}
+
+We don't forget to change access right to allow execution.
+We can run _compile.sh_ after some minutes pjsip is compiled.

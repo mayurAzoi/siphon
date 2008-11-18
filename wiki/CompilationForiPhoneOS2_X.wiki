@@ -16,7 +16,6 @@ svn checkout http://svn.pjsip.org/repos/pjproject/trunk pjproject
 
 
 ==Modify some files==
-===Media device for iPhone===
 
 ===aconfigure.ac===
 
@@ -82,6 +81,24 @@ endif
 
 We have defined a new target for sound device.
 
+===pjmedia/include/pjmedia/config.h===
+in _config.h_ add the lines below with '+':
+
+{{{
+ /** Constant for Win32 MME sound backend. */
+ #define PJMEDIA_SOUND_WIN32_MME_SOUND	    3
+
++/** Constant for AudioQueue sound backend. */
++#define PJMEDIA_SOUND_IPHONE_SOUND            4
+}}}
+
+===pjmedia/src/pjmedia===
+
+
 ==Configuration==
+Generate configuration script
+{{{
+autoconf aconfigure.ac > aconfigure
+}}}
 
 ==Compilation==

@@ -37,6 +37,8 @@ In _aconfigure.ac_ file add the lines below displayed with '+'. Of course copy w
  	if test "`uname -r`" = "6.8"; then
 }}}
 
+
+
 ===build/rules.mak===
 In _rules.mak_ modify, remove lines with '-' and add lines with '+':
 {{{
@@ -46,6 +48,16 @@ In _rules.mak_ modify, remove lines with '-' and add lines with '+':
 -	$(RANLIB) $(LIB)
 +	$(RANLIB) -static -o $(LIB) $(OBJS)
 }}}
+===pjlib/include/pj/compat/os_darwinos.h===
+In _os_darwinos.h_ find and comment the following lines :
+{{{
+/*
+ * Socket related
+ */
+//typedef int socklen_t;
+}}}
+
+Without this, you will get an error when you will compile, because socklen_t is redefined. 
 
 
 ==Configuration==

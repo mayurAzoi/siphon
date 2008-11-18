@@ -32,9 +32,9 @@ In aconfigure.ac file add the lines below displayed with '+'. Of course copy wit
 +        ac_pjmedia_snd=iphone
 +        AC_MSG_RESULT([Checking sound device backend... AudioQueue])
 +        ;;
-  *darwin*)
-	LIBS="$LIBS -framework CoreAudio -framework CoreServices -framework AudioUnit -framework AudioToolbox"
-	if test "`uname -r`" = "6.8"; then
+   *darwin*)
+ 	LIBS="$LIBS -framework CoreAudio -framework CoreServices -framework AudioUnit -framework AudioToolbox"
+ 	if test "`uname -r`" = "6.8"; then
 }}}
 
 ==Configuration==

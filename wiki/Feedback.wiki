@@ -10,7 +10,11 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 = Beta 11 =
 
 Bugs fixed
- * crash for audio feedback of _star_ key for windows users (issue 77)
+ * Crash for audio feedback of _star_ key for windows users (issue 77)
+
+Enhancements
+ * Display status of connection
+ * Disconnect and reconnect when the Wi-Fi network status changes.
 
 = Beta 10 =
 
@@ -18,8 +22,8 @@ Bugs fixed and enhancement:
  * Ring and ringback (issue 40, issue 56, issue 68)
  * History of calls (issue 48)
  * Stun server and parameters are correctly used (issue 74).
- * sound when you dials, if the iPhone is not on vibrate mode.
- * reorder favorites
+ * Sound when you dials, if the iPhone is not on vibrate mode.
+ * Reorder favorites
 
 = Beta 9 =
 

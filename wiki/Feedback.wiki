@@ -11,6 +11,7 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 
 Bugs fixed
  * Crash for audio feedback of _star_ key for windows users (issue 77)
+ * some bugs in call history
 
 Enhancements
  * Display status of connection

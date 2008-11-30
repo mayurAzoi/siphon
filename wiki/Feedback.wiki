@@ -10,7 +10,7 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 = Beta 14 =
 
 Bugs fixed :
- * several after modification of compilation options.
+ * several bugs fixed in Distribution after modification of compilation options.
 
 = Beta 13 =
 

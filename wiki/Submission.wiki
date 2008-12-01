@@ -5,20 +5,19 @@
 I would like to write the process to submit one application for AppStore.
 For the moment, Siphon was submitted three times.
 
-= Third (27-29/11) =
+== Third (27-29/11) ==
 I submitted Siphon (27/11) but I found a bug so I re-submitted Siphon (29/11) before Apple review.
 
 
-
-= Second (~13/11) =
-I submitted Siphon (~13/11) with new functionalities.
-Apple refused because GUI was too close to MobilePhone application of iPhone.
-In fact, with my compilation problems the GUI didn't work correctly. So I understand now why Apple refused Siphon.
+== Second (~13/11) ==
+I submitted Siphon (~13/11) with new functionalities.<br/>
+Apple refused because GUI was too close to MobilePhone application of iPhone.<br/>
+In fact, with my compilation problems the GUI didn't work correctly. So I understand now why Apple refused Siphon.<br/>
 I corrected these problems and now Siphon displays the status of connection.
 
 
-= First (25/10) =
-I submitted Siphon (25/10) before I leave in holiday with my family in Spain (Galicia).
-Apple refused because I didn't give a SIP account (27/10).
-So When I came back, I create a new SIP account and I gave them it.
+== First (25/10) ==
+I submitted Siphon (25/10) before I leave in holiday with my family in Spain (Galicia).<br/>
+Apple refused because I didn't give a SIP account (27/10).<br/>
+So When I came back, I create a new SIP account and I gave them it.<br/>
  

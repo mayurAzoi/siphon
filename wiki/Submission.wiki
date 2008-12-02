@@ -3,7 +3,11 @@
 = Introduction =
 
 I would like to write the process to submit one application for AppStore.
-For the moment, Siphon was submitted three times.
+For the moment, Siphon was submitted four times.
+
+== Fourth (02/12) ==
+
+I submitted Siphon (02/12) for iPhone and iPod Touch 2.
 
 == Third (27-29/11) ==
 I submitted Siphon (27/11) but I found a bug so I re-submitted Siphon (29/11) before Apple review.

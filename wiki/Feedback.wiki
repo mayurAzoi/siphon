@@ -9,11 +9,13 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 
 = Beta 15 =
 
+Siphon works on iPod Touch 2 with headset.
+
 Bugs fixed:
  * In some cases Siphon could work on 3G/Edge :-(
  * Siphon can be installed from Windows and Mac.
 
-Thanks to Yan and Bernard
+Thanks to Yan and Bernard.
 
 = Beta 14 =
 

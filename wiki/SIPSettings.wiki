@@ -24,7 +24,7 @@ If you want add your provider, please post a message in comments with the detail
 ||keyyo|| keyyo.net || 3600 ||||
 ||netvoip||sip.netvoip.ch||1800||||
 ||neuf||voip.wengo.fr ||55||||
-||[www.onsip.com onSIP]||||
+||[http://www.onsip.com onSIP]||<specific>.onsip.com||1800||||
 ||morrotel||sip.morrotel.com||3600|| 
 ||sipcall||sip.backbone.ch||1800||||
 ||sipdiscount||sip.sipdiscount.com||300||||

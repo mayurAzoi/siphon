@@ -12,6 +12,7 @@ If you want add your provider, please post a message in comments with the detail
 ||bellshare||proxy.bellshare.com||1800||
 ||blueface||sip.blueface.ie||1800||||
 ||[http://www.callcentric.com/ callcentric] || callcentric.com || 1800 || || || callcentric.com ||
+||eutelia||voip.eutelia.it||3600||83.211.227.25||?||83.211.227.21||
 ||free||freephonie.net||1800||||
 ||freephonie||172.17.20.241||1800|| || ||172.17.20.241||
 ||[http://www.freecall.com/en/index.html freecall]||sip.voiparound.com||55||||

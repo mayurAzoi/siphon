@@ -7,6 +7,16 @@ If you are a beta-testers of Siphon, you can describe the results of your tests 
 
 For problems and enhancements, you should add [http://code.google.com/p/siphon/issues/list issues].
 
+= Beta 17 (Not published) =
+
+Bugs fixed:
+ * Impossible to set Username unequal Authorization name (issue 20)
+ * Stun server is not saved (Cydia) (issue 88)
+
+= Beta 16 =
+
+Cydia version, because I have no news from Apple since December 7,2008 I decide to publish a Cydia version. Users can activated VoIP on 3G/Edge.
+
 = Beta 15 =
 
 Siphon works on iPod Touch 2 with headset.

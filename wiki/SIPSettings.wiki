@@ -25,7 +25,8 @@ If you want add your provider, please post a message in comments with the detail
 ||netvoip||sip.netvoip.ch||1800||||
 ||neuf||voip.wengo.fr ||55||||
 ||[http://www.onsip.com onSIP]||{specific}.onsip.com||1800||||
-||morrotel||sip.morrotel.com||3600|| 
+||morrotel||sip.morrotel.com||3600||
+||[http://www.pennytel.com pennytel]||sip.pennytel.com||1800||sip.pennytel.com||
 ||sipcall||sip.backbone.ch||1800||||
 ||sipdiscount||sip.sipdiscount.com||300||||
 ||[http://www.sipgate.de/ SipGate]||sipgate.de||600||||

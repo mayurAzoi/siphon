@@ -7,7 +7,7 @@ If you want add your provider, please post a message in comments with the detail
 
 
 = Details =
-|| *Provider* || *SIP Server* || *Reg.Timeout* || *STUN* || *NAT* || *Proxy* ||
+|| *Provider* || *SIP Server* || *Reg.Timeout* || *STUN* || *NAT* || *Proxy* || *Local port*||
 ||annatel||sip.annatel.net||300||stun.annatel.net||  X ||
 ||bellshare||proxy.bellshare.com||1800||
 ||blueface||sip.blueface.ie||1800||||
@@ -25,6 +25,7 @@ If you want add your provider, please post a message in comments with the detail
 ||netvoip||sip.netvoip.ch||1800||||
 ||neuf||voip.wengo.fr ||55||||
 ||[http://www.onsip.com onSIP]||{specific}.onsip.com||1800||||
+||[http://www.messagenet.it messagenet]||sip.messagenet.it||1800||||||||5061||
 ||morrotel||sip.morrotel.com||3600||
 ||[http://www.pennytel.com pennytel]||sip.pennytel.com||1800||sip.pennytel.com||
 ||sipcall||sip.backbone.ch||1800||||

@@ -43,6 +43,9 @@ If you want add your provider, please post a message in comments with the detail
 ||voipraider||sip.voipraider.com||1800||||
 ||voipstunt||sip.voipstunt.com||300||||
 ||voipwise||sip.voipwise.com||300||||
+||voxalot(USA)||us.voxalot.com||600||stun.voxalot.com.au:3478||
+||voxalot(European)||eu.voxalot.com||600||stun.voxalot.com.au:3478||
+||voxalot(Australia)||au.voxalot.com||600||stun.voxalot.com.au:3478||
 ||vyke||sip.vyke.com||1800||||
 ||youfon||sip.youfon.net||3600|| || X||
 

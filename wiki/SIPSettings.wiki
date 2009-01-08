@@ -32,7 +32,7 @@ If you want add your provider, please post a message in comments with the detail
 ||sipcall||sip.backbone.ch||1800||||
 ||sipdiscount||sip.sipdiscount.com||300||||
 ||[http://www.sipgate.de/ SipGate]||sipgate.de||600||||
-||sipnet||sipnet.ru||3600|| || X||
+||sipnet||sipnet.ru||3600|| X||
 ||[http://www.sipphone.com/ SIPPhone]||proxy01.sipphone.com||1800||||
 ||terrasip||terrasip.net||1800||||
 ||viatalk||sanjose-1.vtnoc.net||30||stun.vtnoc.net||X||sanjose-1.vtnoc.net||

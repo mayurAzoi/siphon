@@ -3,7 +3,7 @@
 = Introduction =
 
 I would like to write the process to submit one application for AppStore.
-For the moment, Siphon was submitted four times.
+For the moment, Siphon was submitted five times.
 
 == Fifth (06/01/2009) ==
 

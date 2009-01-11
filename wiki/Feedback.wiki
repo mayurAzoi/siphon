@@ -12,7 +12,7 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 New features:
  * mute (issue 66)
  * speaker (issue 67)
- * hold
+ * new splashscreen
 
 = 2.0.1 =
 

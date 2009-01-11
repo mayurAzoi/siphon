@@ -16,10 +16,10 @@ I submitted Siphon (02/12) for iPhone and iPod Touch 2.
 I never received an answer.</p>
 
 == Third (27-29/11) ==
-<p>I submitted Siphon (27/11) but I found a bug so I re-submitted Siphon (29/11) before Apple review.</p>
+||<p>I submitted Siphon (27/11) but I found a bug so I re-submitted Siphon (29/11) before Apple review.</p>
 <p>Apple refused "because the VoIP service is active over the cellular network". Like you can see on the screenshot that I received, they tested on iPod touch. So the test was not complete.</p>
-<p>In fact when SIP is unreachable or Wi-Fi is unavailable, Siphon asks to users to make a cellular call. Maybe in USA, GSM is unknown.</p>
-[http://siphon.googlecode.com/svn/images/Apple%20VoIP%20GSM.PNG]
+<p>In fact when SIP is unreachable or Wi-Fi is unavailable, Siphon asks to users to make a cellular call. Maybe in USA, GSM is unknown.</p>||
+[http://siphon.googlecode.com/svn/images/Apple%20VoIP%20GSM.PNG]||
 
 == Second (~13/11) ==
 I submitted Siphon (~13/11) with new functionalities.<br/>

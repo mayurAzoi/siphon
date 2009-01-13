@@ -24,6 +24,11 @@ UITabBarSystemItemHistory
 
 Effectively, I use this button and it allows to see call history.
 
+So I give you the end of message:
+ "The Recents button is to be used to display recent calls made using the Phone application.  Implementing this button to refer to calls made from your app will lead to user confusion.  We recommend using another button to refer to the recent calls made from your application."
+
+When I will change the icon, it won't be able submitted to AppStore because the user will be able to not understand. And after it will the favorites icon, and then keypad icon, etc...
+
 == Fourth (02/12) ==
 
 I submitted Siphon (02/12) for iPhone and iPod Touch 2.

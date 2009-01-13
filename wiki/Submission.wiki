@@ -22,7 +22,7 @@ UITabBarSystemItemHistory
   Declared in UITabBarItem.h.
 }}} 
 
-Effectively, I use this button and it allows to see call history.
+Effectively, I use this button and it allows to see call history. If the developers mustn't use this icon, why is it available in the SDK ?
 
 So I give you the end of message:
  "The Recents button is to be used to display recent calls made using the Phone application.  Implementing this button to refer to calls made from your app will lead to user confusion.  We recommend using another button to refer to the recent calls made from your application."

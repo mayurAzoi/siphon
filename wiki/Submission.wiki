@@ -8,6 +8,9 @@ For the moment, Siphon was submitted five times.
 == Fifth (06/01/2009) ==
 
 I submitted Siphon 2.0.1 (06/01) with some new functions that you can see [Feedback here].
+The January 13, I received an answer: negative, why i give you the test of his mail:
+"Your application, Siphone, cannot be submitted to the App Store because it uses the Recents button from the iPhone's phone application for an action other than that for which it is intended.  Applications must adhere to the iPhone Human Interface Guidelines as outlined in iPhone SDK Agreement section 3.3.5."
+
 
 == Fourth (02/12) ==
 

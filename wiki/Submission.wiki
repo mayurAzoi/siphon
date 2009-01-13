@@ -9,8 +9,19 @@ For the moment, Siphon was submitted five times.
 
 I submitted Siphon 2.0.1 (06/01) with some new functions that you can see [Feedback here].
 The January 13, I received an answer: negative, why i give you the test of his mail:
-"Your application, Siphone, cannot be submitted to the App Store because it uses the Recents button from the iPhone's phone application for an action other than that for which it is intended.  Applications must adhere to the iPhone Human Interface Guidelines as outlined in iPhone SDK Agreement section 3.3.5."
+ "Your application, Siphone, cannot be submitted to the App Store because it uses the Recents button from the iPhone's phone application for an action other than that for which it is intended.  Applications must adhere to the iPhone Human Interface Guidelines as outlined in iPhone SDK Agreement section 3.3.5."
 
+I don't understand because I use SDK features, copy below:
+{{{
+UITabBarSystemItemHistory
+  The history system item. 
+
+  Available in iPhone OS 2.0 and later.
+
+  Declared in UITabBarItem.h.
+}}} 
+
+Effectively, the button allows to see call history.
 
 == Fourth (02/12) ==
 

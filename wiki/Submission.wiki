@@ -21,7 +21,7 @@ UITabBarSystemItemHistory
   Declared in UITabBarItem.h.
 }}} 
 
-Effectively, the button allows to see call history.
+Effectively, I use this button and it allows to see call history.
 
 == Fourth (02/12) ==
 

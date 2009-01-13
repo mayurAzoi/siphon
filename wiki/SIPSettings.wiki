@@ -14,6 +14,7 @@ If you want add your provider, please post a message in comments with the detail
 ||[http://www.callcentric.com/ callcentric] || callcentric.com || 1800 || || || callcentric.com ||
 ||eutelia||voip.eutelia.it||3600||83.211.227.25||?||83.211.227.21||
 ||free||freephonie.net||1800||||
+||freenet||freenet.de||1800|| || || || iphone.freenet.de  || 
 ||freephonie||172.17.20.241||1800|| || ||172.17.20.241||
 ||[http://www.freecall.com/en/index.html freecall]||sip.voiparound.com||55||||
 ||IcanReach || sip.icanreach.com || 300 |||| 

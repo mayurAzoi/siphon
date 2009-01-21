@@ -10,13 +10,19 @@ Apple doesn't accept (for the moment) an application runs in the background. So,
 === Why Siphon doesn't work on 3G/EDGE network ? ===
 The developer agreement forbids the development of VoIP software for 3G/Edge. Moreover, several mobile phone operator forbid the VoIP traffic on their 3G/EDGE network.
 
-The Siphon version released on Cydia works on 3G/EDGE network. But the users must verified their mobile subscription. The author is not responsible of Siphon's usage. 
+`The Siphon version released on Cydia works on 3G/EDGE network. 
+
+But the users must verified their mobile subscription. 
+
+*The author is not responsible of Siphon's usage.*`
 
 === Does Siphon use proxy server ? ===
 No, You are directly connected to your SIP provider.
 
 === Does Siphon work with Bluetooth stereo headset ===
-If you have a Bluetooth stereo headset & A2DP adapter for iPhone, Siphon will work over Bluetooth stereo. This was tested with Jaybird JB-200. It will not work over the handsfree profile. This is an apple limitation.
+If you have a Bluetooth stereo headset & A2DP adapter for iPhone, Siphon will work over Bluetooth stereo. 
+
+This was tested with Jaybird JB-200. It will not work over the handsfree profile. This is an apple limitation.
 
 
 == Siphon and iPhone's applications ==

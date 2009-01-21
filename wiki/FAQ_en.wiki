@@ -12,9 +12,7 @@ The developer agreement forbids the development of VoIP software for 3G/Edge. Mo
 
 _The Siphon version released on Cydia works on 3G/EDGE network._
 
-_But the users must verified their mobile subscription._
-
-_*The author is not responsible of Siphon's usage.*_
+_But the users must verified their mobile subscription. *The author is not responsible of Siphon's usage.*_
 
 === Does Siphon use proxy server ? ===
 No, You are directly connected to your SIP provider.

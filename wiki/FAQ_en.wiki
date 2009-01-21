@@ -15,6 +15,10 @@ The Siphon version released on Cydia works on 3G/EDGE network. But the users mus
 === Does Siphon use proxy server ? ===
 No, You are directly connected to your SIP provider.
 
+=== Does Siphon work with Bluetooth stereo headset ===
+If you have a Bluetooth stereo headset & A2DP adapter for iPhone, Siphon will work over Bluetooth stereo. This was tested with Jaybird JB-200. It will not work over the handsfree profile. This is an apple limitation.
+
+
 == Siphon and iPhone's applications ==
 === Why Siphon doesn't use/display the favorites of iPhone? ===
 Apple allow to share address book, but in iPhone OS 2.0 and 2.1, it doesn't existe API to obtain favorites.

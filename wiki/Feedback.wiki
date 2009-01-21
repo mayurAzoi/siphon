@@ -14,6 +14,7 @@ New features:
  * speaker (issue 67)
  * Dial SIP addresses (issue 97, issue 89)
  * new splashscreen
+ * new icons for AppStore
 
 = 2.0.1 =
 

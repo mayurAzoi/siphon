@@ -7,8 +7,10 @@ Skype uses a proprietary protocol that doesn't use SIP protocol. And Siphon uses
 === Why Siphon doesn't allow to receive a call when it doesn't run ===
 Apple doesn't accept (for the moment) an application runs in the background. So, when Siphon doesn't run, the SIP server of your provider doesn't know your iPhone.
 
-=== Why Siphon doesn't work one 3G/EDGE network ? ===
-The developer agreement forbids the development of VoIP software for 3G/Edge. Moreover, several mobile phone operator forbid the VoIP traffic on their 3G/EDGE network. 
+=== Why Siphon doesn't work on 3G/EDGE network ? ===
+The developer agreement forbids the development of VoIP software for 3G/Edge. Moreover, several mobile phone operator forbid the VoIP traffic on their 3G/EDGE network.
+
+The Siphon version released on Cydia works on 3G/EDGE network. But the users must verified their mobile subscription. The author is not responsible of Siphon's usage. 
 
 === Does Siphon use proxy server ? ===
 No, You are directly connected to your SIP provider.

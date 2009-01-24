@@ -1,4 +1,4 @@
-#summary Feedback from beta-testers
+#summary Changelog
 #labels Featured
 
 = Introduction =

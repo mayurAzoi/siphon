@@ -3,7 +3,11 @@
 = Introduction =
 
 I would like to write the process to submit one application for AppStore.
-For the moment, Siphon was submitted five times.
+For the moment, Siphon was submitted six times.
+
+== Sixth (25/01/2009 ==
+
+I submitted Siphon 2.0.3 (25/01) with some new functions that you can see [Feedback here], but *mainly* I changed the icons.
 
 == Fifth (06/01/2009) ==
 
@@ -12,10 +16,10 @@ I submitted Siphon 2.0.1 (06/01) with some new functions that you can see [Feedb
 The January 13th, I received an answer: negative, why i give you the test of his mail:
  "Your application, Siphone, cannot be submitted to the App Store because it uses the Recents button from the iPhone's phone application for an action other than that for which it is intended.  Applications must adhere to the iPhone Human Interface Guidelines as outlined in iPhone SDK Agreement section 3.3.5."
 
-I don't understand because I use SDK features (copy below): [http://siphon.googlecode.com/svn/images/Apple%20UITabBarHistory.PNG]
+I don't understand because I use SDK features (copy below): [http://siphon.googlecode.com/svn/images/Apple%20UITabBarHistory.png]
 {{{
 UITabBarSystemItemHistory
-  The history system item. [http://siphon.googlecode.com/svn/images/Apple%20UITabBarHistory.PNG]
+  The history system item.
 
   Available in iPhone OS 2.0 and later.
 

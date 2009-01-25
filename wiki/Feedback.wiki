@@ -13,13 +13,17 @@ New features:
  * Message scrolling if it's too long (issue 132)
  * Enable/disable echo canceller (issue 45)
  * Enable/Disable silence detector/voice activity detector
+ * Define CallerID for From field (issue 115, issue 134)
 
 = 2.0.2 =
+
+Bugs fixed:
+ * Dial SIP addresses (issue 97, issue 89)
+ * No auth on invite (issue 121)
 
 New features:
  * mute (issue 66)
  * speaker (issue 67)
- * Dial SIP addresses (issue 97, issue 89)
  * new splashscreen
  * new icons for AppStore
 

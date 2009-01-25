@@ -20,6 +20,13 @@ UITabBarSystemItemHistory
   Available in iPhone OS 2.0 and later.
 
   Declared in UITabBarItem.h.
+
+UITabBarSystemItemRecents
+  The recents system item. 
+
+  Available in iPhone OS 2.0 and later.
+
+  Declared in UITabBarItem.h.
 }}} 
 
 Effectively, I use this button and it allows to see call history. If the developers mustn't use this icon, why is it available in the SDK ?

@@ -11,6 +11,8 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 
 New features:
  * Message scrolling if it's too long (issue 132)
+ * Enable/disable echo canceller (issue 45)
+ * Enable/Disable silence detector/voice activity detector
 
 = 2.0.2 =
 

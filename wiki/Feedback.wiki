@@ -14,6 +14,7 @@ New features:
  * Enable/disable echo canceller (issue 45)
  * Enable/Disable silence detector/voice activity detector
  * Define CallerID for From field (issue 115, issue 134?)
+ * Hold on call (issue 133)
 
 = 2.0.2 =
 

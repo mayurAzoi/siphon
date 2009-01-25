@@ -19,7 +19,7 @@ New features:
 
 Bugs fixed:
  * Dial SIP addresses (issue 97, issue 89)
- * No auth on invite (issue 121)
+ * No auth on invite (issue 121 issue 126?)
 
 New features:
  * mute (issue 66)

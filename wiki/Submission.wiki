@@ -5,7 +5,7 @@
 I would like to write the process to submit one application for AppStore.
 For the moment, Siphon was submitted six times.
 
-== Sixth (25/01/2009 ==
+== Sixth (25/01/2009) ==
 
 I submitted Siphon 2.0.3 (25/01) with some new functions that you can see [Feedback here], but *mainly* I changed the icons.
 

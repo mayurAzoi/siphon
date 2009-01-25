@@ -5,10 +5,11 @@
 For the moment, Siphon is localized in :
   * English
   * French
-
-I began translation for :
   * Spanish
   * German
+  * Portuguese
+  * Italian
+  * Danish
 
 = Details =
 

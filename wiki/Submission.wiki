@@ -15,14 +15,14 @@ The January 13th, I received an answer: negative, why i give you the test of his
 I don't understand because I use SDK features (copy below):
 {{{
 UITabBarSystemItemHistory
-  The history system item. 
+  The history system item. [http://siphon.googlecode.com/svn/images/Apple%20UITabBarHistory.PNG]
 
   Available in iPhone OS 2.0 and later.
 
   Declared in UITabBarItem.h.
 
 UITabBarSystemItemRecents
-  The recents system item. 
+  The recents system item. [http://siphon.googlecode.com/svn/images/Apple%20UITabBarHistory.PNG]
 
   Available in iPhone OS 2.0 and later.
 

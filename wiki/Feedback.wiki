@@ -15,6 +15,8 @@ New features:
  * Enable/Disable silence detector/voice activity detector
  * Define CallerID for From field (issue 115, issue 134?)
  * Hold on call (issue 133)
+ * International prefix substitution (issue 96)
+ * Keep Alive Interval (issue 130)
 
 = 2.0.2 =
 

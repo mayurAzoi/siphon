@@ -18,6 +18,7 @@ If you want add your provider, please post a message in comments with the detail
 ||freephonie||172.17.20.241||1800|| || ||172.17.20.241||
 ||[http://www.freecall.com/en/index.html freecall]||sip.voiparound.com||55||||
 ||future-nine||sip.future-nine.com ||180||stun.future-nine.com||
+||[Gizmo5 http://gizmo5.com/]||proxy01.sipphone.com||1800||stun01.sipphone.com||
 ||IcanReach || sip.icanreach.com || 300 |||| 
 ||[http://www.inphonex.com/ InPhonex]||sip.inphonex.com||300||||
 ||internetcalls||sip.internetcalls.com||1800||||

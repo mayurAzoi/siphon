@@ -11,6 +11,7 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 
 Bug fixed:
  * Problem of connection with IP address and Proxy (issue 103)
+ * size of title button (issue 143)
 
 New feature
  * enable ICE

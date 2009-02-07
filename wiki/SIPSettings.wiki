@@ -39,6 +39,7 @@ If you want add your provider, please post a message in comments with the detail
 ||[http://www.sipgate.de/ SipGate]||sipgate.de||600||||
 ||sipnet||sipnet.ru||3600|| X||
 ||[http://www.sipphone.com/ SIPPhone]||proxy01.sipphone.com||1800||||
+||telmex||lpi.telmex.com||1800|| || || 201.116.100.193 ||
 ||terrasip||terrasip.net||1800||||
 ||viatalk||sanjose-1.vtnoc.net||30||stun.vtnoc.net||X||sanjose-1.vtnoc.net||
 ||videotron|| 70.82.254.4(sip20.videotron.com) ||600||||

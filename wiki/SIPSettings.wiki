@@ -12,7 +12,7 @@ If you want add your provider, please post a message in comments with the detail
 ||bellshare||proxy.bellshare.com||1800||
 ||blueface||sip.blueface.ie||1800||||
 ||[http://www.callcentric.com/ callcentric] || callcentric.com || 1800 || || || callcentric.com ||
-||Digisip||proxy.digisip.net|| 1800 || || || || username / account_nb ||
+||Digisip||proxy.digisip.net|| 1800 || || || || || username / account_nb ||
 ||eutelia||voip.eutelia.it||3600||83.211.227.25||?||83.211.227.21||
 ||free||freephonie.net||1800||||
 ||freenet||freenet.de||1800|| || || iphone.freenet.de  || || account name for 1st number /<br/> number incl. area code for others ||

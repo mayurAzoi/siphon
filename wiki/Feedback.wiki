@@ -12,11 +12,14 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 Bug fixed:
  * Problem of connection with IP address and Proxy (issue 103)
 
+New feature
+ * enable ICE
+
 = 2.0.3 =
 
 New features:
  * Message scrolling if it's too long (issue 132)
- * Enable/disable echo canceller (issue 45)
+ * Enable/disable echo canceler (issue 45)
  * Enable/Disable silence detector/voice activity detector
  * Define CallerID for From field (issue 115, issue 134?)
  * Hold on call (issue 133)

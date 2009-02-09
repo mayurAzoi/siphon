@@ -59,4 +59,7 @@ If you want add your provider, please post a message in comments with the detail
 ||youfon||sip.youfon.net||3600|| || X||
 
 
-Skype doesn't use SIP protocol.
+Skype doesn't use SIP protocol. But you can call Skype's users by gizmo5 project.
+You need to connect with your gizmo5 account (parameters above).
+When you want to call someone, you must use SIP URL: sip://number@opensky.gizmo5.com<br/>
+You can write this URL in safari, or in your address book (web field).

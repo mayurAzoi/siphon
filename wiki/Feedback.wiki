@@ -14,7 +14,7 @@ Bug fixed:
  * size of title button (issue 143)
 
 New feature
- * enable ICE
+ * enable [http://en.wikipedia.org/wiki/Interactive_Connectivity_Establishment ICE] (Interactive Connectivity Establishment)
  * Slovenian Translation (issue 141)
 
 = 2.0.3 =

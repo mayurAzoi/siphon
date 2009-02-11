@@ -7,7 +7,7 @@ If you are a beta-testers of Siphon, you can describe the results of your tests 
 
 For problems and enhancements, you should add [http://code.google.com/p/siphon/issues/list issues].
 
-= 2.0.4 (Not released yet) =
+= 2.0.4 =
 
 Bug fixed:
  * Problem of connection with IP address and Proxy (issue 103)

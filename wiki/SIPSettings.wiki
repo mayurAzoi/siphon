@@ -31,7 +31,7 @@ If you want add your provider, please post a message in comments with the detail
 ||neuf||voip.wengo.fr ||55||||
 ||[http://www.onsip.com onSIP]||{specific}.onsip.com||1800||||
 ||[http://www.messagenet.it messagenet]||sip.messagenet.it||1800|| || || ||5060 or 5061||
-||magic jack||talk4free.com||3600|| || || proxy1._city_.talk4free.com:5700 || 5070||Ephonenumber01||
+||magic jack||talk4free.com||3600|| || || proxy1.*city*.talk4free.com:5070 || 5070||Ephonenumber01||
 ||morrotel||sip.morrotel.com||3600||
 ||megaphone||sip.megaphone.se||1800||
 ||nvisiongroup||spvoip.nvisiongroup.ru||1800|| || || 213.221.17.193 ||

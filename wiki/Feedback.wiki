@@ -12,7 +12,8 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 Bugs fixed:
 
 New features:
-  * Czech localization (issue 158) 
+  * Czech localization (issue 158)
+  * Select one codec, by default all codec can be used (issue 156)
 
 = 2.0.5 =
 

@@ -4,7 +4,7 @@
 === Why Siphon doesn't work with Skype ===
 Skype uses a proprietary protocol that doesn't use SIP protocol. And Siphon uses SIP protocol.
 
-_But you can call Skype's users by gizmo5 project. You need to connect with your gizmo5 account (parameters above). When you want to call someone, you must use SIP URL: sip://number@opensky.gizmo5.com_
+_But you can call Skype's users by gizmo5 project. When you want to call someone, you must use SIP URL: sip://number@opensky.gizmo5.com_
 _You can write this URL in safari, or in your address book (web field)._
 
 === Why Siphon doesn't allow to receive a call when it doesn't run ===
@@ -32,6 +32,11 @@ NAT is [http://en.wikipedia.org/wiki/Network_address_translation Network Address
 === What is ICE option ? ===
 
 ICE is [http://en.wikipedia.org/wiki/Interactive_Connectivity_Establishment Interactive Connectivity Establishment]
+
+=== Which codec are supported by Siphon ===
+
+Currently, Siphon implements G711, GSM and G722 codec.
+In the future, iLbc, amr will be supported.
 
 == Siphon and iPhone's applications ==
 === Why Siphon doesn't use/display the favorites of iPhone? ===

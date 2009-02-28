@@ -9,6 +9,7 @@ If you want add your provider, please post a message in comments with the detail
 = Details =
 || *Provider* || *SIP Server* || *Reg.Timeout* || *STUN* || *NAT* || *Proxy* || *Local port*|| *Username / Auth. name*||
 ||annatel||sip.annatel.net||300||stun.annatel.net||  X ||
+||babytel||sip.babytel.ca||3600|| || || nat.babytel.ca:5065 || || 1 + Your ten digits phone number || 
 ||belgacom||voip.belgacom.be||1800|| stun.softjoys.com|| X || 81.240.251.38 || 3478<br />(port RTP : 5004)|| 
 ||bellshare||proxy.bellshare.com||1800||
 ||blueface||sip.blueface.ie||1800||||

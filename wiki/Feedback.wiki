@@ -10,6 +10,7 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 = 2.0.6 (Not released yet) =
 
 Bugs fixed:
+  * Impossible to call SIP url several times (issue 145)
 
 New features:
   * Czech localization (issue 158)

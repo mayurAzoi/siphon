@@ -11,6 +11,7 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 
 Bugs fixed:
   * Impossible to call SIP url several times (issue 145)
+  * Auto Lock screen is not disabled by siphon (issue 153)
 
 New features:
   * Czech localization (issue 158)

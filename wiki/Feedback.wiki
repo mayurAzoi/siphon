@@ -16,6 +16,7 @@ Bugs fixed:
 New features:
   * Czech localization (issue 158)
   * Select one codec, by default all codec can be used (issue 156)
+  * Doesn't support DTMF with INFO message (issue 168)
 
 = 2.0.5 =
 

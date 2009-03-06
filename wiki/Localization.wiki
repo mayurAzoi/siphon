@@ -10,6 +10,9 @@ For the moment, Siphon is localized in :
   * Portuguese
   * Italian
   * Danish
+  * Chinese
+  * Slovenian
+  * Czesk
 
 = Details =
 

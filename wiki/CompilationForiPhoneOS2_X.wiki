@@ -138,14 +138,9 @@ popd
 
 export PATH=${DEV}/usr/bin:${PATH}
 
-export CFLAGS="-O2 -arch armv6 \
-	-I${SDK}/usr/include \
-	-I${DEV}/usr/lib/gcc/arm-apple-darwin9/4.0.1/include \
-	-I/usr/include -F${SDK}/System/Library/Frameworks"
+export CFLAGS="-O2 -arch armv6 -isysroot ${SDK}"
 
-export LDFLAGS="-O2 -arch armv6 \
-	-L${SDK}/usr/lib \
-	-F${SDK}/System/Library/Frameworks"
+export LDFLAGS="-O2 -arch armv6 isysroot ${SDK}"
 
 export CPP="${DEV}/usr/bin/cpp"
 

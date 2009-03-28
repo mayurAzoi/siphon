@@ -7,7 +7,15 @@ If you are a beta-testers of Siphon, you can describe the results of your tests 
 
 For problems and enhancements, you should add [http://code.google.com/p/siphon/issues/list issues].
 
-= 2.0.6 =
+= next version =
+
+Bugs fixed:
+  * call recent dial string works (issue 162)
+
+New features:
+  * dial string is possible (issue 162)
+
+= 2.0.6/ 2.0.7 =
 
 Bugs fixed:
   * Impossible to call SIP url several times (issue 145)

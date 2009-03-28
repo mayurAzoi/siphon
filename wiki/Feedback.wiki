@@ -13,6 +13,7 @@ Update with the last version of pjsip 1.0.2
 
 Bugs fixed:
   * call recent dial string works (issue 162)
+  * display menu instead of dialpad (issue 99, issue 144)
 
 New features:
   * dial string is possible (issue 162)

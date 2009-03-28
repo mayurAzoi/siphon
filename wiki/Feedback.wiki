@@ -9,11 +9,14 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 
 = next version =
 
+Update with the last version of pjsip 1.0.2
+
 Bugs fixed:
   * call recent dial string works (issue 162)
 
 New features:
   * dial string is possible (issue 162)
+  * GSM button to call with mobile subscription and not SIP.
 
 = 2.0.6/ 2.0.7 =
 

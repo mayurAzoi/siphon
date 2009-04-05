@@ -1,0 +1,29 @@
+#summary Installation guide for iPhone OS jailbroke.
+#labels Phase-Deploy
+
+= Installation instructions =
+
+  * Download Siphon-_version_.deb
+  * Copy on your iPhone
+  * Install
+{{{
+dpkg -i Siphon-_version_.deb
+}}}
+  * Install Preferences
+{{{
+cd /Applications/Siphon.app
+./Siphon --installPrefBundle
+}}}
+
+= Removing instructions =
+
+  * Remove Preferences
+{{{
+cd /Applications/Siphon.app
+./Siphon --removePrefBundle
+cd
+}}}
+  * Uninstall Siphon
+{{{
+apt-get remove com.googlecode.siphon
+}}}

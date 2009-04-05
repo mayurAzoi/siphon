@@ -20,6 +20,8 @@ New features:
   * GSM button to call with mobile subscription and not SIP.
   * display version number in settings (issue 173)
   * Multiple codec selection (issue 186)
+  * Russian language (issue 205)
+  * display photo
 
 = 2.0.6 / 2.0.7 =
 

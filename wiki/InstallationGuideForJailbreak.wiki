@@ -7,7 +7,7 @@
   * Copy on your iPhone
   * Install
 {{{
-dpkg -i Siphon-_version_.deb
+dpkg -i Siphon-version.deb
 }}}
   * Install Preferences
 {{{

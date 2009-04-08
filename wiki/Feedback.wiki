@@ -14,7 +14,7 @@ Update with the last version of pjsip 1.0.2
 Bugs fixed:
   * call recent dial string works (issue 162)
   * display menu instead of dialpad (issue 99, issue 144)
-  * crash at startup with NAT or Echo canceler enables (issue 194, issue 199)
+  * crash at startup with NAT or Echo canceler enables (issue 187, issue 194, issue 199)
 
 New features:
   * dial string is possible (issue 162)

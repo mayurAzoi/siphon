@@ -1,1 +1,0 @@
-<wiki:gadget url="http://thebigboss.org/stats.php?dev=samuelvinson" height="200" border="0" />

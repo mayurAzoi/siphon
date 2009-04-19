@@ -5,13 +5,26 @@
 I would like to write the process to submit one application for AppStore.
 For the moment, Siphon was submitted six times.
 
-== Sixth (25/01/2009) ==
+== 19th april ==
 
-I submitted Siphon 2.0.3 (25/01) with some new functions that you can see [Feedback here], but *mainly* I changed the icons.<br />
+Apple's guys work saturday and sundy, it's a great news but here is their message :
+
+ "Thank you for submitting Siphon to the App Store. We've reviewed Siphon and determined that we cannot post this version of your iPhone application to the App Store because its business model is in violation of section 3.3.3 of the iPhone SDK Agreement:
+
+"Without Apple's prior written approval, an Application may not provide, unlock or enable additional features or functionality through distribution mechanisms other than the iTunes Store."
+
+== 9th april == 
+
+2.5 months after submission, I received this message :
+
 The April 9th, Apple informed me, he need more time to finalize the review:
  "Your application, Siphon, is requiring unexpected additional time for review. We apologize for the delay, and will update you with further status as soon as we are able.
 
  Thank you for your patience."
+
+== Sixth (25/01/2009) ==
+
+I submitted Siphon 2.0.3 (25/01) with some new functions that you can see [Feedback here], but *mainly* I changed the icons.<br />
 
 == Fifth (06/01/2009) ==
 

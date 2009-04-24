@@ -13,6 +13,7 @@ Bugs fixed:
   * enter @ sign for URI (issue 214)
 
 New features:
+  * Switch between numpad and alpha bad is possible by touch the field (issue 215)
   * _Add "URI" in address book_
 
 = 2.0.8 =

@@ -10,9 +10,10 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 = Next version =
 
 Bugs fixed:
+  * enter @ sign for URI (issue 214)
 
 New features:
-  * Add "URI" in address book
+  * _Add "URI" in address book_
 
 = 2.0.8 =
 

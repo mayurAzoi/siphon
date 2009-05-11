@@ -18,9 +18,15 @@ You need to do this for :
  * Preferences (PrivateFrameworks)
  * AdressBookUI (Frameworks)
 
+Copy the two directories in _Headers_ folder.
+
 = Compilation =
 
 == Settings ==
+
+xcode project is configured to compiled for iPhone OS 2.2 so you need to define the certificate.
+ * Open *Project "SiphonSettings" Info*
+ * Select in *Code Signing/Any iPhone OS Device* your certificate.
 
 == Siphon ==
 

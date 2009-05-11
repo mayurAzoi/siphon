@@ -1,4 +1,4 @@
-#summary Compilation guide for iPhone OS 2.X.
+#summary Compilation guide for pjsip on iPhone OS 2.X.
 
 = Introduction =
 

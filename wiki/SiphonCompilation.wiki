@@ -30,6 +30,10 @@ xcode project is configured to compiled for iPhone OS 2.2 so you need to define 
 
 == Siphon ==
 
+xcode project is configured to compiled for iPhone OS 2.2 so you need to define the certificate.
+ * Open *Project "SiphonSettings" Info*
+ * Select in *Code Signing/Any iPhone OS Device* your certificate.
+
 = Packaging =
 
 == Settings ==

@@ -31,3 +31,13 @@ xcode project is configured to compiled for iPhone OS 2.2 so you need to define 
 == Siphon ==
 
 = Packaging =
+
+== Settings ==
+
+The SiphonSettings.bundle package must be installed on iPhone in this directory :
+ * /System/Library/PreferenceBundles
+
+== Siphon ==
+
+The Siphon.app package must be installed on iPhone in this directory : 
+ * /Applications

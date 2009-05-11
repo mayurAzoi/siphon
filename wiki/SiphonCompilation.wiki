@@ -17,3 +17,11 @@ But Siphon uses some headers. You can find its on [http://ericasadun.com/iPhoneD
 You need to do this for :
  * Preferences (PrivateFrameworks)
  * AdressBookUI (Frameworks)
+
+= Compilation =
+
+== Settings ==
+
+== Siphon ==
+
+= Packaging =

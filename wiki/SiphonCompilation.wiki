@@ -1,13 +1,19 @@
 #summary Compilation guide for Siphon on iPhone OS 2.X.
+#labels Phase-Implementation
 
 = Introduction =
 
 Add your content here.
 
 
-= Details =
+= Headers =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Apple doesn't publish all headers from Public Frameworks, and none from Private Frameworks.
+But Siphon uses some headers. You can find its on [http://ericasadun.com/iPhoneDocs220/ Erica Sadun's] site, or you can generate alone with class-dump tool on iPhone.
+{{{
+   class-dump -H <Framework>
+}}}
+
+You need to do this for :
+ * Preferences (PrivateFrameworks)
+ * AdressBookUI (Frameworks)

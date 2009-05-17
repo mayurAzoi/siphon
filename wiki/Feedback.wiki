@@ -18,6 +18,7 @@ New features:
   * _Add "URI" in address book_
   * Voicemail button
   * Suppress DTMF (or make it optional) when entering destination number (issue 211)
+  * Russian translation (issue 205)
 
 = 2.0.8 =
 

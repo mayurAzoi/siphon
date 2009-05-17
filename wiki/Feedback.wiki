@@ -16,6 +16,7 @@ New features:
   * Switch between numpad and alpha bad is possible by touch the field (issue 215)
   * _Add "URI" in address book_
   * Voicemail button
+  * Suppress DTMF (or make it optional) when entering destination number (issue 211)
 
 = 2.0.8 =
 

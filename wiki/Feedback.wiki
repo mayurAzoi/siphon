@@ -15,6 +15,7 @@ Bugs fixed:
 New features:
   * Switch between numpad and alpha bad is possible by touch the field (issue 215)
   * _Add "URI" in address book_
+  * Voicemail button
 
 = 2.0.8 =
 

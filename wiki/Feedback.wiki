@@ -21,6 +21,7 @@ New features:
   * Russian translation (issue 205)
   * Enable or disable GSM/Cellular button (issue 213)
   * implementation of the "pause" key (issue 241)
+  * option to remove international prefix '+', if you don't find the substitution code.
 
 = 2.0.8 =
 

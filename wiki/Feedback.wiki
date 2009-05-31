@@ -20,6 +20,7 @@ New features:
   * Suppress DTMF (or make it optional) when entering destination number (issue 211)
   * Russian translation (issue 205)
   * Enable or disable GSM/Cellular button (issue 213)
+  * implementation of the "pause" key (issue 241)
 
 = 2.0.8 =
 

@@ -31,6 +31,7 @@ If you want add your provider, please post a message in comments with the detail
 ||keyyo|| keyyo.net || 3600 ||||
 ||netvoip||sip.netvoip.ch||1800||||
 ||neuf||voip.wengo.fr ||55||||
+||[http://www.nonoh.net/ nonoh]||sip.nonoh.net|| || stun.nonoh.net ||
 ||[http://www.onsip.com onSIP]||{specific}.onsip.com||1800||||
 ||[http://www.messagenet.it messagenet]||sip.messagenet.it||1800|| || || ||5060 or 5061||
 ||magic jack||talk4free.com||3600|| || || proxy1.*city*.talk4free.com:5070 || 5070||Ephonenumber01||

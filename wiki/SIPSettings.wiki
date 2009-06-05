@@ -29,7 +29,6 @@ If you want add your provider, please post a message in comments with the detail
 ||[http://www.ippi.fr/ ippi]||ippi.fr||1800||||
 ||justvoip||sip.justvoip.com||300||||
 ||keyyo|| keyyo.net || 3600 ||||
-||[http://www.onsip.com onSIP]||{specific}.onsip.com||1800||||
 ||[http://www.messagenet.it messagenet]||sip.messagenet.it||1800|| || || ||5060 or 5061||
 ||magic jack||talk4free.com||3600|| || || proxy1.*city*.talk4free.com:5070 || 5070||Ephonenumber01||
 ||morrotel||sip.morrotel.com||3600||
@@ -39,6 +38,7 @@ If you want add your provider, please post a message in comments with the detail
 ||[http://www.nonoh.net/ nonoh]||sip.nonoh.net|| || stun.nonoh.net ||
 ||nvisiongroup||spvoip.nvisiongroup.ru||1800|| || || 213.221.17.193 ||
 ||o2 germany||sip.o2online.de||1800|| || || || || Phone number /<br /> username ||
+||[http://www.onsip.com onSIP]||{specific}.onsip.com||1800||||
 ||[http://www.pennytel.com pennytel]||sip.pennytel.com||1800||sip.pennytel.com||
 ||[http://www.poivy.com/ poivy]||sip.poivy.com||1800||stun.poivy.com||
 ||sipcall||sip.backbone.ch||1800||||

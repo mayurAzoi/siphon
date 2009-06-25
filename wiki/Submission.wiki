@@ -7,12 +7,13 @@ For the moment, Siphon was submitted six times.
 
 == 19th april ==
 
-Apple's guys work saturday and sundy, it's a great news but here is their message :
+Apple's guys work Saturday and Sunday, it's a great news but here is their message :
 
  "Thank you for submitting Siphon to the App Store. We've reviewed Siphon and determined that we cannot post this version of your iPhone application to the App Store because its business model is in violation of section 3.3.3 of the iPhone SDK Agreement:
 
  "Without Apple's prior written approval, an Application may not provide, unlock or enable additional features or functionality through distribution mechanisms other than the iTunes Store."
 
+Apple took *3 months to answer* and between this two dates Apple changed his license :-(
 
 == 9th april == 
 

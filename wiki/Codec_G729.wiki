@@ -1,4 +1,5 @@
 #summary g729 codec optimization.
+#labels Featured,Phase-Requirements
 
 = Introduction =
 

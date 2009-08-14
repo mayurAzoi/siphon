@@ -16,18 +16,34 @@ Add your content here.
 ||Frame || 1969 || 3749 ||
 ||real || 0m8.580s || 0m15.902s ||
 ||user || 0m7.990s || 0m15.110s ||
-||sys || 0m0.140s || 0m0.190s ||
+||sys  || 0m0.140s || 0m0.190s ||
 
-* coder g729a optimized*
+*coder g729a optimized*
 
 || || sample.pcm || speech.pcm ||
 ||Frame || 1969 || 3749 ||
 ||real || 0m3.217s || 0m5.939s ||
 ||user || 0m2.990s || 0m5.670s ||
-||sys || 0m0.050s || 0m0.080s ||
+||sys  || 0m0.050s || 0m0.080s ||
 
 
 === Decoder ===
+
+*decoder g729a ITU (reference)*
+
+|| || sample.pcm || speech.pcm ||
+||Frame || 1969 || 3749 ||
+||real || 0m1.865s || 0m3.498s ||
+||user || 0m1.740s || 0m3.250s ||
+||sys  || 0m0.050s || 0m0.080s ||
+
+*decoder g729a optimized*
+
+|| || sample.pcm || speech.pcm ||
+||Frame || 1969 || 3749 ||
+||real || 0m0.652s || 0m1.576s ||
+||user || 0m0.520s || 0m0.990s ||
+||sys  || 0m0.070s || 0m0.070s ||
 
 == ==
 

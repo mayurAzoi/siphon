@@ -2,7 +2,10 @@
 
 = Introduction =
 
-Add your content here.
+I have began to port ITU g729a codec implementation on iPhone OS.
+I report below the performance and conformance between ITU reference implementation and my optimization.
+
+For the moment the code is not released, because I haven't finished to integrate in my app. Normally, a new version of Siphon should be released in September with g729a support. 
 
 
 = g729a =
@@ -45,7 +48,7 @@ Add your content here.
 ||user || 0m0.520s || 0m0.990s ||
 ||sys  || 0m0.070s || 0m0.070s ||
 
-== ==
+== References ==
 
 ||         ||coder  ||decoder|| Description ||
 ||algthm   ||  ok   || ok   || conditional parts of the algorithm ||

@@ -47,6 +47,17 @@ Add your content here.
 
 == ==
 
+||         ||coder  ||decoder|| Description ||
+||algthm   ||  ok   || ok   || conditional parts of the algorithm ||
+||erasure  ||  N/A  || ok   || frame erasure recovery ||
+||fixed    ||  ok   || ok   || fixed codebook search ||
+||lsp      ||  ok   || ok   || lsp quantization ||
+||overflow ||  N/A  || ok   || overflow detection in synthesizer ||
+||parity   ||  N/A  || ok   || parity check ||
+||pitch    ||  ok   || ok   || pitch search ||
+||speech   ||  ok   || n/A  || generic speech file ||
+||tame     ||  ok   || ok   || taming procedure ||
+
 == Platform ==
 
 iPhone or iPod Touch, with arm ARM1176JZF.

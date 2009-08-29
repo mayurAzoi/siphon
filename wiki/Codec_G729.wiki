@@ -6,7 +6,7 @@
 I have begun to port ITU g729a codec implementation on iPhone OS.
 I report below the performance and conformance between ITU reference implementation and my optimization.
 
-For the moment the code is not released, but now the library is integrated in Siphon and it works fine(--because I haven't finished to integrate in Siphon--). Normally, a new version of Siphon should be released in September with g729a support. 
+For the moment the code is not released, but now the library is integrated in Siphon and it works fine(_because I haven't finished to integrate in Siphon_). Normally, a new version of Siphon should be released in September with g729a support. 
 
 
 = g729a =

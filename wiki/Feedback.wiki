@@ -9,6 +9,8 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 
 = Next version =
 
+Update with the last version of pjsip 1.0.3
+
 Bugs fixed:
   * enter @ sign for URI (issue 214)
   * disable RTCP advertising in SDP (for televantage provider) (issue 207)

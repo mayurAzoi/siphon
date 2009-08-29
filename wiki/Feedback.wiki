@@ -14,6 +14,7 @@ Bugs fixed:
   * disable RTCP advertising in SDP (for televantage provider) (issue 207)
 
 New features:
+  * *g729a codec* (issue 129)
   * Switch between numpad and alpha bad is possible by touch the field (issue 215)
   * _Add "URI" in address book_
   * Voicemail button

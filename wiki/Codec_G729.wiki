@@ -13,6 +13,8 @@ For the moment the code is not released, but now the library is integrated in Si
 
 == Performance ==
 
+All tests have been realized on iPhone 1 with iPhone OS 2.2.1
+
 === Coder ===
 *coder g729a ITU (reference)*
 

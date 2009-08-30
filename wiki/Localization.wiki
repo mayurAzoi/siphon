@@ -3,17 +3,21 @@
 = Introduction =
 
 For the moment, Siphon is localized in :
-  * English
-  * French
-  * Spanish
-  * German
-  * Portuguese
-  * Italian
-  * Danish
   * Chinese - Traditional
   * Chinese - Simplified
+  * Croatian
+  * Czesk 
+  * Danish
+  * English
+  * French
+  * German
+  * Hebrew
+  * Italian
+  * Korean
+  * Portuguese
+  * Russian
+  * Spanish
   * Slovenian
-  * Czesk
 
 = Details =
 

@@ -28,7 +28,10 @@ cd
 apt-get remove com.googlecode.siphon
 }}}
 
-= Display app on SpringBoard =
+= Regenerate Spring Board's system =
+
+Regenerate Spring Board's system application installation icon cache.
+This will cause newly installed/removed .app bundles to appear/disappear on the icon list.
 {{{
 su mobile
 uicache

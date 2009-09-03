@@ -27,3 +27,15 @@ cd
 {{{
 apt-get remove com.googlecode.siphon
 }}}
+
+= Display app on SpringBoard =
+{{{
+su mobile
+uicache
+}}}
+
+or
+
+{{{
+sudo -u mobile uicache
+}}}

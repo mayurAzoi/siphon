@@ -22,6 +22,7 @@ New features:
   * Voicemail button
   * Suppress DTMF (or make it optional) when entering destination number (issue 211)
   * Russian translation (issue 205)
+  * Hebrew translation (issue 260, issue 276)
   * Enable or disable GSM/Cellular button (issue 213)
   * implementation of the "pause" key (issue 241)
   * option to remove international prefix '+', if you don't find the substitution code.

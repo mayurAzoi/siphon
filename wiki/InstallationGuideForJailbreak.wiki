@@ -46,7 +46,9 @@ sudo -u mobile uicache
 = Dependencies and links =
 
 == Dependencies ==
-  * UIKit (uicache)
+  
+  * *Open SSH* : connect on your device by _ssh_.
+  * *UIKit* : Regenerate Spring Board with _uicache_.
   * Sudo (optional)
   * Install Apt
   * SSH

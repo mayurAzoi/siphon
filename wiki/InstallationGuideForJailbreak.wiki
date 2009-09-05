@@ -42,3 +42,18 @@ or
 {{{
 sudo -u mobile uicache
 }}}
+
+= Dependencies and links =
+
+== Dependencies ==
+  * UIKit (uicache)
+  * Sudo (optional)
+  * Install Apt
+  * SSH
+  * PreferenceLoader
+
+== Links ==
+
+  * [http://volatile-dev.com/PreferenceLoader/ Preference Loader]
+  * [http://code.google.com/p/networkpx/wiki/PreferencesSpecifierPlistFormat Preferences Specifier]
+  * [http://www.touchrepo.com/guides/preferencebundles/PreferenceBundles.doc Preference Bundles]

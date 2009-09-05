@@ -47,10 +47,10 @@ sudo -u mobile uicache
 
 == Dependencies ==
   
-  * *Open SSH* : connect on your device by _ssh_.
-  * *UIKit* : Regenerate Spring Board with _uicache_.
+  * *Open SSH* : Connect on your device by _ssh_.
+  * *UIKit Tools* : Regenerate Spring Board with _uicache_.
+  * *APT Strict* : Uninstall with _apt-get_
   * Sudo (optional)
-  * Install Apt
 
   * PreferenceLoader
 

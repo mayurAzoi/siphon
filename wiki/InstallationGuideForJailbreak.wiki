@@ -10,6 +10,11 @@
 dpkg -i Siphon-version.deb
 apt-get -y -f install
 }}}
+
+== Old process <= 2.1.0 rc 1 ==
+{{{
+dpkg -i Siphon-version.deb
+}}}
   * Install Preferences
 {{{
 cd /Applications/Siphon.app
@@ -18,6 +23,12 @@ cd /Applications/Siphon.app
 
 = Removing instructions =
 
+  * Uninstall Siphon
+{{{
+apt-get -y autoremove com.googlecode.siphon
+}}}
+
+== Old process <= 2.1.0 rc 1 ==
   * Remove Preferences
 {{{
 cd /Applications/Siphon.app
@@ -57,7 +68,7 @@ sudo -u mobile uicache
   * *APT Strict* : Install/Uninstall with _apt-get_
   * *Sudo* : (optional)
 
-  * *PreferenceLoader* : 
+  * *PreferenceLoader* : Load settings, and they are always displayed. 
 
 == Links ==
 

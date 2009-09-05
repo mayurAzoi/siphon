@@ -12,6 +12,10 @@ apt-get -y -f install
 }}}
 
 == Old process <= 2.1.0 rc 1 ==
+
+  * Download Siphon-_version_.deb
+  * Copy on your iPhone
+  * Install
 {{{
 dpkg -i Siphon-version.deb
 }}}

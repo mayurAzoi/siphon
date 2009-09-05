@@ -12,7 +12,7 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 Bugs fixed:
   * hebrew language should be used
   * settings should be displayed everytime (issue 90)
-  * on ipod touch microphone must be connected to phone (issue 288)
+  * on ipod touch microphone must be connected to phone (issue 248, issue 288)
 
 = 2.1.0 rc1 =
 

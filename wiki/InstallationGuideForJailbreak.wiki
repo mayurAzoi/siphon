@@ -8,6 +8,7 @@
   * Install
 {{{
 dpkg -i Siphon-version.deb
+apt-get -y -f install
 }}}
   * Install Preferences
 {{{
@@ -26,6 +27,10 @@ cd
   * Uninstall Siphon
 {{{
 apt-get remove com.googlecode.siphon
+}}}
+or
+{{{
+apt-get -y autoremove com.googlecode.siphon
 }}}
 
 = Regenerate Spring Board's system =
@@ -49,10 +54,10 @@ sudo -u mobile uicache
   
   * *Open SSH* : Connect on your device by _ssh_.
   * *UIKit Tools* : Regenerate Spring Board with _uicache_.
-  * *APT Strict* : Uninstall with _apt-get_
-  * Sudo (optional)
+  * *APT Strict* : Install/Uninstall with _apt-get_
+  * *Sudo* : (optional)
 
-  * PreferenceLoader
+  * *PreferenceLoader* : 
 
 == Links ==
 

@@ -43,10 +43,6 @@ cd
 {{{
 apt-get remove com.googlecode.siphon
 }}}
-or
-{{{
-apt-get -y autoremove com.googlecode.siphon
-}}}
 
 = Regenerate Spring Board's system =
 

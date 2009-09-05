@@ -31,3 +31,9 @@ You must translate the right part of sentences. For example,
 "Cancel" = "*Translation*";
 
 When the work is finished you should create an [http://code.google.com/p/siphon/issues/list issue], and upload the files.
+
+= i18n code =
+
+You can find the i18n code on wikipedia :
+ * [http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes English]
+ * [http://fr.wikipedia.org/wiki/Liste_des_codes_ISO_639-1 French]

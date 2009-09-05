@@ -51,7 +51,7 @@ sudo -u mobile uicache
   * *UIKit* : Regenerate Spring Board with _uicache_.
   * Sudo (optional)
   * Install Apt
-  * SSH
+
   * PreferenceLoader
 
 == Links ==

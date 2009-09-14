@@ -15,7 +15,7 @@ Bugs fixed:
 = 2.1.0 rc2 =
 
 Bugs fixed:
-  * hebrew language should be used
+  * hebrew language should be worked
   * settings should be displayed everytime (issue 90)
   * on ipod touch microphone must be connected to phone (issue 248, issue 288)
 

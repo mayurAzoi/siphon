@@ -15,7 +15,7 @@ New features:
   * update to pjsip 1.4
   * Catalan translation (thanks to Jordi)
   * Slovak translation (thanks to Rovniansky)
-
+  * Labels below images (speaker, mute, hold...) are displayed
 
 
 = 2.1.0 rc3 and 2.1.0 =

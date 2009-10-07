@@ -16,6 +16,7 @@ New features:
   * Catalan translation (thanks to Jordi)
   * Slovak translation (thanks to Rovniansky)
   * Labels below images (speaker, mute, hold...) are displayed
+  * Long hold of delete key , deletes quicker or instantly all numbers (issue 156)
 
 
 = 2.1.0 rc3 and 2.1.0 =

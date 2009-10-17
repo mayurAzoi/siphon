@@ -47,7 +47,7 @@ If you want add your provider, please post a message in comments with the detail
 ||[http://www.poivy.com/ poivy]||sip.poivy.com||1800||stun.poivy.com||
 ||sipcall||sip.backbone.ch||1800||||
 ||sipdiscount||sip.sipdiscount.com||300||||
-||[http://www.sipgate.de/ SipGate]||sipgate.de||600||||
+||[http://www.sipgate.de/ SipGate]||sipgate.de||600||stun.sipgate.net|| || sipgate.de||
 ||sipnet||sipnet.ru||3600|| ||X||
 ||[http://www.sipphone.com/ SIPPhone]||proxy01.sipphone.com||1800||||
 ||[http://www.smartvoip.com smartvoip]||sip.smartvoip.com||1800||stun.smartvoip.com||

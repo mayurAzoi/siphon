@@ -40,7 +40,7 @@ If you want add your provider, please post a message in comments with the detail
 ||nvisiongroup||spvoip.nvisiongroup.ru||1800|| || || 213.221.17.193 ||
 ||o2 germany||sip.o2online.de||1800|| || || || || Phone number /<br /> username ||
 ||[http://www.onsip.com onSIP]||{specific}.onsip.com||1800||||
-||[http://www.pctel.ru pctel||sip.pctel.ru||3600|| X ||
+||[http://www.pctel.ru pctel]||sip.pctel.ru||3600|| || X ||
 ||[http://www.pennytel.com pennytel]||sip.pennytel.com||1800||sip.pennytel.com||
 ||[http://www.poivy.com/ poivy]||sip.poivy.com||1800||stun.poivy.com||
 ||sipcall||sip.backbone.ch||1800||||

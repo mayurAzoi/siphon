@@ -52,6 +52,7 @@ If you want add your provider, please post a message in comments with the detail
 ||sipnet||sipnet.ru||3600|| ||X||
 ||[http://www.sipphone.com/ SIPPhone]||proxy01.sipphone.com||1800||||
 ||[http://www.smartvoip.com smartvoip]||sip.smartvoip.com||1800||stun.smartvoip.com||
+||spikko||d2.spikko.com|| || || || || || 5061||
 ||telmex||lpi.telmex.com||1800|| || || 201.116.100.193 ||
 ||terrasip||terrasip.net||1800||||
 ||vbuzzer||vbuzzer.com||1800|| || ||vbuzzer.com:80||

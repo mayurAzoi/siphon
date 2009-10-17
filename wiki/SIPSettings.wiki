@@ -18,6 +18,7 @@ If you want add your provider, please post a message in comments with the detail
 ||[http://www.callcentric.com/ callcentric] || callcentric.com || 1800 || || || callcentric.com || || phone number ||
 ||Digisip||proxy.digisip.net|| 1800 || || || || || username / account_nb ||
 ||eutelia||voip.eutelia.it||3600||83.211.227.25||?||83.211.227.21||
+||exetel||220.233.0.3||1800||
 ||free||freephonie.net||1800||||
 ||freenet||freenet.de||1800|| || || iphone.freenet.de  || || account name for 1st number /<br/> number incl. area code for others ||
 ||freephonie||172.17.20.241||1800|| || ||172.17.20.241||

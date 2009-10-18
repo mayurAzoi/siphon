@@ -10,6 +10,7 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 = Next version =
 
 Bugs fixed:
+  * No audio after call put on hold (issue 219)
 
 New features:
   * update to pjsip 1.4

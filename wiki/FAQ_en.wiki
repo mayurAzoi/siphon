@@ -1,6 +1,9 @@
 #summary Frequently Ask Questions.
 
 == Using of Siphon ==
+
+Siphon works on iPhone OS 2.2 and later.
+
 === Why Siphon doesn't work with Skype ===
 Skype uses a proprietary protocol that doesn't use SIP protocol. And Siphon uses SIP protocol.
 
@@ -35,7 +38,7 @@ ICE is [http://en.wikipedia.org/wiki/Interactive_Connectivity_Establishment Inte
 
 === Which codec are supported by Siphon ===
 
-Currently, Siphon implements G711, GSM and G722 codec.
+Currently, Siphon implements G711, GSM, G729a and G722 codec.
 In the future, iLbc, amr will be supported.
 
 == Siphon and iPhone's applications ==

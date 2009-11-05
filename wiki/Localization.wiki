@@ -3,6 +3,7 @@
 = Introduction =
 
 For the moment, Siphon is localized in :
+  * Catalan
   * Chinese - Traditional
   * Chinese - Simplified
   * Croatian
@@ -17,6 +18,7 @@ For the moment, Siphon is localized in :
   * Portuguese
   * Russian
   * Spanish
+  * Slovak
   * Slovenian
 
 = Details =

@@ -32,7 +32,7 @@ New features:
   * Labels below images (speaker, mute, hold...) are displayed
   * Long hold of delete key , deletes quicker or instantly all numbers (issue 156)
 
-  * VPN
+  * VPN (issue 225, issue 195, issue 120)
    * _public ip addr_ : Application can specify any address or hostname for this field, for example it can point to one of the interface address in the system, or it can point to the public address of a NAT router where port mappings have been configured for the application.
    * _bound ip addr_ : This option SHOULD only be used to selectively bind the socket to particular interface (instead of 0.0.0.0), and SHOULD NOT be used to set the published address of a transport (the public ip addr field should be used for that purpose).
 

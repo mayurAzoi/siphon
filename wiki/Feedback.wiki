@@ -13,7 +13,7 @@ New features:
   * multi definition of proxy in advanced settings (separate multi server by coma)
 
 Bugs fixed:
-  * crash if network configuration is incomplete (issue 223, issue 220, issue 155, issue 230, issue 303, issue 313, issue 315)
+  * crash if network configuration is incomplete (issue 223, issue 220, issue 155, issue 230, issue 303, issue 313, issue 315, issue 326, issue 327)
 
 = 2.2.0 rc2 =
 

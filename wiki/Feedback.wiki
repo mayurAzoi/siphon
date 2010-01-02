@@ -7,6 +7,11 @@ If you are a beta-testers of Siphon, you can describe the results of your tests 
 
 For problems and enhancements, you should add [http://code.google.com/p/siphon/issues/list issues].
 
+= 2.2.1 alpha 1 =
+
+Bugs fixed : 
+  * Problem with using Magicjack SIP account (issue 151, issue 234, issue 245, issue 261)
+
 = 2.2.0 rc4 and 2.2.0 =
 
 Bugs fixed:

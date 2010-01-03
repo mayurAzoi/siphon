@@ -3,7 +3,7 @@
 
 = Installation =
 
-First, you read [http://trac.pjsip.org/repos/wiki/Intel_IPP_Codecs pjsip documentation], and certainly [http://software.intel.com/en-us/articles/intel-integrated-performance-primitives-for-mac-os-how-to-link-to-the-intel-ipp-for-mac-os-x-libraries-in-application/ Intel documentation].
+First, you should read [http://trac.pjsip.org/repos/wiki/Intel_IPP_Codecs pjsip documentation], and certainly [http://software.intel.com/en-us/articles/intel-integrated-performance-primitives-for-mac-os-how-to-link-to-the-intel-ipp-for-mac-os-x-libraries-in-application/ Intel documentation].
 
 == Leopard instructions ==
 

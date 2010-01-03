@@ -8,14 +8,14 @@ First, you should read [http://trac.pjsip.org/repos/wiki/Intel_IPP_Codecs pjsip 
 == Leopard instructions ==
 
 === Download and install IPP and IPP samples ===
-  1. Download Intel IPP and Intel IPP samples from
-  2. Mount the package (e.g. m_cproc_p_11.1.080.dmg) and run the installer (m_cproc_p_11.1.080.mpkg). The default installation options will install it to "/opt/intel/Compiler/" directory (e.g. "/opt/intel/Compiler/11.1/080/" in my case).
-  3. Extract IPP samples to a directory (e.g. to "~/Desktop/ipp-samples"). 
+  #. Download Intel IPP and Intel IPP samples from
+  #. Mount the package (e.g. m_cproc_p_11.1.080.dmg) and run the installer (m_cproc_p_11.1.080.mpkg). The default installation options will install it to "/opt/intel/Compiler/" directory (e.g. "/opt/intel/Compiler/11.1/080/" in my case).
+  #. Extract IPP samples to a directory (e.g. to "~/Desktop/ipp-samples"). 
 	
 === Build the IPP samples ===
-  1. Go to the directory where IPP samples have been extracted to (e.g. ~/Desktop/ipp-samples).
-  2. Go to speech-codecs folder.
-  3. Open the readme.htm file, and follow the instructions there to build the samples from the source. 
+  #. Go to the directory where IPP samples have been extracted to (e.g. ~/Desktop/ipp-samples).
+  #. Go to speech-codecs folder.
+  #. Open the readme.htm file, and follow the instructions there to build the samples from the source. 
 
 Once the build process done, you should have libusc.a file somewhere in a directory inside speech-codecs\_bin directory (in my case, it's in ~/Desktop/ipp-samples/speech-codecs/_bin/osx32_icc111/lib directory). The directory name corresponds to the platform where the samples are built for. (Note: for IPP version 6, the bin folder has been renamed to _bin). 
 
@@ -28,7 +28,7 @@ and replace by
 {{{
 if test x$IPP_LDFLAGS = x; then
    IPP_LDFLAGS="-L$IPPROOT/sharedlib"
- fi
+fi
 }}}
 libguide, hhe default OpenMP runtime library for Intel IPP has been changed from libguide to libiomp. See the User Guide in the doc directory for more information.
 {{{

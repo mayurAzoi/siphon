@@ -8,7 +8,7 @@ First, you should read [http://trac.pjsip.org/repos/wiki/Intel_IPP_Codecs pjsip 
 == Leopard instructions ==
 
 === Download and install IPP and IPP samples ===
-  #. Download Intel IPP and Intel IPP samples from
+  #. Download Intel® C++ Compiler Professional Edition for Mac OS* X and Intel IPP samples from [http://software.intel.com/en-us/articles/intel-software-evaluation-center/] and [http://software.intel.com/en-us/intel-ipp/]
   #. Mount the package (e.g. m_cproc_p_11.1.080.dmg) and run the installer (m_cproc_p_11.1.080.mpkg). The default installation options will install it to "/opt/intel/Compiler/" directory (e.g. "/opt/intel/Compiler/11.1/080/" in my case).
   #. Extract IPP samples to a directory (e.g. to "~/Desktop/ipp-samples"). 
 	

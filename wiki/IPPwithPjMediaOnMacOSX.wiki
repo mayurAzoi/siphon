@@ -3,12 +3,12 @@
 
 = Installation =
 
-First, you should read [http://trac.pjsip.org/repos/wiki/Intel_IPP_Codecs pjsip documentation], and certainly [http://software.intel.com/en-us/articles/intel-integrated-performance-primitives-for-mac-os-how-to-link-to-the-intel-ipp-for-mac-os-x-libraries-in-application/ Intel documentation].
+First, you should read [http://trac.pjsip.org/repos/wiki/Intel_IPP_Codecs pjsip documentation], and certainly [http://software.intel.com/en-us/articles/intel-integrated-performance-primitives-for-mac-os-how-to-link-to-the-intel-ipp-for-mac-os-x-libraries-in-application/ Intel® documentation].
 
 == Leopard instructions ==
 
 === Download and install IPP and IPP samples ===
-  #. Download Intel® C++ Compiler Professional Edition for Mac OS* X and Intel IPP samples from [http://software.intel.com/en-us/articles/intel-software-evaluation-center/] and [http://software.intel.com/en-us/intel-ipp/]
+  #. Download Intel® C++ Compiler Professional Edition for Mac OS X and Intel® IPP samples from [http://software.intel.com/en-us/articles/intel-software-evaluation-center/] and [http://software.intel.com/en-us/intel-ipp/]
   #. Mount the package (e.g. m_cproc_p_11.1.080.dmg) and run the installer (m_cproc_p_11.1.080.mpkg). The default installation options will install it to "/opt/intel/Compiler/" directory (e.g. "/opt/intel/Compiler/11.1/080/" in my case).
   #. Extract IPP samples to a directory (e.g. to "~/Desktop/ipp-samples"). 
 	
@@ -89,7 +89,7 @@ If you want to compile with floating port support, you must enable it in config_
 
 == Leopard instructions ==
 
-Read [http://software.intel.com/en-us/articles/intel-integrated-performance-primitives-for-mac-os-how-to-link-to-the-intel-ipp-for-mac-os-x-libraries-in-application/ Intel documentation]
+Read [http://software.intel.com/en-us/articles/intel-integrated-performance-primitives-for-mac-os-how-to-link-to-the-intel-ipp-for-mac-os-x-libraries-in-application/ Intel® documentation]
 
 = Setting DLL/Shared Library Path =
 

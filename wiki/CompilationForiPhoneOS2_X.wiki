@@ -111,7 +111,7 @@ in _config.h_ add the lines below with '+':
 }}}
 
 ===pjmedia/src/pjmedia===
-Download iphonesound.c file in Downlaod tab.
+Download iphonesound.c file from Download tab.
 
 --_For the moment, I didn't upload iphonesound.c so we need to compile with null sound._--
 

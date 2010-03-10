@@ -44,7 +44,7 @@ Complete _os-auto.mak.in_ in _pjmedia/build_ at line 92 with following lines:
 ifeq ($(AC_PJMEDIA_SND),iphone)
 export SOUND_OBJS = iphonesound.o
 INCLUDE_IPHONE=/path/of/include/in/iphone/sdk
-export CFLAGS += -DPJMEDIA_SOUND_IMPLEMENTATION=PJMEDIA_SOUND_IPOD_SOUND \
+export CFLAGS += -DPJMEDIA_SOUND_IMPLEMENTATION=PJMEDIA_SOUND_IPHONE_SOUND \
 	-D__COREAUDIO_USE_FLAT_INCLUDES__ \
 	-I$(INCLUDE_IPHONE)/AudioToolbox \
 	-I$(INCLUDE_IPHONE)/CoreAudio \
@@ -61,7 +61,7 @@ On MacOS X, with official SDK, you need insert these lines:
 #
 ifeq ($(AC_PJMEDIA_SND),ipod)
 export SOUND_OBJS = iphonesound.o
-export CFLAGS += -DPJMEDIA_SOUND_IMPLEMENTATION=PJMEDIA_SOUND_IPOD_SOUND
+export CFLAGS += -DPJMEDIA_SOUND_IMPLEMENTATION=PJMEDIA_SOUND_IPHONE_SOUND
 endif
 }}}
 

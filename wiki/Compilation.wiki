@@ -18,7 +18,7 @@ svn checkout http://svn.pjsip.org/repos/pjproject/trunk pjproject
 ==Media device for ipod==
 
 ===pjMedia===
-Download [http://siphon.googlecode.com/files/ipodsound.20080519.c ipodsound.c], and save in _pjmedia/src/pjmedia_ directory.
+Download [http://siphon.googlecode.com/files/iphonesound-20091226.c iphonesound.c], and save in _pjmedia/src/pjmedia_ directory.
 
 Complete _config.h_ file in pjmedia/include/pjmedia at line 59 with:
 {{{
@@ -42,7 +42,7 @@ Complete _os-auto.mak.in_ in _pjmedia/build_ at line 92 with following lines:
 # iPod/iPhone
 #
 ifeq ($(AC_PJMEDIA_SND),ipod)
-export SOUND_OBJS = ipodsound.o
+export SOUND_OBJS = iphonesound.o
 INCLUDE_IPHONE=/path/of/include/in/iphone/sdk
 export CFLAGS += -DPJMEDIA_SOUND_IMPLEMENTATION=PJMEDIA_SOUND_IPOD_SOUND \
 	-D__COREAUDIO_USE_FLAT_INCLUDES__ \
@@ -60,7 +60,7 @@ On MacOS X, with official SDK, you need insert these lines:
 # iPod/iPhone
 #
 ifeq ($(AC_PJMEDIA_SND),ipod)
-export SOUND_OBJS = ipodsound.o
+export SOUND_OBJS = iphonesound.o
 export CFLAGS += -DPJMEDIA_SOUND_IMPLEMENTATION=PJMEDIA_SOUND_IPOD_SOUND
 endif
 }}}

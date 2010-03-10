@@ -15,7 +15,7 @@ Get [http://pjsip.org PjSIP] from subversion repository:
 svn checkout http://svn.pjsip.org/repos/pjproject/trunk pjproject
 }}}
 
-==Media device for ipod==
+==Media device for ipod/iphone==
 
 ===pjMedia===
 Download [http://siphon.googlecode.com/files/iphonesound-20091226.c iphonesound.c], and save in _pjmedia/src/pjmedia_ directory.
@@ -31,7 +31,7 @@ Complete _aconfigure.ac_ file at line 370 with:
 {{{
   arm-apple-darwin*)
 	LIBS="$LIBS -framework CoreAudio -framework CoreFoundation -framework AudioToolbox"
-	ac_pjmedia_snd=ipod
+	ac_pjmedia_snd=iphone
 	AC_MSG_RESULT([Checking sound device backend... AudioQueue])
 	;;
 }}}
@@ -41,7 +41,7 @@ Complete _os-auto.mak.in_ in _pjmedia/build_ at line 92 with following lines:
 #
 # iPod/iPhone
 #
-ifeq ($(AC_PJMEDIA_SND),ipod)
+ifeq ($(AC_PJMEDIA_SND),iphone)
 export SOUND_OBJS = iphonesound.o
 INCLUDE_IPHONE=/path/of/include/in/iphone/sdk
 export CFLAGS += -DPJMEDIA_SOUND_IMPLEMENTATION=PJMEDIA_SOUND_IPOD_SOUND \

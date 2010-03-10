@@ -23,7 +23,7 @@ Download [http://siphon.googlecode.com/files/iphonesound-20091226.c iphonesound.
 Complete _config.h_ file in pjmedia/include/pjmedia at line 59 with:
 {{{
 /** Constant for AudioQueue sound backend. */
-#define PJMEDIA_SOUND_IPOD_SOUND	    3
+#define PJMEDIA_SOUND_IPHONE_SOUND	    3
 }}}
 
 ===Configuration===

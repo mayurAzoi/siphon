@@ -114,9 +114,11 @@ in _config.h_ add the lines below with '+':
 }}}
 
 ===pjmedia/src/pjmedia===
-Download iphonesound.c file from Download tab.
+Download [http://siphon.googlecode.com/files/iphonesound-20091226.c iphonesound.c] file from Download tab, and save in pjmedia/src/pjmedia  directory. 
 
---_For the moment, I didn't upload iphonesound.c so we need to compile with null sound._--
+For pjsip 1.4 and later, you should apply [http://siphon.googlecode.com/files/patch-audio_dev.txt patch]. Maybe it works with pjsip 1.3 but I didn't test.
+
+For pjsip 1.4 and later, if you don't want to use legacy audio dev, you can apply this [http://siphon.googlecode.com/files/patch-audioqueue-dev.txt patch]. Maybe it works with pjsip 1.3 but I didn't test.
 
 ==Configuration==
 Generate configuration script

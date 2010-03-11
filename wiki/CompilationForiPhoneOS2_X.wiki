@@ -148,7 +148,7 @@ export CPP="${DEV}/usr/bin/cpp"
 
 ./aconfigure --host=arm-apple-darwin9 --disable-speex-aec \
    --disable-speex-codec --disable-l16-codec --disable-g722-codec \
-   --disable-ilbc-codec --disable-ssl --disable-sound
+   --disable-ilbc-codec --disable-ssl
 
 make dep
 make

@@ -36,7 +36,10 @@ In _aconfigure.ac_ file add the lines below displayed with '+'. Of course copy w
  	if test "`uname -r`" = "6.8"; then
 }}}
 
-
+Comment the checking of in_system.h existence :
+{{{
+dnl AC_CHECK_HEADER(netinet/in_systm.h,[AC_DEFINE(PJ_HAS_NETINET_IN_SYSTM_H,1)])
+}}}
 
 ===build/rules.mak===
 In _rules.mak_ modify, remove lines with '-' and add lines with '+':

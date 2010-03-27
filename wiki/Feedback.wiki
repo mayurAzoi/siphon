@@ -9,8 +9,12 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 
 = 2.3 rc1 (in progress) =
 
-New features
+Bugs fixed:
    * Dutch translation (issue 348)
+   * Correct ptime with G729 (issue 374)
+
+New features:
+   * Add Keep Awake functionality (issue 383, issue 228, issue 296, issue 328)
 
 = 2.2.1 rc1 (not released) =
 

@@ -12,6 +12,7 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 Bugs fixed:
    * Dutch translation (issue 348)
    * Correct ptime with G729 (issue 374)
+   * open codec to 16kHz (issue 337)
 
 New features:
    * Add Keep Awake functionality (issue 383, issue 228, issue 296, issue 328)

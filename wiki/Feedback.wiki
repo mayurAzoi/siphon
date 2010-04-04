@@ -11,7 +11,7 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 
 New features:
    * Define the frequency/clock rate
-   * Enable bluetooth headset (quality is not very good, Apple's issue ?)
+   * Enable bluetooth headset (quality is not very good, Apple's issue ?) (issue 277)
 
 = 2.3 rc1 =
 

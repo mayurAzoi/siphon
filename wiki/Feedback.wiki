@@ -16,7 +16,7 @@ New features:
 = 2.3 rc1 =
 
 Bugs fixed:
-   * Dutch translation (issue 348)
+   * Dutch translation (issue 353)
    * Correct ptime with G729 (issue 374)
    * open codec to 16kHz (issue 337)
 

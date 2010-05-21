@@ -7,10 +7,11 @@ If you are a beta-testers of Siphon, you can describe the results of your tests 
 
 For problems and enhancements, you should add [http://code.google.com/p/siphon/issues/list issues].
 
-= 2.3 rc3 (in progress)
+= 2.3 rc3 = (in progress)
 
 New features:
    * Manage Message Waiting Information (MWI) (issue 94)
+   * Dipslay the missed call (issue 273)
 
 Bugs fixed:
    * Resend authentication after error message 302 (issue 397)

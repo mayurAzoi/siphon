@@ -16,6 +16,7 @@ New features:
 Bugs fixed:
    * Resend authentication after error message 302 (issue 397)
    * Crash on decline incoming call (issue 385)
+   * Accept two calls simultaneously (issue 237, issue 391)
 
 = 2.3 rc2 =
 

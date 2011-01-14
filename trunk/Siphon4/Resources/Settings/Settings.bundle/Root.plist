@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>StringsTable</key>
+	<string>Siphon</string>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Accounts</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+			<key>Title</key>
+			<string>Account</string>
+			<key>File</key>
+			<string>Account</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+			<key>Title</key>
+			<string>Add Account...</string>
+			<key>File</key>
+			<string>NewAccount</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<integer>0</integer>
+			<key>Key</key>
+			<string>DefaultAccount</string>
+			<key>Title</key>
+			<string>Default Account</string>
+			<key>Titles</key>
+			<array>
+				<string>Provider 1</string>
+				<string>Provider 2</string>
+				<string>Provider 3</string>
+			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Values</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Advanced settings</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+			<key>Title</key>
+			<string>Media</string>
+			<key>File</key>
+			<string>MediaAdvanced</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+			<key>Title</key>
+			<string>Network</string>
+			<key>File</key>
+			<string>NetworkAdvanced</string>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<integer>0</integer>
+			<key>Key</key>
+			<string>logLevel</string>
+			<key>Title</key>
+			<string>Debugging log file</string>
+			<key>Titles</key>
+			<array>
+				<string>Disabled</string>
+				<string>Error</string>
+				<string>Warning</string>
+				<string>Info</string>
+				<string>Important</string>
+				<string>Detailed</string>
+				<string>Very detailed</string>
+			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Values</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>3</integer>
+				<integer>4</integer>
+				<integer>5</integer>
+				<integer>6</integer>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Title</key>
+			<string>Version</string>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+			<key>Key</key>
+			<string>version</string>
+			<key>DefaultValue</key>
+			<string>1.0.0</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -20,29 +20,22 @@
 
 #import "AKKeychain.h"
 
-
-#define KEY_CHAIN 1
-#if !KEY_CHAIN
-#import "SettingsController.h"
-#endif
-
 @implementation AKKeychain
 
 + (NSString *)passwordForServiceName:(NSString *)serviceName
                          accountName:(NSString *)accountName 
 {
-#if KEY_CHAIN	
 	NSData *passwordData = NULL;
 	OSStatus findStatus;
 	NSDictionary *query = [NSDictionary dictionaryWithObjectsAndKeys:
-												 (id)kSecClass, kSecClassGenericPassword,
-												 kSecAttrType, 'voip',
-												 kSecAttrService, serviceName,
-												 kSecAttrAccount, accountName,
+												 (id)kSecClassGenericPassword, (id)kSecClass, 
+												 [NSNumber numberWithUnsignedInt:'voip'], (id)kSecAttrType, 
+												 serviceName, (id)kSecAttrService, 
+												 accountName, (id)kSecAttrAccount, 
 												 // Use the proper search constants, 
 												 // return only the attributes of the first match.
-												 kSecMatchLimit, (id)kSecMatchLimitOne,
-												 kSecReturnData, (id)kCFBooleanTrue,
+												 (id)kSecMatchLimitOne, (id)kSecMatchLimit, 
+												 (id)kCFBooleanTrue, (id)kSecReturnData,
 												 nil];
 	
 	// Acquire the password data from the attributes.
@@ -59,74 +52,58 @@
 	[passwordData release];
 	
 	return password;
-	
-#else
-	NSArray *savedAccounts = [[NSUserDefaults standardUserDefaults] arrayForKey:kAccounts];
-	for (NSDictionary *accountDict in savedAccounts)
-	{
-		NSString *localUsername = [accountDict objectForKey:kUsername];
-		NSString *localServiceName;
-		NSString *registrar = [accountDict objectForKey:kRegistrar];
-		if ([registrar length])
-      localServiceName = [NSString stringWithFormat:@"SIP: %@", registrar];
-    else
-      localServiceName = [NSString stringWithFormat:@"SIP: %@", [accountDict objectForKey:kDomain]];
-		
-		if (([localServiceName compare:serviceName options:NSLiteralSearch] == NSOrderedSame) &&
-					([localUsername compare:accountName options:NSLiteralSearch] == NSOrderedSame))
-			return [accountDict objectForKey:kPassword];
-	}
-	return nil;
-#endif
 }
 
 + (BOOL)addItemWithServiceName:(NSString *)serviceName
                    accountName:(NSString *)accountName
                       password:(NSString *)password 
 {
-#if KEY_CHAIN
-	NSDictionary *attributes, *query, *attributesToUpdate;
-	OSStatus addStatus, modifyStatus;
+	NSDictionary *attributes;
+	OSStatus addStatus;
   BOOL success = NO;
-	
+
 	attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-								(id)kSecClass, kSecClassGenericPassword,
-								kSecAttrType, 'voip',
-								kSecAttrService, serviceName,
-								kSecAttrAccount, accountName,
-								kSecValueData, [password dataUsingEncoding:NSUTF8StringEncoding],
+								(id)kSecClassGenericPassword, (id)kSecClass,
+								[NSNumber numberWithUnsignedInt:'voip'], (id)kSecAttrType, 
+								serviceName, (id)kSecAttrService, 	
+								accountName, (id)kSecAttrAccount,
+								[password dataUsingEncoding:NSUTF8StringEncoding], (id)kSecValueData,
 								nil];
 	
 	// Add item to keychain.
-	addStatus = SecItemAdd ((CFDictionaryRef)attributes, NULL /*CFTypeRef *result*/);
+	addStatus = SecItemAdd ((CFDictionaryRef)attributes, NULL);
 	if (addStatus == errSecSuccess) 
     success = YES;
   else if (addStatus == errSecDuplicateItem) 
 	{
-		query = [NSDictionary dictionaryWithObjectsAndKeys:
-						 (id)kSecClass, kSecClassGenericPassword,
-						 kSecAttrType, 'voip',
-						 kSecAttrService, serviceName,
-						 kSecAttrAccount, accountName,
-						 // Use the proper search constants, 
-						 // return only the attributes of the first match.
-						 kSecMatchLimit, (id)kSecMatchLimitOne,
-						 kSecReturnAttributes, (id)kCFBooleanTrue,
-						 nil];
-		
-		attributesToUpdate = [NSDictionary dictionaryWithObject:[password dataUsingEncoding:NSUTF8StringEncoding]
-																										 forKey:(id)kSecValueData];
-		// Modify password in the duplicate item.
-		modifyStatus =	SecItemUpdate ((CFDictionaryRef)query,
-																	 (CFDictionaryRef)attributesToUpdate);
-		if (modifyStatus == errSecSuccess)
+		[AKKeychain removeItemWithServiceName:serviceName
+															accountName:accountName];
+		addStatus = SecItemAdd ((CFDictionaryRef)attributes, NULL);
+		if (addStatus == errSecSuccess) 
 			success = YES;
 	}
+	return success;
+}
+
++ (BOOL)removeItemWithServiceName:(NSString *)serviceName
+											accountName:(NSString *)accountName
+{
+	NSDictionary *query;
+	OSStatus deleteStatus;
+	BOOL success = NO;
+
+	query = [NSDictionary dictionaryWithObjectsAndKeys:
+					 (id)kSecClassGenericPassword, (id)kSecClass,
+					 [NSNumber numberWithUnsignedInt:'voip'], (id)kSecAttrType, 
+					 serviceName, (id)kSecAttrService, 
+					 accountName, (id)kSecAttrAccount,
+					 nil];
+
+	deleteStatus = SecItemDelete((CFDictionaryRef)query);
+	if (deleteStatus == errSecSuccess)
+		success = YES;
 	
 	return success;
-#else
-	return NO;
-#endif
 }
 
 @end

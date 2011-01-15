@@ -18,6 +18,7 @@
  */
 
 #import "SiphonAppDelegate.h"
+#import "FavoritesListController.h"
 #import "PhoneViewController.h"
 #import <AddressBookUI/AddressBookUI.h>
 #import "InAppSettings.h"
@@ -37,6 +38,8 @@
 
 - (void)setupMainUserInterface
 {
+	UINavigationController *localNav;
+	
 	// Set up the window and content view
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
@@ -45,23 +48,34 @@
 	NSMutableArray *localViewControllersArray = [[NSMutableArray alloc] initWithCapacity:5];
 	
 	// Setup the view controllers
+	/* Favorites List*/
+  FavoritesListController *favorites = [[[FavoritesListController alloc]
+																				 initWithStyle:UITableViewStylePlain] autorelease];  
+  localNav = [[UINavigationController alloc] initWithRootViewController: favorites];
+  localNav.navigationBar.barStyle = UIBarStyleBlackOpaque;
+	[localViewControllersArray addObject:localNav];
+	[localNav release];
+	
+	/* Dial pad */
+	PhoneViewController *phone = [[PhoneViewController alloc] init];
+	[localViewControllersArray addObject:phone];
+	[phone release];
+	
+	/* Contacts */
 	ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
 	picker.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemContacts tag:'cont'];
 	[localViewControllersArray addObject:picker];
 	[picker release];
 	
-	PhoneViewController *phone = [[PhoneViewController alloc] init];
-	[localViewControllersArray addObject:phone];
-	[phone release];
-	
+	/* Settings */
 	InAppSettingsViewController *settings = [[[InAppSettingsViewController alloc] init] autorelease];
-	UINavigationController *localNav = [[UINavigationController alloc] initWithRootViewController:settings];
+	localNav = [[UINavigationController alloc] initWithRootViewController:settings];
 	localNav.navigationBar.barStyle = UIBarStyleBlackOpaque;
 	localNav.tabBarItem.image = [UIImage imageNamed:@"settings"];
 	localNav.tabBarItem.title = NSLocalizedString(@"Settings", @"Modify the settings");
 	[localViewControllersArray addObject:localNav];
 	[localNav release];
-	
+
 	// Set the tab bar controller view.
   self.tabBarController.viewControllers = localViewControllersArray;
 	
@@ -69,7 +83,7 @@
 	// so we can release the local version
 	[localViewControllersArray release];
   
-  //tabBarController.selectedIndex = 2;
+  tabBarController.selectedIndex = 1;
   
 	// Set the window subview as the tab bar controller
 	[self.window addSubview: self.tabBarController.view];
@@ -249,8 +263,9 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 
 - (void)dealloc 
 {
-    [window_ release];
-    [super dealloc];
+	[tabBarController_ release];
+	[window_ release];
+	[super dealloc];
 }
 
 

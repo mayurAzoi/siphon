@@ -370,7 +370,7 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
 																						displayName:_lastNumber /*[dictionnary valueForKey:@"name"]*/];
 		
 		[firstEnabledAccountController makeCallToURI:destinationURI
-																			phoneLabel:_lastNumber/*[dictionnary valueForKey:@"label"]*/];
+																			phoneLabel:nil/*[dictionnary valueForKey:@"label"]*/];
 		
 	}
 	else

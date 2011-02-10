@@ -11,9 +11,41 @@
 
 @implementation InAppSettingsPSMultiValueSpecifierCell
 
+#pragma mark Datasource
+- (NSArray *)values {
+	NSArray *anArray = [self.setting valueForKey:InAppSettingsSpecifierValues];
+	if (anArray)
+		return anArray;
+	
+	NSString *aSelectorString = [self.setting valueForKey:InAppSettingsSpecifierInAppValuesDataSource];
+	if ([aSelectorString length]) {
+		SEL aSelector = NSSelectorFromString(aSelectorString);
+		if ([self.setting.object respondsToSelector:aSelector])
+			anArray = [self.setting.object performSelector:aSelector];
+	}
+	
+	return anArray;
+}
+
+- (NSArray *)titles {
+	NSArray *anArray = [self.setting valueForKey:InAppSettingsSpecifierTitles];
+	if (anArray)
+		return anArray;
+	
+	NSString *aSelectorString = [self.setting valueForKey:InAppSettingsSpecifierInAppTitlesDataSource];
+	if ([aSelectorString length]) {
+		SEL aSelector = NSSelectorFromString(aSelectorString);
+		if ([self.setting.object respondsToSelector:aSelector])
+			anArray = [self.setting.object performSelector:aSelector];
+	}
+	
+	return anArray;
+}
+
+#pragma mark -
 - (NSString *)getValueTitle{
-    NSArray *titles = [self.setting valueForKey:InAppSettingsSpecifierTitles];
-    NSArray *values = [self.setting valueForKey:InAppSettingsSpecifierValues];
+		NSArray *titles = [self titles];
+		NSArray *values = [self values];
     NSInteger valueIndex = [values indexOfObject:[self.setting getValue]];
     if((valueIndex >= 0) && (valueIndex < (NSInteger)[titles count])){
         return InAppSettingsLocalize([titles objectAtIndex:valueIndex], self.setting.stringsTable); 

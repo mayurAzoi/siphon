@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "InAppSettingsConstants.h"
 
 @interface InAppSettingsReaderRegisterDefaults : NSObject {
     //keep track of what files we've read to avoid circular references
@@ -22,10 +23,16 @@
 @interface InAppSettingsReader : NSObject {
     NSString *file;
     NSMutableArray *headers, *settings, *footers;
+#if defined(DYNAMIC_CONTENT_CELLS) && DYNAMIC_CONTENT_CELLS!=0
+		NSMutableArray * hasDynamicContents;
+#endif /* DYNAMIC_CONTENT_CELLS */
 }
 
 @property (nonatomic, copy) NSString *file;
 @property (nonatomic, retain) NSMutableArray *headers, *settings, *footers;
+#if defined(DYNAMIC_CONTENT_CELLS) && DYNAMIC_CONTENT_CELLS!=0
+@property (nonatomic, retain) NSMutableArray *hasDynamicContents;
+#endif /* DYNAMIC_CONTENT_CELLS */
 
 - (id)initWithFile:(NSString *)inputFile;
 

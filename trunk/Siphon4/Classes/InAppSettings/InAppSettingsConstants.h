@@ -8,6 +8,8 @@
 
 #import <Availability.h>
 
+#define DYNAMIC_CONTENT_CELLS 1
+
 #define InAppSettingsRootFile @"Root"
 #define InAppSettingsProjectName @"InAppSettings"
 #define InAppSettingsNotificationName @"InAppSettingsNotification"
@@ -51,6 +53,8 @@
 #define InAppSettingsPSTitleValueSpecifier @"PSTitleValueSpecifier"
 #define InAppSettingsPSMultiValueSpecifier @"PSMultiValueSpecifier"
 #define InAppSettingsPSToggleSwitchSpecifier @"PSToggleSwitchSpecifier"
+#define InAppSettingsPSButtonSpecifier @"PSButtonSpecifier"
+#define InAppSettingsPSDynamicPaneSpecifier @"PSDynamicPaneSpecifier"
 
 #define InAppSettingsSpecifierKey @"Key"
 #define InAppSettingsSpecifierType @"Type"
@@ -66,6 +70,20 @@
 #define InAppSettingsSpecifierInAppURL @"InAppURL"
 #define InAppSettingsSpecifierInAppTitle @"InAppTitle"
 #define InAppSettingsSpecifierInAppPlaceholder @"InAppPlaceholder"
+
+#define InAppSettingsSpecifierInAppConfirmation  @"InAppConfirmation"
+#define InAppSettingsSpecifierInAppIsDestructive @"InAppIsDestructive"
+#define InAppSettingsConfirmationPrompt      @"prompt"
+#define InAppSettingsConfirmationCancelTitle @"cancelTitle"
+#define InAppSettingsConfirmationOkTitle     @"okTitle"
+#define InAppSettingsConfirmationTitle       @"title"
+
+#define InAppSettingsSpecifierInAppValuesDataSource @"InAppValuesDataSource"
+#define InAppSettingsSpecifierInAppTitlesDataSource @"InAppTitlesDataSource"
+#define InAppSettingsSpecifierInAppContentsDataSource @"InAppContentsDataSource"
+#define InAppSettingsSpecifierInAppGet    @"InAppGet"
+#define InAppSettingsSpecifierInAppSet    @"InAppSet"
+#define InAppSettingsSpecifierInAppAction @"InAppAction"
 
 // test what cell init code should be used
 #define InAppSettingsUseNewCells __IPHONE_3_0 && __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_3_0

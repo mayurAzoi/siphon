@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "InAppSettingsSpecifier.h"
 
-@interface InAppSettingsTableCell : UITableViewCell {
+@interface InAppSettingsTableCell : UITableViewCell <UIActionSheetDelegate> {
     InAppSettingsSpecifier *setting;
     UILabel *titleLabel, *valueLabel;
     UIControl *valueInput;
@@ -31,5 +31,7 @@
 - (void)setupCell;
 - (void)setUIValues;
 - (id)initWithReuseIdentifier:(NSString *)reuseIdentifier;
+
+- (void)displayConfirmation:(NSDictionary *)confirmation;
 
 @end

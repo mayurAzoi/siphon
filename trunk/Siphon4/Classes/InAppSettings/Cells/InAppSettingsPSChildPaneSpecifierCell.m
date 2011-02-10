@@ -13,7 +13,7 @@
 
 - (void)setUIValues{
     [super setUIValues];
-    
+
     [self setTitle];
 }
 

@@ -48,7 +48,7 @@
 			<key>DefaultValue</key>
 			<string>1800</string>
 			<key>Key</key>
-			<string>RegisterTimeout</string>
+			<string>ReregistrationTime</string>
 			<key>KeyboardType</key>
 			<string>NumberPad</string>
 			<key>Title</key>
@@ -61,8 +61,6 @@
 			<string>No</string>
 			<key>DefaultValue</key>
 			<string></string>
-			<key>IsSecure</key>
-			<false/>
 			<key>Key</key>
 			<string>ProxyHost</string>
 			<key>KeyboardType</key>
@@ -83,6 +81,7 @@
 			<string>Protocol</string>
 			<key>Titles</key>
 			<array>
+				<string>Automatic</string>
 				<string>UDP</string>
 				<string>TCP</string>
 			</array>
@@ -92,6 +91,7 @@
 			<array>
 				<integer>0</integer>
 				<integer>1</integer>
+				<string>2</string>
 			</array>
 		</dict>
 		<dict>

@@ -67,8 +67,6 @@
 			<string>No</string>
 			<key>DefaultValue</key>
 			<string></string>
-			<key>IsSecure</key>
-			<false/>
 			<key>Key</key>
 			<string>Domain</string>
 			<key>KeyboardType</key>

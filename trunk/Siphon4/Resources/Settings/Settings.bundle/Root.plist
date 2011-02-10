@@ -14,11 +14,9 @@
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-			<key>Title</key>
-			<string>Account</string>
-			<key>File</key>
-			<string>Account</string>
+			<string>PSDynamicPaneSpecifier</string>
+			<key>InAppContentsDataSource</key>
+			<string>accountsDescriptionDataSource</string>
 		</dict>
 		<dict>
 			<key>Type</key>
@@ -27,6 +25,8 @@
 			<string>Add Account...</string>
 			<key>File</key>
 			<string>NewAccount</string>
+			<key>InAppAction</key>
+			<string>addAccountWithSettingSpecifier:fromViewController:</string>
 		</dict>
 		<dict>
 			<key>Type</key>
@@ -39,20 +39,12 @@
 			<string>DefaultAccount</string>
 			<key>Title</key>
 			<string>Default Account</string>
-			<key>Titles</key>
-			<array>
-				<string>Provider 1</string>
-				<string>Provider 2</string>
-				<string>Provider 3</string>
-			</array>
 			<key>Type</key>
 			<string>PSMultiValueSpecifier</string>
-			<key>Values</key>
-			<array>
-				<integer>0</integer>
-				<integer>1</integer>
-				<integer>2</integer>
-			</array>
+			<key>InAppValuesDataSource</key>
+			<string>valuesDataSource</string>
+			<key>InAppTitlesDataSource</key>
+			<string>titlesDataSource</string>
 		</dict>
 		<dict>
 			<key>Type</key>

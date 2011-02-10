@@ -23,8 +23,13 @@
 #import "DialerPhonePad.h"
 #import "LCDPhoneView.h"
 
-#define SPECIFIC_ADD_PERSON 1
 #define GSM_BUTTON 0
+#define POPOVER_CALL 0
+
+#if defined(POPOVER_CALL) && POPOVER_CALL!=0
+#import "WEPopoverController.h"
+#import "CallPickerController.h"
+#endif /* POPOVER_CALL */
 
 @interface PhoneViewController : UIViewController <
           UITextFieldDelegate,
@@ -44,14 +49,21 @@
   UIButton *_gsmCallButton;
 #endif
   UIButton *_callButton;
+	
   UIButton *_deleteButton;
-  
   int      _deletedChar;
   NSTimer *_deleteTimer;
   
   NSString *_lastNumber;
 
   ABPeoplePickerNavigationController *peoplePickerCtrl;
+	
+#if defined(POPOVER_CALL) && POPOVER_CALL!=0
+	NSTimer  *_callButtonTimer;
+	
+	CallPickerController *_callPicker;
+	WEPopoverController *_callPickerPopover;
+#endif /* POPOVER_CALL */
 }
 
 @end

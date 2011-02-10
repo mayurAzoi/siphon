@@ -19,7 +19,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "UIScreen-ConvertRect.h"
+#import "UIScreen+ConvertRect.h"
 
 
 @implementation UIScreen (ConvertRect)

@@ -20,7 +20,7 @@
 			<key>Key</key>
 			<string>AccountEnabled</string>
 			<key>DefaultValue</key>
-			<true/>
+			<false/>
 			<key>InAppAlternateColor</key>
 			<true/>
 		</dict>
@@ -124,7 +124,30 @@
 			<key>Title</key>
 			<string>Advanced</string>
 			<key>File</key>
-			<string>NewAccountAdvanced</string>
+			<string>AccountAdvanced</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSButtonSpecifier</string>
+			<key>Title</key>
+			<string>Delete Account</string>
+			<key>InAppIsDestructive</key>
+			<true/>
+			<key>InAppConfirmation</key>
+			<dict>
+				<key>title</key>
+				<string>Delete this account?</string>
+				<key>cancelTitle</key>
+				<string>Cancel</string>
+				<key>okTitle</key>
+				<string>Delete Account</string>
+			</dict>
+			<key>InAppAction</key>
+			<string>removeAccount:fromViewController:</string>
 		</dict>
 	</array>
 </dict>

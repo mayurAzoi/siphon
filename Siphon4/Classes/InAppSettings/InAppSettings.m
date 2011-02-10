@@ -206,9 +206,50 @@ static InAppSettings *sharedInstance = nil;
 }
 
 #pragma mark Table view methods
+#if defined(DYNAMIC_CONTENT_CELLS) && DYNAMIC_CONTENT_CELLS!=0
+- (NSArray *)dynamicContentsFromSettings:(InAppSettingsSpecifier *)settingsSpecifier {
+
+	NSString *aSelectorString = [settingsSpecifier valueForKey:InAppSettingsSpecifierInAppContentsDataSource];
+	
+	if ([aSelectorString length]) {
+		SEL aSelector = NSSelectorFromString(aSelectorString);
+		
+		if ([settingsSpecifier.object respondsToSelector:aSelector])
+			return [settingsSpecifier.object performSelector:aSelector];
+	}
+	return nil;
+}
+#endif /* DYNAMIC_CONTENT_CELLS */
+
 
 - (InAppSettingsSpecifier *)settingAtIndexPath:(NSIndexPath *)indexPath{
-    return [[self.settingsReader.settings objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+#if defined(DYNAMIC_CONTENT_CELLS) && DYNAMIC_CONTENT_CELLS!=0
+	id obj = [self.settingsReader.hasDynamicContents objectAtIndex:indexPath.section];
+	if (![obj boolValue])
+		return [[self.settingsReader.settings objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+	
+	int row = indexPath.row;
+	NSArray *settings = [self.settingsReader.settings objectAtIndex:indexPath.section];
+
+	int num = 0;
+	for (InAppSettingsSpecifier *settingsSpecifier in settings) {
+		if ([settingsSpecifier isType:InAppSettingsPSDynamicPaneSpecifier]) {
+			NSArray *anArray = [self dynamicContentsFromSettings:settingsSpecifier];
+			if (row < num + [anArray count])
+				return [anArray objectAtIndex:row-num];
+			num += [anArray count];
+		}
+		else {
+			if (num == row)
+				return settingsSpecifier;
+			num += 1;
+		}
+	}
+
+	return nil;
+#else
+	return [[self.settingsReader.settings objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+#endif
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -216,7 +257,7 @@ static InAppSettings *sharedInstance = nil;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    return [self.settingsReader.headers objectAtIndex:section];
+	return [self.settingsReader.headers objectAtIndex:section];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
@@ -224,7 +265,22 @@ static InAppSettings *sharedInstance = nil;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [[self.settingsReader.settings objectAtIndex:section] count];
+#if defined(DYNAMIC_CONTENT_CELLS) && DYNAMIC_CONTENT_CELLS!=0
+	int count;
+	NSArray *theSettings = [self.settingsReader.settings objectAtIndex:section];
+	count = [theSettings count];
+	for (InAppSettingsSpecifier *settingSpecifier in theSettings) {
+		//NSString *type = [settingSpecifier getType];
+		if ([settingSpecifier isType:InAppSettingsPSDynamicPaneSpecifier]) {
+			NSArray *anArray = [self dynamicContentsFromSettings:settingSpecifier];
+			count -= 1; // FIXME What happen if anArray is undefined or empty
+			count += [anArray count];
+		}
+	}
+	return count;
+#else /* DYNAMIC_CONTENT_CELLS */
+	return [[self.settingsReader.settings objectAtIndex:section] count];
+#endif /* DYNAMIC_CONTENT_CELLS */
 }
 
 #if 0 /* InAppSettingsDisplayPowered == NO */
@@ -277,7 +333,8 @@ static InAppSettings *sharedInstance = nil;
 }
 #endif
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView 
+				 cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     InAppSettingsSpecifier *setting = [self settingAtIndexPath:indexPath];
     
     //get the NSClass for a specifier, if there is none use the base class InAppSettingsTableCell
@@ -305,6 +362,17 @@ static InAppSettings *sharedInstance = nil;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     InAppSettingsSpecifier *setting = [self settingAtIndexPath:indexPath];
+		
+		NSString *anActionSelector = [setting valueForKey:InAppSettingsSpecifierInAppAction];
+		if ([anActionSelector length]) {
+				SEL aSelector = NSSelectorFromString(anActionSelector);
+				if ([setting.object respondsToSelector:aSelector])
+					[setting.object performSelector:aSelector 
+															 withObject:setting 
+															 withObject:self.navigationController];
+				return;
+		}
+	
     if([setting isType:InAppSettingsPSMultiValueSpecifier]){
         InAppSettingsPSMultiValueSpecifierTable *multiValueSpecifier = [[InAppSettingsPSMultiValueSpecifierTable alloc] initWithSetting:setting];
         [self.navigationController pushViewController:multiValueSpecifier animated:YES];

@@ -9,11 +9,14 @@
 #import <Foundation/Foundation.h>
 
 @interface InAppSettingsSpecifier : NSObject {
-    NSString *stringsTable;
-    NSDictionary *settingDictionary;
+	NSString *stringsTable;
+	NSDictionary *settingDictionary;
+	@package
+	id object;
 }
 
 @property (nonatomic, copy) NSString *stringsTable;
+@property (nonatomic, retain) id object;
 
 - (NSString *)getKey;
 - (NSString *)getType;
@@ -21,6 +24,7 @@
 - (id)getValue;
 - (void)setValue:(id)newValue;
 - (id)valueForKey:(NSString *)key;
+
 - (NSString *)localizedTitle;
 - (NSString *)localizedFooter;
 - (NSString *)cellName;

@@ -2,12 +2,16 @@
 //  PSToggleSwitchSpecifier.m
 //  InAppSettingsTestApp
 //
+//  Modified by Samuel Vinson on 01/21/11
+//  Copyright 2011 Samuel Vinson. All rights reserved.
 //  Created by David Keegan on 11/21/09.
 //  Copyright 2009 InScopeApps{+}. All rights reserved.
 //
 
 #import "InAppSettingsPSToggleSwitchSpecifierCell.h"
 #import "InAppSettingsConstants.h"
+
+#import "NSDictionary+Additions.h"
 
 @implementation InAppSettingsPSToggleSwitchSpecifierCell
 
@@ -59,7 +63,11 @@
 }
 
 - (void)switchAction{
+	NSDictionary *confirmation = [self.setting valueForKey:InAppSettingsSpecifierInAppConfirmation];
+	if (!confirmation)
     [self setBool:[self.valueSwitch isOn]];
+	else	
+		[self displayConfirmation:confirmation];
 }
 
 - (void)setUIValues{
@@ -91,6 +99,15 @@
 - (void)dealloc{
     [valueSwitch release];
     [super dealloc];
+}
+
+#pragma mark -
+- (void)didCancel {
+	self.valueSwitch.on = ![self.valueSwitch isOn];
+}
+
+- (void)didConfirm {
+	[self setBool:[self.valueSwitch isOn]];
 }
 
 @end

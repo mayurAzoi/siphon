@@ -2,12 +2,15 @@
 //  InAppSettingsTableCell.m
 //  InAppSettingsTestApp
 //
+//  Modified by Samuel Vinson on 01/21/11.
 //  Created by David Keegan on 11/21/09.
 //  Copyright 2009 InScopeApps{+}. All rights reserved.
 //
 
 #import "InAppSettingsTableCell.h"
 #import "InAppSettingsConstants.h"
+
+#import "NSDictionary+Additions.h"
 
 @implementation InAppSettingsTableCell
 
@@ -16,7 +19,7 @@
 @synthesize valueInput;
 @synthesize canSelectCell;
 
-#pragma mark Cell lables
+#pragma mark Cell labels
 
 - (void)setTitle{
     self.titleLabel.text = [self.setting localizedTitle];
@@ -150,6 +153,45 @@
     [valueLabel release];
     self.valueInput = nil;
     [super dealloc];
+}
+
+#pragma mark implement confirmation
+- (void)didCancel {
+	//implement this per cell type
+}
+
+- (void)didConfirm {
+	//implement this per cell type
+}
+
+- (void)displayConfirmation:(NSDictionary *)confirmation
+{
+	id value = [self.setting valueForKey:InAppSettingsSpecifierInAppIsDestructive];
+	BOOL isDestructive = [value boolValue];
+
+	NSString *okButton = InAppSettingsLocalize([confirmation stringForKey:InAppSettingsConfirmationOkTitle],
+																						 self.setting.stringsTable);
+	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:InAppSettingsLocalize([confirmation stringForKey:InAppSettingsConfirmationTitle],
+																																													self.setting.stringsTable)
+																													 delegate:self 
+																									cancelButtonTitle:InAppSettingsLocalize([confirmation stringForKey:InAppSettingsConfirmationCancelTitle],
+																																													self.setting.stringsTable)
+																						 destructiveButtonTitle:(isDestructive ? okButton : nil) 
+																									otherButtonTitles:(isDestructive ? nil : okButton), nil];
+	[actionSheet showInView:self];
+	[actionSheet release];
+}
+
+#pragma mark UIActionSheetDelegate
+/*- (void)actionSheet:(UIActionSheet *)actionSheet 
+clickedButtonAtIndex:(NSInteger)buttonIndex*/
+- (void)actionSheet:(UIActionSheet *)actionSheet 
+			didDismissWithButtonIndex:(NSInteger)buttonIndex{
+	if (buttonIndex == actionSheet.cancelButtonIndex)
+		[self didCancel];
+	else if ((buttonIndex == actionSheet.destructiveButtonIndex) ||
+					 (buttonIndex == actionSheet.firstOtherButtonIndex))
+		[self didConfirm];
 }
 
 @end

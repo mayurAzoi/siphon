@@ -96,7 +96,11 @@
     textFieldFrame.size.width = (CGFloat)round((InAppSettingsScreenWidth-(InAppSettingsTotalTablePadding+InAppSettingsCellPadding))-textFieldFrame.origin.x);
     textFieldFrame.size.height = titleSize.height;
     self.textField.frame = textFieldFrame;
-    self.textField.text = [self.setting getValue];
+		id value = [self.setting getValue];
+		if ([value isKindOfClass:[NSString class]])
+			self.textField.text = value;
+		else 
+			self.textField.text = [value stringValue];
 		self.textField.placeholder = [self.setting valueForKey:InAppSettingsSpecifierInAppPlaceholder];
     
     //keyboard traits

@@ -13,6 +13,7 @@
 @implementation InAppSettingsSpecifier
 
 @synthesize stringsTable;
+@synthesize object;
 
 - (NSString *)getKey{
     return [self valueForKey:InAppSettingsSpecifierKey];
@@ -58,8 +59,10 @@
 - (void)setValue:(id)newValue{
     NSString *key = [self getKey];
     [[NSUserDefaults standardUserDefaults] setObject:newValue forKey:key];
-
-    NSNotification *notification = [NSNotification notificationWithName:InAppSettingsNotificationName object:key];
+	  [[NSUserDefaults standardUserDefaults] synchronize];
+	
+    NSNotification *notification = [NSNotification notificationWithName:InAppSettingsNotificationName 
+																																 object:key];
     [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
@@ -101,19 +104,21 @@
             return NO;
         }
         
-        NSArray *titles = [self valueForKey:InAppSettingsSpecifierTitles];
-        if((!titles) || ([titles count] == 0)){
-            return NO;
-        }
-        
-        NSArray *values = [self valueForKey:InAppSettingsSpecifierValues];
-        if((!values) || ([values count] == 0)){
-            return NO;
-        }
-        
-        if([titles count] != [values count]){
-            return NO;
-        }
+				NSArray *titles = [self valueForKey:InAppSettingsSpecifierTitles];
+				if(((!titles) || ([titles count] == 0)) && 
+					 (![self valueForKey:InAppSettingsSpecifierInAppTitlesDataSource])){
+						return NO;
+				}
+				
+				NSArray *values = [self valueForKey:InAppSettingsSpecifierValues];
+				if(((!values) || ([values count] == 0)) &&
+					 (![self valueForKey:InAppSettingsSpecifierInAppValuesDataSource])){
+						return NO;
+				}
+				
+				if([titles count] != [values count]){
+						return NO;
+				}
         
         return YES;
     }
@@ -190,7 +195,23 @@
         
         return YES;
     }
-    
+	
+		if([self isType:InAppSettingsPSButtonSpecifier]){
+				if(![self hasTitle]){
+						return NO;
+				}
+				
+				return YES;
+		}
+#if defined(DYNAMIC_CONTENT_CELLS) && DYNAMIC_CONTENT_CELLS!=0
+		if ([self isType:InAppSettingsPSDynamicPaneSpecifier]) {
+			if (![self valueForKey:InAppSettingsSpecifierInAppContentsDataSource]){
+				return NO;
+			}
+			return YES;
+		}
+#endif /* DYNAMIC_CONTENT_CELLS */
+	
     return NO;
 }
 
@@ -206,6 +227,7 @@
         if(dictionary){
             self.stringsTable = table;
             settingDictionary = [dictionary retain];
+						object = nil;
         }
     }
     return self;
@@ -214,6 +236,7 @@
 - (void)dealloc{
     [stringsTable release];
     [settingDictionary release];
+		[object release];
     [super dealloc];
 }
 

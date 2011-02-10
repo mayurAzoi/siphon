@@ -71,6 +71,9 @@
 
 @synthesize file;
 @synthesize headers, settings, footers;
+#if defined(DYNAMIC_CONTENT_CELLS) && DYNAMIC_CONTENT_CELLS!=0
+@synthesize hasDynamicContents;
+#endif /* DYNAMIC_CONTENT_CELLS */
 
 - (id)initWithFile:(NSString *)inputFile{
     self = [super init];
@@ -86,6 +89,14 @@
         self.headers = [[NSMutableArray alloc] init];
         self.settings = [[NSMutableArray alloc] init];
 				self.footers = [[NSMutableArray alloc] init];
+#if defined(DYNAMIC_CONTENT_CELLS) && DYNAMIC_CONTENT_CELLS!=0			
+				self.hasDynamicContents = [[NSMutableArray alloc] init];
+#endif /* DYNAMIC_CONTENT_CELLS */			
+				//initialize the object
+				NSString *aClassName = [NSString stringWithFormat:@"%@Settings", 
+																[inputFile stringByDeletingPathExtension]];
+				Class aClass = NSClassFromString(aClassName);
+				id anObject = [[aClass alloc] init];
         
         //load the data
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
@@ -96,19 +107,32 @@
                     [self.headers addObject:[setting localizedTitle]];
                     [self.settings addObject:[NSMutableArray array]];
 										[self.footers addObject:[setting localizedFooter]];
+#if defined(DYNAMIC_CONTENT_CELLS) && DYNAMIC_CONTENT_CELLS!=0										
+										[self.hasDynamicContents addObject:[NSNumber numberWithBool:NO]];
+#endif /* DYNAMIC_CONTENT_CELLS */									
                 }else{
                     //if there are no settings make an initial container
                     if([self.settings count] < 1){
                         [self.headers addObject:@""];
                         [self.settings addObject:[NSMutableArray array]];
 												[self.footers addObject:@""];
+#if defined(DYNAMIC_CONTENT_CELLS) && DYNAMIC_CONTENT_CELLS!=0										
+												[self.hasDynamicContents addObject:[NSNumber numberWithBool:NO]];
+#endif /* DYNAMIC_CONTENT_CELLS */	
                     }
 										[[self.settings lastObject] addObject:setting];
+										setting.object = anObject;
+#if defined(DYNAMIC_CONTENT_CELLS) && DYNAMIC_CONTENT_CELLS!=0
+										if ([setting isType:InAppSettingsPSDynamicPaneSpecifier])
+											[self.hasDynamicContents replaceObjectAtIndex:0
+																												 withObject:[NSNumber numberWithBool:YES]];
+#endif /* DYNAMIC_CONTENT_CELLS */
                 }
             }
             [setting release];
         }
         [pool drain];
+				[anObject release];
         [settingsDictionary release];
     }
     return self;
@@ -119,6 +143,9 @@
     [headers release];
     [settings release];
 		[footers release];
+#if defined(DYNAMIC_CONTENT_CELLS) && DYNAMIC_CONTENT_CELLS!=0			
+		[hasDynamicContents release];
+#endif /* DYNAMIC_CONTENT_CELLS */
     [super dealloc];
 }
 

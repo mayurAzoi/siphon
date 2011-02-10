@@ -83,7 +83,7 @@
 	// so we can release the local version
 	[localViewControllersArray release];
   
-  tabBarController.selectedIndex = 1;
+  self.tabBarController.selectedIndex = 1;
   
 	// Set the window subview as the tab bar controller
 	[self.window addSubview: self.tabBarController.view];

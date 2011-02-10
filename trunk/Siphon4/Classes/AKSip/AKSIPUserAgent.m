@@ -352,10 +352,10 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
   [self setUsesICE:kAKSIPUserAgentDefaultUsesICE];
   [self setTransportPort:kAKSIPUserAgentDefaultTransportPort];
   
+	codecs_ = [[NSMutableArray alloc] init];
+	
   [self setRingbackSlot:kAKSIPUserAgentInvalidIdentifier];
 	[self setRingtoneFile:nil];
-	
-	codecs_ = [[NSMutableArray alloc] init];
   
   return self;
 }
@@ -401,7 +401,6 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
   
   [self performSelectorInBackground:@selector(ak_start)
                          withObject:nil];
-	//[self ak_start];
 }
 
 // This method is supposed to run in the secondary thread.

@@ -231,7 +231,6 @@ extern NSString * const AKSIPUserAgentWillRemoveAccountNotification;
 // Enum all supported codecs in the system.
 @property(nonatomic, readonly) NSArray *codecs;
 
-
 // Returns the shared SIP user agent object.
 + (AKSIPUserAgent *)sharedUserAgent;
 

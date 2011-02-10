@@ -20,7 +20,7 @@
 #import "PhoneViewController.h"
 #import "SiphonAppDelegate.h"
 
-#import "UIScreen-ConvertRect.h"
+#import "UIScreen+ConvertRect.h"
 
 #import "SIPController.h"
 #import "SIPAccountController.h"
@@ -33,9 +33,19 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
 
 - (void)addNewPerson;
 
+#if defined(POPOVER_CALL) && POPOVER_CALL!=0
+@property (nonatomic, retain) CallPickerController *callPicker;
+@property (nonatomic, retain) WEPopoverController  *callPickerPopover;
+#endif /* POPOVER_CALL */
+
 @end
 
 @implementation PhoneViewController
+
+#if defined(POPOVER_CALL) && POPOVER_CALL!=0
+@synthesize callPicker = _callPicker;
+@synthesize callPickerPopover = _callPickerPopover;
+#endif /* POPOVER_CALL */
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil 
 {
@@ -160,8 +170,12 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
   [_callButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
   [_callButton setTitleColor:[UIColor colorWithWhite:1.0 alpha:0.5]  forState:UIControlStateDisabled];
 
+	[_callButton addTarget:self action:@selector(callButtonDidPress:) 
+				forControlEvents:UIControlEventTouchDown];
+	[_callButton addTarget:self action:@selector(callButtonDidReleaseOutside:) 
+				forControlEvents:UIControlEventTouchUpOutside];
 
-  [_callButton addTarget:self action:@selector(callButtonReleased:) 
+  [_callButton addTarget:self action:@selector(callButtonDidReleaseInside:) 
                forControlEvents:UIControlEventTouchUpInside];
   
   _deleteButton = [[UIButton alloc] initWithFrame:
@@ -228,12 +242,18 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
 
 	CGRect rect = _container.frame;
 	rect.origin.y = keyboardEndFrame.origin.y - 64.0f;
-	
+#if 0
 	[UIView beginAnimations:@"scroll" context:nil];
 	[UIView setAnimationBeginsFromCurrentState:YES];
   [UIView setAnimationDuration:0.3];
 	[_container setFrame:rect];
 	[UIView commitAnimations];
+#else
+	[UIView animateWithDuration:0.3
+									 animations:^{
+										 _container.frame = rect;
+									 }];
+#endif
 }
 
 - (void)keyboardWillHide:(NSNotification*)aNotification
@@ -244,6 +264,7 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
 	CGRect rect = _container.frame;
   rect.origin.y = 347.0f;
 	
+#if 0
 	[UIView beginAnimations:@"scroll" context:nil];
 	[UIView setAnimationBeginsFromCurrentState:YES];
   [UIView setAnimationDuration:0.3];
@@ -251,6 +272,15 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
   [UIView commitAnimations];
 	
   _pad.enabled = YES;
+#else
+	[UIView animateWithDuration:0.3
+									 animations:^{
+										 _container.frame = rect;
+									 } 
+									 completion:^(BOOL finished){
+										 _pad.enabled = YES;
+									 }];
+#endif
 }
 
 - (void)viewWillAppear:(BOOL)animated 
@@ -276,6 +306,12 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:UIKeyboardWillHideNotification 
                                                 object:nil];
+#if defined(POPOVER_CALL) && POPOVER_CALL!=0
+	if ([self.callPickerPopover isPopoverVisible])
+	{
+		[self.callPickerPopover dismissPopoverAnimated:NO];
+	}
+#endif /* POPOVER_CALL */
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -307,8 +343,18 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
 #if GSM_BUTTON
   [_gsmCallButton release];
 #endif /* GSM_BUTTON */
+#if defined(POPOVER_CALL) && POPOVER_CALL!=0
+	[_callButtonTimer invalidate];
+	[_callButtonTimer release];
+	
+	[_callPickerPopover release];
+#endif /* POPOVER_CALL */
   [_callButton release];
+
+	[_deleteTimer invalidate];
+	[_deleteTimer release];
   [_deleteButton release];
+
 
   [_container release];
 
@@ -338,24 +384,54 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
   [_textfield setText: [curText stringByAppendingString: string]];
 }
 
-- (void)callButtonReleased:(UIButton*)button
+#if defined(POPOVER_CALL) && POPOVER_CALL!=0
+- (void)callButtonDidLongPress:(NSTimer *)timer
 {
-#if 0
-  if (([[_textfield text] length] > 0) && 
-      ([phoneCallDelegate respondsToSelector:@selector(dialup:number:)]))
-  {
-    [phoneCallDelegate dialup:[_textfield text] number:NO];
-    _lastNumber = [[NSString alloc] initWithString: [_textfield text]];
-    [_textfield setText:@""];
-    _lcd.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"lcd_top_buttons"]];
-  }
-  else
-  {
-    _lcd.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"lcd_top"]];
-    [_textfield setText:_lastNumber];
-    [_lastNumber release];
-  }
-#else
+	//UIButton *button = [timer userInfo];
+	
+	if (_callPickerPopover == nil)
+	{
+		self.callPicker = [[CallPickerController alloc] initWithStyle:UITableViewStylePlain];
+		self.callPickerPopover = [[WEPopoverController alloc]
+															initWithContentViewController:self.callPicker];
+		//CGRect rect = _callButton.frame;
+		//rect = _container.frame;
+	}
+	[self.callPickerPopover presentPopoverFromRect:_container.frame/*(CGRect)rect*/
+																					inView:self.view /*self.view/*button*/ 
+												permittedArrowDirections:UIPopoverArrowDirectionDown 
+																				animated:YES];
+}
+
+- (void)callButtonDidPress:(UIButton *)button
+{
+	if ([[_textfield text] length] > 0)
+		_callButtonTimer = [[NSTimer scheduledTimerWithTimeInterval:0.5 target:self 
+																											 selector:@selector(callButtonDidLongPress:) 
+																											 userInfo:button 
+																												repeats:NO] retain];
+	else 
+		_callButtonTimer = nil;
+}
+
+- (void)callButtonDidReleaseOutside:(UIButton *)button
+{
+	[_callButtonTimer invalidate];
+	[_callButtonTimer release];
+	_callButtonTimer = nil;
+}
+#endif /* POPOVER_CALL */
+
+- (void)callButtonDidReleaseInside:(UIButton*)button
+{
+#if defined(POPOVER_CALL) && POPOVER_CALL!=0
+	if (![self.callPickerPopover isPopoverVisible])
+	{
+		[_callButtonTimer invalidate];
+		[_callButtonTimer release];
+		_callButtonTimer = nil;
+#endif /* POPOVER_CALL */
+	
 	if ([[_textfield text] length] > 0)
 	{
 		_lastNumber = [[NSString alloc] initWithString: [_textfield text]];
@@ -379,7 +455,9 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
     [_textfield setText:_lastNumber];
     [_lastNumber release];
   }
-#endif
+#if defined(POPOVER_CALL) && POPOVER_CALL!=0
+	}
+#endif /* POPOVER_CALL */
 }
 
 - (void)addButtonPressed:(UIButton*)unused

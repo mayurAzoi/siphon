@@ -11,6 +11,8 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 
 Bugs fixed:
    * Auth. name does not work (issue 489)
+   * Calling direct SIP addresses (issue 490)
+   * Display button '+' in Contacts view
 
 = 3.9.2 (4.0 alpha) =
 

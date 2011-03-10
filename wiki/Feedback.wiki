@@ -19,6 +19,9 @@ Bugs fixed:
    * MagicJack support (issue 485)
    * Display button '+' in Contacts view
 
+New feature:
+   * Multitask support (TCP only) (issue 410, issue 486)
+
 = 3.9.2 (4.0 alpha) =
 
 Bugs fixed:

@@ -7,19 +7,19 @@ If you are a beta-testers of Siphon, you can describe the results of your tests 
 
 For problems and enhancements, you should add [http://code.google.com/p/siphon/issues/list issues].
 
-= 3.9.3 (4.0 alpha) (not released yet) =
-
-Bugs fixed:
-   * Auth. name does not work (issue 489)
-   * Calling direct SIP addresses (issue 490)
-   * Siphon Alpha 3.9.1 magicJack support (issue 485)
-   * Display button '+' in Contacts view
-
-= 3.9.2 (4.0 alpha) =
+= 3.9.3 (4.0 alpha) =
 
 Add the source http://svsip.free.fr/repository/cydia in Cydia.
 If you installed Siphon 3.9.0/3.9.1, you have to delete file:
     `/User/Documents/CoreDataSiphon.sqlite`
+
+Bugs fixed:
+   * Auth. name does not work (issue 489)
+   * Calling direct SIP addresses (issue 490)
+   * MagicJack support (issue 485)
+   * Display button '+' in Contacts view
+
+= 3.9.2 (4.0 alpha) =
 
 Bugs fixed:
    * Recent calls are not displayed (issue 484)

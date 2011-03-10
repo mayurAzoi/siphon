@@ -21,6 +21,7 @@ Bugs fixed:
 
 New feature:
    * Multitask support (TCP only) (issue 410, issue 486)
+   * SIP Signaling over TCP  (issue 398)
 
 = 3.9.2 (4.0 alpha) =
 

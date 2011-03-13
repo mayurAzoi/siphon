@@ -13,6 +13,7 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 Bugs fixed:
    * Bluetooth support (issue 487)
    * Not ringing when incoming call is received (issue 488)
+   * STUN sever doesn't use.
 
 New feature:
    * ilbc support (issue 65)

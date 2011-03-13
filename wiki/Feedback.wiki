@@ -8,7 +8,11 @@ If you are a beta-testers of Siphon, you can describe the results of your tests 
 For problems and enhancements, you should add [http://code.google.com/p/siphon/issues/list issues].
 
 
-= 3.9.5 (4.0 alpha) (not yet released) =
+= 3.9.5 (4.0 alpha) =
+
+Add the source http://svsip.free.fr/repository/cydia in Cydia.
+If you installed Siphon 3.9.0/3.9.1, you have to delete file:
+    `/User/Documents/CoreDataSiphon.sqlite`
 
 Bugs fixed:
    * Bluetooth support (issue 487)
@@ -19,10 +23,6 @@ New feature:
    * ilbc support (issue 65)
 
 = 3.9.4 (4.0 alpha) =
-
-Add the source http://svsip.free.fr/repository/cydia in Cydia.
-If you installed Siphon 3.9.0/3.9.1, you have to delete file:
-    `/User/Documents/CoreDataSiphon.sqlite`
 
 Bugs fixed:
    * Auth. name does not work (issue 489)

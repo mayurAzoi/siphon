@@ -8,6 +8,12 @@ If you are a beta-testers of Siphon, you can describe the results of your tests 
 For problems and enhancements, you should add [http://code.google.com/p/siphon/issues/list issues].
 
 
+= 3.9.5 (4.0 alpha) (not yet released) =
+
+Bugs fixed:
+   * Bluetooth support (issue 487)
+   * Not ringing when incoming call is received (issue 488)
+
 = 3.9.4 (4.0 alpha) =
 
 Add the source http://svsip.free.fr/repository/cydia in Cydia.

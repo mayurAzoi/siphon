@@ -26,9 +26,6 @@
 
 @interface PhonePad : UIControl
 {  
-  UIImage *_keypadImage;
-  UIImage *_pressedImage;
-  
   CGFloat _topHeight, _midHeight, _bottomHeight;
   CGFloat _leftWidth, _midWidth, _rightWidth;
   

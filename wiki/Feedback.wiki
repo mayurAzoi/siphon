@@ -11,6 +11,7 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 
 Bugs fixed:
    * Auth. name does not work (issue 489)
+   * test if VoIP over 3G feature is enabled or not
 
 New Features:
    * multi DNS

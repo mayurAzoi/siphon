@@ -12,7 +12,7 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 Bugs fixed:
 
 New features
-   * Specify user agent (issue ) 
+   * Specify user agent (issue 477) 
 
 = 3.9.6 (4.0 alpha) =
 

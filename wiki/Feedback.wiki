@@ -7,15 +7,15 @@ If you are a beta-testers of Siphon, you can describe the results of your tests 
 
 For problems and enhancements, you should add [http://code.google.com/p/siphon/issues/list issues].
 
-= 3.9.6 (4.0 alpha) (Not yet released) =
+= 3.9.6 (4.0 alpha) =
 
 Bugs fixed:
    * Auth. name does not work (issue 489)
    * test if VoIP over 3G feature is enabled or not
 
 New Features:
-   * multi DNS
-   * multi proxy and outbound proxy
+   * multi DNS (use coma between server)
+   * multi proxy and outbound proxy (use coma between server)
 
 = 3.9.5 (4.0 alpha) =
 

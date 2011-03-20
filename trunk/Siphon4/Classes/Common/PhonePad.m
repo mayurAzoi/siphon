@@ -49,9 +49,7 @@ static SystemSoundID sounds[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
    forControlEvents:UIControlEventTouchUpInside|UIControlEventTouchUpOutside];
     
     // Init
-    [self keypadImage];
-    [self pressedImage];
-    _topHeight = 58.0;
+		_topHeight = 58.0;
     _midHeight = 56.0;
     _bottomHeight = 59.0;
     _leftWidth = 95.0;
@@ -80,20 +78,12 @@ static SystemSoundID sounds[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 - (UIImage*)keypadImage
 {
-  if (_keypadImage == nil)
-  {
-    _keypadImage = [[UIImage imageNamed: @"dialpad.png"] retain];
-  }
-  return _keypadImage;
+	return [UIImage imageNamed:@"keypad"];
 }
 
 - (UIImage*)pressedImage
 {
-  if (_pressedImage == nil)
-  {
-    _pressedImage = [[UIImage imageNamed: @"dialpad_pressed.png"] retain];
-  }
-  return _pressedImage;
+	return [UIImage imageNamed: @"keypad_pressed.png"];
 }
 
 - (void)cancelTrackingWithEvent:(UIEvent *)event
@@ -187,7 +177,7 @@ static SystemSoundID sounds[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 - (int)keyForPoint:(CGPoint)point
 {
   int pos = 0;
-  CGSize size = [_keypadImage size];
+	CGSize size = [[self keypadImage] size];
   CGRect bounds = [self bounds];
   
   point.x = point.x - (CGRectGetMidX(bounds) - size.width/2.);
@@ -274,7 +264,7 @@ static SystemSoundID sounds[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
   b = [self bounds];
   r.origin.x = (b.size.width - r.size.width) / 2;
   r.origin.y = (b.size.height - r.size.height) / 2;
-  [_keypadImage drawInRect:r];
+	[[self keypadImage] drawInRect:r];
   
   if (_downKey != 0)
   {
@@ -380,8 +370,6 @@ static SystemSoundID sounds[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
       sounds[i] = 0;
     }
 #endif
-  [_keypadImage release];
-  [_pressedImage release];
   [super dealloc];
 }
 

@@ -21,20 +21,12 @@
 @implementation DialerPhonePad
 - (UIImage*)keypadImage;
 {
-  if (_keypadImage == nil)
-  {
-    _keypadImage = [[UIImage imageNamed: @"dialerkeypad"] retain];
-  }
-  return _keypadImage;
+	return [UIImage imageNamed: @"dialerkeypad"];
 }
 
 - (UIImage*)pressedImage
 {
-  if (_pressedImage == nil)
-  {
-    _pressedImage = [[UIImage imageNamed: @"dialerkeypad_pressed"] retain];
-  }
-  return _pressedImage;
+	return [UIImage imageNamed: @"dialerkeypad_pressed"];
 }
 
 - (id)initWithFrame:(struct CGRect)rect

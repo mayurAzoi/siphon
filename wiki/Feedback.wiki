@@ -14,8 +14,8 @@ Bugs fixed:
    * test if VoIP over 3G feature is enabled or not
 
 New Features:
-   * multi DNS (use coma between server)
-   * multi proxy and outbound proxy (use coma between server)
+   * multi DNS (use coma between servers)
+   * multi proxy and outbound proxy (use coma between servers)
 
 = 3.9.5 (4.0 alpha) =
 

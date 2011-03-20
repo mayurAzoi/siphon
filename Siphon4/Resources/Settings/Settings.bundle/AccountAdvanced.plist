@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>StringsTable</key>
-	<string>Account</string>
+	<string>AccountAdvanced</string>
 	<key>PreferenceSpecifiers</key>
 	<array>
 		<dict>
@@ -57,20 +57,14 @@
 			<string>PSTextFieldSpecifier</string>
 		</dict>
 		<dict>
-			<key>AutocorrectionType</key>
-			<string>No</string>
-			<key>DefaultValue</key>
-			<string></string>
-			<key>Key</key>
-			<string>ProxyHost</string>
-			<key>KeyboardType</key>
-			<string>URL</string>
-			<key>Title</key>
-			<string>Proxy</string>
 			<key>Type</key>
-			<string>PSTextFieldSpecifier</string>
-			<key>InAppPlaceholder</key>
-			<string>sipdomain.com</string>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Enable NAT</string>
+			<key>Key</key>
+			<string>UseNAT</string>
+			<key>DefaultValue</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
@@ -93,6 +87,22 @@
 				<integer>1</integer>
 				<string>2</string>
 			</array>
+		</dict>
+		<dict>
+			<key>AutocorrectionType</key>
+			<string>No</string>
+			<key>DefaultValue</key>
+			<string></string>
+			<key>Key</key>
+			<string>Proxies</string>
+			<key>KeyboardType</key>
+			<string>URL</string>
+			<key>Title</key>
+			<string>Proxies</string>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>InAppPlaceholder</key>
+			<string>sipdomain.com</string>
 		</dict>
 		<dict>
 			<key>Title</key>
@@ -159,6 +169,16 @@
 			<string>PSTextFieldSpecifier</string>
 			<key>InAppPlaceholder</key>
 			<string>wildcard character (&apos;*&apos;)</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Magic Jack</string>
+			<key>Key</key>
+			<string>UseMJAuth</string>
+			<key>DefaultValue</key>
+			<false/>
 		</dict>
 	</array>
 </dict>

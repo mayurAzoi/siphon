@@ -69,34 +69,12 @@
 			<string>NetworkAdvanced</string>
 		</dict>
 		<dict>
-			<key>DefaultValue</key>
-			<integer>0</integer>
-			<key>Key</key>
-			<string>logLevel</string>
-			<key>Title</key>
-			<string>Debugging log file</string>
-			<key>Titles</key>
-			<array>
-				<string>Disabled</string>
-				<string>Error</string>
-				<string>Warning</string>
-				<string>Info</string>
-				<string>Important</string>
-				<string>Detailed</string>
-				<string>Very detailed</string>
-			</array>
 			<key>Type</key>
-			<string>PSMultiValueSpecifier</string>
-			<key>Values</key>
-			<array>
-				<integer>0</integer>
-				<integer>1</integer>
-				<integer>2</integer>
-				<integer>3</integer>
-				<integer>4</integer>
-				<integer>5</integer>
-				<integer>6</integer>
-			</array>
+			<string>PSChildPaneSpecifier</string>
+			<key>Title</key>
+			<string>Phone</string>
+			<key>File</key>
+			<string>PhoneAdvanced</string>
 		</dict>
 		<dict>
 			<key>Type</key>
@@ -110,7 +88,7 @@
 			<key>Key</key>
 			<string>version</string>
 			<key>DefaultValue</key>
-			<string>1.0.0</string>
+			<string>3.9.5</string>
 		</dict>
 	</array>
 </dict>

@@ -3,12 +3,10 @@
 <plist version="1.0">
 <dict>
 	<key>StringsTable</key>
-	<string>NewAccount</string>
+	<string>Account</string>
 	<key>PreferenceSpecifiers</key>
 	<array>
 		<dict>
-			<key>Title</key>
-			<string></string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
@@ -56,7 +54,7 @@
 			<key>KeyboardType</key>
 			<string>Alphabet</string>
 			<key>Title</key>
-			<string>Username</string>
+			<string>User Name</string>
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 			<key>InAppPlaceholder</key>

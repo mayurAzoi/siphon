@@ -9,6 +9,10 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 
 = 3.9.6 (4.0 alpha) =
 
+Add the source http://svsip.free.fr/repository/cydia in Cydia.
+If you installed Siphon 3.9.0/3.9.1, you have to delete file:
+    `/User/Documents/CoreDataSiphon.sqlite`
+
 Bugs fixed:
    * Auth. name does not work (issue 489)
    * test if VoIP over 3G feature is enabled or not
@@ -18,10 +22,6 @@ New Features:
    * multi proxy and outbound proxy (use coma between servers)
 
 = 3.9.5 (4.0 alpha) =
-
-Add the source http://svsip.free.fr/repository/cydia in Cydia.
-If you installed Siphon 3.9.0/3.9.1, you have to delete file:
-    `/User/Documents/CoreDataSiphon.sqlite`
 
 Bugs fixed:
    * Bluetooth support (issue 487)

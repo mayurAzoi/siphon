@@ -31,7 +31,7 @@
 	pj_status_t status;
 	pj_str_t identifier = [self.identifier pjString];
 	
-	status = pjsua_codec_set_priority(&identifier, self.priority);
+	status = pjsua_codec_set_priority(&identifier, priority);
 	if (status != PJ_SUCCESS)
 		NSLog(@"Error setting %@ codec priority (Err. %d)", self.identifier, status);
 	else

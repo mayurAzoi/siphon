@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>StringsTable</key>
-	<string>Advanced</string>
+	<string>NetworkAdvanced</string>
 	<key>PreferenceSpecifiers</key>
 	<array>
 		<dict>
@@ -18,7 +18,7 @@
 			<key>Title</key>
 			<string>VoIP over EDGE/3G</string>
 			<key>Key</key>
-			<string>voipOverEDGE</string>
+			<string>VoipOverEDGE</string>
 			<key>DefaultValue</key>
 			<false/>
 		</dict>
@@ -33,10 +33,8 @@
 			<string>No</string>
 			<key>DefaultValue</key>
 			<string></string>
-			<key>IsSecure</key>
-			<false/>
 			<key>Key</key>
-			<string>stunServer</string>
+			<string>STUNServer</string>
 			<key>KeyboardType</key>
 			<string>URL</string>
 			<key>Title</key>
@@ -49,22 +47,28 @@
 			<string>No</string>
 			<key>DefaultValue</key>
 			<string></string>
-			<key>IsSecure</key>
-			<false/>
 			<key>Key</key>
-			<string>dnsServer</string>
+			<string>OutboundProxies</string>
+			<key>KeyboardType</key>
+			<string>URL</string>
+			<key>Title</key>
+			<string>Outbound Proxies</string>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+		</dict>
+		<dict>
+			<key>AutocorrectionType</key>
+			<string>No</string>
+			<key>DefaultValue</key>
+			<string></string>
+			<key>Key</key>
+			<string>DNSServerHost</string>
 			<key>KeyboardType</key>
 			<string>URL</string>
 			<key>Title</key>
 			<string>DNS</string>
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
-		</dict>
-		<dict>
-			<key>Title</key>
-			<string>VPN</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
 		</dict>
 		<dict>
 			<key>Type</key>

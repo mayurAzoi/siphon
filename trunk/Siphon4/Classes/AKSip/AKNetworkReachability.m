@@ -36,6 +36,12 @@
 #import "AKNSString+Scanning.h"
 
 
+typedef enum {
+	NotReachable = 0,
+	ReachableViaWiFi,
+	ReachableViaWWAN
+} NetworkStatus;
+
 NSString * const AKNetworkReachabilityDidBecomeReachableNotification
  = @"AKNetworkReachabilityDidBecomeReachable";
 NSString * const AKNetworkReachabilityDidBecomeUnreachableNotification
@@ -132,6 +138,68 @@ static void AKReachabilityChanged(SCNetworkReachabilityRef target,
 
 - (NSString *)description {
   return [NSString stringWithFormat:@"%@ reachability", [self host]];
+}
+
+- (NetworkStatus) networkStatus
+{
+  SCNetworkConnectionFlags flags;
+  Boolean flagsValid = SCNetworkReachabilityGetFlags(reachability_, &flags);
+	if (!flagsValid || (flags & kSCNetworkReachabilityFlagsReachable) == 0)
+	{
+		// if target host is not reachable
+		return NotReachable;
+	}
+	
+	BOOL retVal = NotReachable;
+	
+	if ((flags & kSCNetworkReachabilityFlagsConnectionRequired) == 0)
+	{
+		// if target host is reachable and no connection is required
+		//  then we'll assume (for now) that your on Wi-Fi
+		retVal = ReachableViaWiFi;
+	}
+	
+	
+	if ((((flags & kSCNetworkReachabilityFlagsConnectionOnDemand ) != 0) ||
+			 (flags & kSCNetworkReachabilityFlagsConnectionOnTraffic) != 0))
+	{
+		// ... and the connection is on-demand (or on-traffic) if the
+		//     calling application is using the CFSocketStream or higher APIs
+		
+		if ((flags & kSCNetworkReachabilityFlagsInterventionRequired) == 0)
+		{
+			// ... and no [user] intervention is needed
+			retVal = ReachableViaWiFi;
+		}
+	}
+	
+	if ((flags & kSCNetworkReachabilityFlagsIsWWAN) == kSCNetworkReachabilityFlagsIsWWAN)
+	{
+		// ... but WWAN connections are OK if the calling application
+		//     is using the CFNetwork (CFSocketStream?) APIs.
+		retVal = ReachableViaWWAN;
+	}
+	return retVal;
+}
+
+- (BOOL) activeWWAN 
+{
+	NetworkStatus netStatus = [self networkStatus];
+	return (netStatus != NotReachable && netStatus == ReachableViaWWAN);
+}
+
+- (BOOL) activeWiFi 
+{
+	NetworkStatus netStatus = [self networkStatus];
+	return (netStatus != NotReachable && netStatus == ReachableViaWiFi);
+}
+
+- (BOOL)connectionRequired
+{
+	SCNetworkConnectionFlags flags;
+  Boolean flagsValid = SCNetworkReachabilityGetFlags(reachability_, &flags);
+  
+  return (flagsValid && (flags & kSCNetworkReachabilityFlagsConnectionRequired)) ? YES : NO;
 }
 
 @end

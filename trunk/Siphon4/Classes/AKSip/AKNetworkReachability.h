@@ -62,4 +62,14 @@ extern NSString * const AKNetworkReachabilityDidBecomeUnreachableNotification;
 // Returns nil when |nameOrAddress| is nil or @"".
 - (id)initWithHost:(NSString *)nameOrAddress;
 
+
+// Indicates whether the WWAN connection is active.
+- (BOOL) activeWWAN;
+
+// Indicates whether the Wf-Fi connection is active.
+- (BOOL) activeWiFi;
+
+// Indicates whether a connection is required.
+- (BOOL)connectionRequired;
+
 @end

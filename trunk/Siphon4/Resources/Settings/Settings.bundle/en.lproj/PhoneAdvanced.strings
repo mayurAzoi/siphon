@@ -20,12 +20,12 @@
 "Background" = "Background";
 "Debugging log file" = "Debugging log file";
 
-/* Background */
 "Disabled" = "Disabled";
+
+/* Background */
 "On" = "On"; 
 
 /* Debugging log file */
-"Disabled" = "Disabled";
 "Error" = "Error";
 "Warning" = "Warning";
 "Info" = "Info";

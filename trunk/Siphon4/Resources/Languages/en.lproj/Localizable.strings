@@ -19,6 +19,7 @@
 
 "OK" = "OK";
 "Cancel" = "Cancel";
+"Answer" = "Answer";
 
 /* AccountSetupController */
 "New Account" = "New Account";
@@ -38,7 +39,6 @@
 
 /* AKSIPUserAgent */
 "Incoming Call" = "Incoming Call";
-"Answer" = "Answer";
 "Missed Call" = "Missed Call";
 "Open" = "Open";
 
@@ -46,7 +46,6 @@
 "End" = "End";
 "End Call + Answer" = "End Call + Answer";
 "Decline" = "Decline";
-"Answer" = "Answer";
 
 /* FavoritesListController */
 "Favorites" = "Favorites";
@@ -59,7 +58,6 @@
 
 /* PhoneViewController */
 "Keypad" = "Keypad";
-"Cancel" = "Cancel";
 "Create New Contact" = "Create New Contact";
 "Add to Existing Contact" = "Add to Existing Contact";
 
@@ -81,7 +79,7 @@
 "calling..." = "calling...";
 "Call Failed" = "Call Failed";
 "Could not register with %@." = "Could not register with %@.";
-"Please check network connection and Registry Server settings." = "Please check network connection and Registry Server settings."
+"Please check network connection and Registry Server settings." = "Please check network connection and Registry Server settings.";
 "Available" = "Available";
 "Unavailable" = "Unavailable";
 "Offline" = "Offline";

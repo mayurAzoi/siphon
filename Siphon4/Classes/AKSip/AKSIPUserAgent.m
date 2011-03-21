@@ -64,6 +64,12 @@ NSString * const AKSIPUserAgentWillRemoveAccountNotification
 // Maximum number of nameservers to take into account.
 static const NSInteger kAKSIPUserAgentNameserversMax = 4;
 
+// Maximum number of STUN servers to take into account.
+static const NSInteger kAKSIPUserAgentSTUNServersMax = 8;
+
+// Maximum number of outbound proxies to take into account.
+static const NSInteger kAKSIPUserAgentOutboundProxiesMax = 4;
+
 // User agent defaults.
 static const NSInteger kAKSIPUserAgentDefaultOutboundProxyPort = 5060;
 static const NSInteger kAKSIPUserAgentDefaultSTUNServerPort = 3478;
@@ -132,6 +138,7 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
 @dynamic activeCallsCount;
 @dynamic callData;
 @dynamic speakerPhoneEnabled;
+@dynamic bluetoothHeadsetEnabled;
 @synthesize pjPool = pjPool_;
 @synthesize ringbackSlot = ringbackSlot_;
 @synthesize ringbackCount = ringbackCount_;
@@ -139,10 +146,9 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
 @synthesize ringtoneFile = ringtoneFile_;
 
 @synthesize nameservers = nameservers_;
-@synthesize outboundProxyHost = outboundProxyHost_;
-@synthesize outboundProxyPort = outboundProxyPort_;
-@synthesize STUNServerHost = STUNServerHost_;
-@synthesize STUNServerPort = STUNServerPort_;
+@synthesize outboundProxies = outboundProxies_;
+@synthesize STUNServers = STUNServers_;
+
 @synthesize userAgentString = userAgentString_;
 @synthesize logFileName = logFileName_;
 @synthesize logLevel = logLevel_;
@@ -222,6 +228,22 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
   return route == PJMEDIA_AUD_DEV_ROUTE_LOUDSPEAKER;
 }
 
+- (BOOL)isBluetoothHeadsetEnabled
+{
+  //if ([self identifier] == kAKSIPUserAgentInvalidIdentifier)
+  //  return NO;
+  
+  pjmedia_aud_dev_route route;
+  pj_status_t status = pjsua_snd_get_setting(PJMEDIA_AUD_DEV_CAP_INPUT_ROUTE,
+                                             &route);
+  if (status != PJ_SUCCESS)
+  {
+    NSLog(@"Error getting audio route %@", self);
+    return NO;
+  }
+  return route == PJMEDIA_AUD_DEV_ROUTE_BLUETOOTH;
+}
+
 - (void)setNameservers:(NSArray *)newNameservers {
   if (nameservers_ != newNameservers) {
     [nameservers_ release];
@@ -235,18 +257,30 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
   }
 }
 
-- (void)setOutboundProxyPort:(NSUInteger)port {
-  if (port > 0 && port < 65535)
-    outboundProxyPort_ = port;
-  else
-    outboundProxyPort_ = kAKSIPUserAgentDefaultOutboundProxyPort;
+- (void)setOutboundProxies:(NSArray *)newOutboundProxies {
+  if (outboundProxies_ != newOutboundProxies) {
+    [outboundProxies_ release];
+    
+    if ([newOutboundProxies count] > kAKSIPUserAgentOutboundProxiesMax) {
+      outboundProxies_ = [[newOutboundProxies subarrayWithRange:
+											 NSMakeRange(0, kAKSIPUserAgentOutboundProxiesMax)] retain];
+    } else {
+      outboundProxies_ = [newOutboundProxies copy];
+    }
+  }
 }
 
-- (void)setSTUNServerPort:(NSUInteger)port {
-  if (port > 0 && port < 65535)
-    STUNServerPort_ = port;
-  else
-    STUNServerPort_ = kAKSIPUserAgentDefaultSTUNServerPort;
+- (void)setSTUNServers:(NSArray *)newSTUNServers {
+  if (STUNServers_ != newSTUNServers) {
+    [STUNServers_ release];
+    
+    if ([newSTUNServers count] > kAKSIPUserAgentSTUNServersMax) {
+      STUNServers_ = [[newSTUNServers subarrayWithRange:
+											 NSMakeRange(0, kAKSIPUserAgentSTUNServersMax)] retain];
+    } else {
+      STUNServers_ = [newSTUNServers copy];
+    }
+  }
 }
 
 - (void)setLogFileName:(NSString *)pathToFile {
@@ -341,9 +375,7 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
   accounts_ = [[NSMutableArray alloc] init];
   [self setDetectedNATType:kAKNATTypeUnknown];
   pjsuaLock_ = [[NSLock alloc] init];
-  
-  [self setOutboundProxyPort:kAKSIPUserAgentDefaultOutboundProxyPort];
-  [self setSTUNServerPort:kAKSIPUserAgentDefaultSTUNServerPort];
+
   [self setLogLevel:kAKSIPUserAgentDefaultLogLevel];
   [self setConsoleLogLevel:kAKSIPUserAgentDefaultConsoleLogLevel];
   [self setClockRate:kAKSIPUserAgentDefaultClockRate];
@@ -367,9 +399,10 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
 - (void)dealloc {
   [accounts_ release];
   [pjsuaLock_ release];
+
   [nameservers_ release];
-  [outboundProxyHost_ release];
-  [STUNServerHost_ release];
+	[outboundProxies_ release];
+
   [userAgentString_ release];
   [logFileName_ release];
   [transportPublicHost_ release];
@@ -445,26 +478,19 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
                                        pjString];
   }
   
-  if ([[self outboundProxyHost] length] > 0) {
-    userAgentConfig.outbound_proxy_cnt = 1;
-    
-    if ([self outboundProxyPort] == kAKSIPUserAgentDefaultOutboundProxyPort) {
-      userAgentConfig.outbound_proxy[0] = [[NSString stringWithFormat:@"sip:%@;lr",
-                                            [self outboundProxyHost]]
-                                           pjString];
-    } else {
-      userAgentConfig.outbound_proxy[0] = [[NSString stringWithFormat:@"sip:%@:%u;lr",
-                                            [self outboundProxyHost],
-                                            [self outboundProxyPort]]
-                                           pjString];
-    }
-  }
+	if ([[self outboundProxies] count] > 0) {
+		userAgentConfig.outbound_proxy_cnt = [[self nameservers] count];
+    for (NSUInteger i = 0; i < [[self outboundProxies] count]; ++i)
+      userAgentConfig.outbound_proxy[i] = [[NSString stringWithFormat:@"sip:%@;lr", 
+																						[[self outboundProxies] objectAtIndex:i]]
+																					 pjString];
+	}
   
-  
-  if ([[self STUNServerHost] length] > 0) {
-    userAgentConfig.stun_host = [[NSString stringWithFormat:@"%@:%u",
-                                  [self STUNServerHost], [self STUNServerPort]]
-                                 pjString];
+	if ([[self STUNServers] count] > 0) {
+    userAgentConfig.stun_srv_cnt = [[self STUNServers] count];
+    for (NSUInteger i = 0; i < [[self STUNServers] count]; ++i)
+      userAgentConfig.stun_srv[i] = [[[self STUNServers] objectAtIndex:i]
+                                       pjString];
   }
   
   userAgentConfig.user_agent = [[self userAgentString] pjString];
@@ -502,7 +528,8 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
   status = pjsua_init(&userAgentConfig, &loggingConfig, &mediaConfig);
   if (status != PJ_SUCCESS) {
     NSLog(@"Error initializing PJSUA");
-    [self stop];
+    //[self stop];
+		[self stopInBackground:YES];
     [[self pjsuaLock] unlock];
     [pool release];
     return;
@@ -526,7 +553,8 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
                                    &aRingbackPort);
   if (status != PJ_SUCCESS) {
     NSLog(@"Error creating ringback tones");
-    [self stop];
+    //[self stop];
+		[self stopInBackground:YES];
     [[self pjsuaLock] unlock];
     [pool release];
     return;
@@ -549,7 +577,8 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
   status = pjsua_conf_add_port([self pjPool], [self ringbackPort], &aRingbackSlot);
   if (status != PJ_SUCCESS) {
     NSLog(@"Error adding media port for ringback tones");
-    [self stop];
+    //[self stop];
+		[self stopInBackground:YES];
     [[self pjsuaLock] unlock];
     [pool release];
     return;
@@ -563,7 +592,8 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
                                   &transportIdentifier);
   if (status != PJ_SUCCESS) {
     NSLog(@"Error creating transport");
-    [self stop];
+    //[self stop];
+		[self stopInBackground:YES];
     [[self pjsuaLock] unlock];
     [pool release];
     return;
@@ -591,7 +621,8 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
   status = pjsua_start();
   if (status != PJ_SUCCESS) {
     NSLog(@"Error starting PJSUA");
-    [self stop];
+    //[self stop];
+		[self stopInBackground:YES];
     [[self pjsuaLock] unlock];
     [pool release];
     return;
@@ -613,7 +644,7 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
   [pool release];
 }
 
-- (void)stop {
+/*- (void)stop {
   // If there was an error while starting, post a notification from here.
   if ([self state] == kAKSIPUserAgentStarting) {
     NSNotification *notification
@@ -628,7 +659,28 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
   
   [self performSelectorInBackground:@selector(ak_stop)
                          withObject:nil];
+}*/
+
+- (void)stopInBackground:(BOOL)inBackground {
+  // If there was an error while starting, post a notification from here.
+  if ([self state] == kAKSIPUserAgentStarting) {
+    NSNotification *notification
+    = [NSNotification notificationWithName:AKSIPUserAgentDidFinishStartingNotification
+                                    object:self];
+    
+    [[NSNotificationCenter defaultCenter]
+     performSelectorOnMainThread:@selector(postNotification:)
+		 withObject:notification
+		 waitUntilDone:NO];
+  }
+  
+	if (inBackground)
+		[self performSelectorInBackground:@selector(ak_stop)
+													 withObject:nil];
+	else
+		[self ak_stop];
 }
+
 
 - (void)ak_stop {
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
@@ -696,8 +748,13 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
   pjsua_acc_config accountConfig;
   pjsua_acc_config_default(&accountConfig);
   
-  NSString *fullSIPURL = [NSString stringWithFormat:@"%@ <sip:%@>",
-                          [anAccount fullName], [anAccount SIPAddress]];
+	NSString *fullSIPURL = nil;
+	if ([[anAccount fullName] length] > 0)
+		fullSIPURL = [NSString stringWithFormat:@"%@ <sip:%@>",
+									[anAccount fullName], [anAccount SIPAddress]];
+	else
+		fullSIPURL = [NSString stringWithFormat:@"sip:%@",
+									[anAccount SIPAddress]];
   accountConfig.id = [fullSIPURL pjString];
   
   NSString *registerURI = [NSString stringWithFormat:@"sip:%@",
@@ -712,25 +769,35 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
   }
   accountConfig.cred_info[0].scheme = pj_str("digest");
   accountConfig.cred_info[0].username = [[anAccount username] pjString];
+#if defined(PJSIP_MAGIC_JACK_SUPPORT) && PJSIP_MAGIC_JACK_SUPPORT!=0
+	if ([anAccount usesMJAuth])
+		accountConfig.cred_info[0].data_type = PJSIP_CRED_DATA_MJ_DIGEST;
+	else 
+#endif /* PJSIP_MAGIC_JACK_SUPPORT */
   accountConfig.cred_info[0].data_type = PJSIP_CRED_DATA_PLAIN_PASSWD;
   accountConfig.cred_info[0].data = [aPassword pjString];
   
-  if ([[anAccount proxyHost] length] > 0) {
-    accountConfig.proxy_cnt = 1;
-    
-    if ([anAccount proxyPort] == kAKSIPAccountDefaultSIPProxyPort) {
-      accountConfig.proxy[0] = [[NSString stringWithFormat:@"sip:%@;lr",
-                                 [anAccount proxyHost]] pjString];
-    } else {
-      accountConfig.proxy[0] = [[NSString stringWithFormat:@"sip:%@:%u;lr",
-                                 [anAccount proxyHost], [anAccount proxyPort]]
-                                pjString];
-    }
-  }
+	if ([[anAccount proxies] count] > 0) {
+    accountConfig.proxy_cnt = [[anAccount proxies] count];
+		for (NSUInteger i = 0; i < [[anAccount proxies] count]; ++i) {
+			NSString *proxy = [NSString stringWithFormat:@"sip:%@", [[anAccount proxies] objectAtIndex:i]];
+			if ([anAccount usesTCP])
+				proxy = [proxy stringByAppendingString:@";transport=tcp"];
+			
+			accountConfig.proxy[i++] = [[proxy stringByAppendingString:@";lr"] pjString];
+		}
+	}
+	else if ([anAccount usesTCP])
+	{
+		accountConfig.proxy_cnt = 1;
+		accountConfig.proxy[0] = [[NSString stringWithFormat:@"sip:%@;transport=tcp;lr",
+															 [anAccount registrar]] pjString] ;
+	}
   
   accountConfig.reg_timeout = [anAccount reregistrationTime];
   
-  if ([self usesICE] && [[self STUNServerHost] length] > 0)
+	if (([self usesICE] && [[self STUNServers] count] > 0) ||
+			[anAccount allowContactRewrite])		
     accountConfig.allow_contact_rewrite = PJ_TRUE;
   else
     accountConfig.allow_contact_rewrite = PJ_FALSE;
@@ -830,28 +897,66 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
   pjmedia_snd_init(pjsua_get_pool_factory());
 }*/
 
-- (void)enableSpeakerPhone
+- (BOOL)enableDefaultAudioRoute
+{
+	pjmedia_aud_dev_route route = PJMEDIA_AUD_DEV_ROUTE_DEFAULT;
+  pj_status_t status = pjsua_snd_set_setting(PJMEDIA_AUD_DEV_CAP_OUTPUT_ROUTE, &route, PJ_FALSE);
+  if (status != PJ_SUCCESS)
+    NSLog(@"Error enabling audio route phone in call %@", self);
+	return (status == PJ_SUCCESS ? YES : NO);
+}
+
+- (BOOL)enableSpeakerPhone
 {
   if ([self isSpeakerPhoneEnabled] /*||
       [self state] != kAKSIPCallConfirmedState*/)
-    return;
+    return YES;
   
   pjmedia_aud_dev_route route = PJMEDIA_AUD_DEV_ROUTE_LOUDSPEAKER;
   pj_status_t status = pjsua_snd_set_setting(PJMEDIA_AUD_DEV_CAP_OUTPUT_ROUTE, &route, PJ_FALSE);
   if (status != PJ_SUCCESS)
     NSLog(@"Error enabling speaker phone in call %@", self);
+	return (status == PJ_SUCCESS ? YES : NO);
 }
 
-- (void)disableSpeakerPhone
+- (BOOL)disableSpeakerPhone
 {
   if (![self isSpeakerPhoneEnabled] /*||
       [self state] != kAKSIPCallConfirmedState*/)
-    return;
+    return YES;
   
-  pjmedia_aud_dev_route route = PJMEDIA_AUD_DEV_ROUTE_DEFAULT;
+  /*pjmedia_aud_dev_route route = PJMEDIA_AUD_DEV_ROUTE_DEFAULT;
   pj_status_t status = pjsua_snd_set_setting(PJMEDIA_AUD_DEV_CAP_OUTPUT_ROUTE, &route, PJ_FALSE);
   if (status != PJ_SUCCESS)
-    NSLog(@"Error disabling speaker phone in call %@", self);
+    NSLog(@"Error disabling speaker phone in call %@", self);*/
+	return [self enableDefaultAudioRoute];
+}
+
+- (BOOL)enableBluetoothHeadset
+{
+  if ([self isBluetoothHeadsetEnabled] /*||
+																		[self state] != kAKSIPCallConfirmedState*/)
+    return YES;
+  
+  pjmedia_aud_dev_route route = PJMEDIA_AUD_DEV_ROUTE_BLUETOOTH;
+  pj_status_t status = pjsua_snd_set_setting(PJMEDIA_AUD_DEV_CAP_INPUT_ROUTE, &route, PJ_FALSE);
+  if (status != PJ_SUCCESS)
+    NSLog(@"Error enabling bluetooth headset");
+	
+	return (status == PJ_SUCCESS ? YES : NO);
+}
+
+- (BOOL)disableBluetoothHeadset
+{
+  if (![self isBluetoothHeadsetEnabled] /*||
+																		 [self state] != kAKSIPCallConfirmedState*/)
+    return YES;
+  
+  pjmedia_aud_dev_route route = PJMEDIA_AUD_DEV_ROUTE_DEFAULT;
+  pj_status_t status = pjsua_snd_set_setting(PJMEDIA_AUD_DEV_CAP_INPUT_ROUTE, &route, PJ_FALSE);
+  if (status != PJ_SUCCESS)
+    NSLog(@"Error disabling bluetooth headset");
+	return (status == PJ_SUCCESS ? YES : NO);
 }
 
 - (NSString *)stringForSIPResponseCode:(NSInteger)responseCode {
@@ -1171,7 +1276,7 @@ static void AKSIPCallStateChanged(pjsua_call_id callIdentifier,
                            NSLocalizedString(@"Missed Call", "Missed call from"), 
                            [[theCall remoteURI] displayName]];
         //alarm.hasAction = NO;
-        alarm.alertAction = NSLocalizedString(@"Open", @"Open application");
+        //alarm.alertAction = NSLocalizedString(@"Open", @"Open application");
         alarm.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 													@"SIP", @"NotificationType",
 													[NSNumber numberWithInt:callInfo.acc_id], AKSIPAccountIdentifier,

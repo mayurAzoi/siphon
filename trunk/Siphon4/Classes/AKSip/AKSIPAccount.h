@@ -31,9 +31,7 @@
 #import <Foundation/Foundation.h>
 #import <pjsua-lib/pjsua.h>
 
-
 // SIP account defaults.
-extern const NSInteger kAKSIPAccountDefaultSIPProxyPort;
 extern const NSInteger kAKSIPAccountDefaultReregistrationTime;
 
 // Notifications.
@@ -67,9 +65,11 @@ extern NSString * const AKSIPAccountIdentifier;
   NSString *SIPAddress_;
   NSString *registrar_;
   NSString *realm_;
+	BOOL      usesMJAuth_;
   NSString *username_;
-  NSString *proxyHost_;
-  NSUInteger proxyPort_;
+	BOOL      allowContactRewrite_;
+	BOOL      usesTCP_;
+	NSArray  *proxies_;
   NSUInteger reregistrationTime_;
   
   NSInteger identifier_;
@@ -102,12 +102,22 @@ extern NSString * const AKSIPAccountIdentifier;
 // Authentication user name.
 @property(nonatomic, copy) NSString *username;
 
-// SIP proxy host.
-@property(nonatomic, copy) NSString *proxyHost;
+// A boolean value indicating whether it will use Magic Jack authentication protocol.
+// Default: NO.
+@property(nonatomic, assign) BOOL usesMJAuth;
 
-// Network port to use with the SIP proxy.
-// Default: 5060.
-@property(nonatomic, assign) NSUInteger proxyPort;
+// A Boolean value indicating whether it will keep track of the public IP 
+// address from the response of REGISTER request
+// Default: YES.
+@property(nonatomic, assign) BOOL allowContactRewrite;
+
+// A boolean value indicating whether it will use TCP protocol.
+// Default: NO.
+@property(nonatomic, assign) BOOL usesTCP;
+
+// An array of proxy servers to use by the receiver. Only first 
+// kAKSIPAccountProxiesMax are used.
+@property(nonatomic, copy) NSArray *proxies;
 
 // SIP re-registration time.
 // Default: 300 (sec).

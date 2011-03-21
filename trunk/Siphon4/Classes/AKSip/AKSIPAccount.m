@@ -35,9 +35,14 @@
 #import "AKSIPUserAgent.h"
 #import "AKSIPCall.h"
 
+// Maximum number of proxies to take into account.
+static const NSInteger kAKSIPAccountProxiesMax = PJSUA_ACC_MAX_PROXIES;
 
-const NSInteger kAKSIPAccountDefaultSIPProxyPort = 5060;
+//const NSInteger kAKSIPAccountDefaultSIPProxyPort = 5060;
 const NSInteger kAKSIPAccountDefaultReregistrationTime = 300;
+static const BOOL kAKSIPAccountDefaultAllowContactRewrite = YES;
+static const BOOL kAKSIPAccountDefaultUsesTCP = NO;
+static const BOOL kAKSIPAccountDefaultUsesMJAuth = NO;
 
 NSString * const AKSIPAccountRegistrationDidChangeNotification
   = @"AKSIPAccountRegistrationDidChange";
@@ -54,8 +59,10 @@ NSString * const AKSIPAccountIdentifier = @"AKSIPAccountIdentifier";
 @synthesize registrar = registrar_;
 @synthesize realm = realm_;
 @synthesize username = username_;
-@synthesize proxyHost = proxyHost_;
-@synthesize proxyPort = proxyPort_;
+@synthesize usesMJAuth = usesMJAuth_;
+@synthesize usesTCP = usesTCP_;
+@synthesize allowContactRewrite = allowContactRewrite_;
+@synthesize proxies = proxies_;
 @synthesize reregistrationTime = reregistrationTime_;
 @synthesize identifier = identifier_;
 @dynamic registered;
@@ -86,11 +93,17 @@ NSString * const AKSIPAccountIdentifier = @"AKSIPAccountIdentifier";
   delegate_ = aDelegate;
 }
 
-- (void)setProxyPort:(NSUInteger)port {
-  if (port > 0 && port < 65535)
-    proxyPort_ = port;
-  else
-    proxyPort_ = kAKSIPAccountDefaultSIPProxyPort;
+- (void)setProxies:(NSArray *)newProxies {
+  if (proxies_ != newProxies) {
+    [proxies_ release];
+    
+    if ([newProxies count] > kAKSIPAccountProxiesMax) {
+      proxies_ = [[newProxies subarrayWithRange:
+											 NSMakeRange(0, kAKSIPAccountProxiesMax)] retain];
+    } else {
+      proxies_ = [newProxies copy];
+    }
+  }
 }
 
 - (void)setReregistrationTime:(NSUInteger)seconds {
@@ -235,7 +248,9 @@ NSString * const AKSIPAccountIdentifier = @"AKSIPAccountIdentifier";
   [self setRegistrar:aRegistrar];
   [self setRealm:aRealm];
   [self setUsername:aUsername];
-  [self setProxyPort:kAKSIPAccountDefaultSIPProxyPort];
+	[self setUsesMJAuth:kAKSIPAccountDefaultUsesMJAuth];
+	[self setAllowContactRewrite:kAKSIPAccountDefaultAllowContactRewrite];
+	[self setUsesTCP:kAKSIPAccountDefaultUsesTCP];
   [self setReregistrationTime:kAKSIPAccountDefaultReregistrationTime];
   [self setIdentifier:kAKSIPUserAgentInvalidIdentifier];
   
@@ -262,7 +277,8 @@ NSString * const AKSIPAccountIdentifier = @"AKSIPAccountIdentifier";
   [registrar_ release];
   [realm_ release];
   [username_ release];
-  [proxyHost_ release];
+	
+	[proxies_ release];
   
   [calls_ release];
   

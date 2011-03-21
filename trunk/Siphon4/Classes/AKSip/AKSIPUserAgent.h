@@ -31,7 +31,6 @@
 #import <Foundation/Foundation.h>
 #import <pjsua-lib/pjsua.h>
 
-
 // User agent states.
 enum {
   kAKSIPUserAgentStopped,
@@ -108,10 +107,9 @@ extern NSString * const AKSIPUserAgentWillRemoveAccountNotification;
   NSLock *pjsuaLock_;
   
   NSArray *nameservers_;
-  NSString *outboundProxyHost_;
-  NSUInteger outboundProxyPort_;
-  NSString *STUNServerHost_;
-  NSUInteger STUNServerPort_;
+	NSArray *outboundProxies_;
+
+	NSArray *STUNServers_;
   NSString *userAgentString_;
   NSString *logFileName_;
   NSUInteger logLevel_;
@@ -158,7 +156,10 @@ extern NSString * const AKSIPUserAgentWillRemoveAccountNotification;
 @property(nonatomic, readonly, assign) AKSIPUserAgentCallData *callData;
 
 // A Boolean value indicating whether speaker phone is enabled.
-@property(nonatomic, assign, getter=isSpeakerPhoneEnabled) BOOL speakerPhoneEnabled;
+@property(nonatomic, readonly, getter=isSpeakerPhoneEnabled) BOOL speakerPhoneEnabled;
+
+// A Boolean value indicating whether bluetooth headset is enabled.
+@property(nonatomic, readonly, getter=isBluetoothHeadsetEnabled) BOOL bluetoothHeadsetEnabled;
 
 // A pool used by the underlying PJSUA library of the receiver.
 @property(readonly, assign) pj_pool_t *pjPool;
@@ -174,21 +175,16 @@ extern NSString * const AKSIPUserAgentWillRemoveAccountNotification;
 // enabled. Only first kAKSIPUserAgentNameserversMax are used.
 @property(nonatomic, copy) NSArray *nameservers;
 
-// SIP proxy host to visit for all outgoing requests. Will be used for all
-// accounts. The final route set for outgoing requests consists of this proxy
-// and proxy configured for the account.
-@property(nonatomic, copy) NSString *outboundProxyHost;
+// An array of SIP proxy host to visit for all outgoing requests. Will be 
+// used for all accounts. The final route set for outgoing requests consists 
+// of this proxy and proxy configured for the account. 
+// Only first kAKSIPUserAgentOutboundProxiesMax are used.
+@property(nonatomic, copy) NSArray *outboundProxies;
 
-// Network port to use with the outbound proxy.
-// Default: 5060.
-@property(nonatomic, assign) NSUInteger outboundProxyPort;
-
-// STUN server host.
-@property(nonatomic, copy) NSString *STUNServerHost;
-
-// Network port to use with the STUN server.
-// Default: 3478.
-@property(nonatomic, assign) NSUInteger STUNServerPort;
+// An array of STUN servers to use by the receiver. If set, it try to resolve 
+// and contact each of the STUN server entry until it finds one that is usable.
+// Only first kAKSIPUserAgentSTUNServersMax are used.
+@property(nonatomic, copy) NSArray *STUNServers;
 
 // User agent string.
 @property(nonatomic, copy) NSString *userAgentString;
@@ -241,7 +237,8 @@ extern NSString * const AKSIPUserAgentWillRemoveAccountNotification;
 - (void)start;
 
 // Stops user agent.
-- (void)stop;
+//- (void)stop;
+- (void)stopInBackground:(BOOL)inBackground;
 
 // Adds an account to the user agent.
 - (BOOL)addAccount:(AKSIPAccount *)anAccount withPassword:(NSString *)aPassword;
@@ -265,11 +262,20 @@ extern NSString * const AKSIPUserAgentWillRemoveAccountNotification;
 // Stops sound.
 //- (BOOL)stopSound;
 
+// Enables audio default route.
+- (BOOL)enableDefaultAudioRoute;
+
 // Enables speaker phone.
-- (void)enableSpeakerPhone;
+- (BOOL)enableSpeakerPhone;
 
 // Disables speaker phone.
-- (void)disableSpeakerPhone;
+- (BOOL)disableSpeakerPhone;
+
+// Enables bluetooth headset
+- (BOOL)enableBluetoothHeadset;
+
+// Disables bluetooth headset
+- (BOOL)disableBluetoothHeadset;
 
 // Updates list of audio devices.
 // You might want to call this method when system audio devices are changed.

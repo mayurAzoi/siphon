@@ -7,11 +7,19 @@ If you are a beta-testers of Siphon, you can describe the results of your tests 
 
 For problems and enhancements, you should add [http://code.google.com/p/siphon/issues/list issues].
 
-= 3.9.7 (4.0 alpha) =
+= 3.9.8 (4.0 alpha) =
 
 Add the source http://svsip.free.fr/repository/cydia in Cydia.
 If you installed Siphon 3.9.0/3.9.1, you have to delete file:
     `/User/Documents/CoreDataSiphon.sqlite`
+
+Bug fixed:
+   * Crash when placing a call with account disconnected.
+
+New features
+   * if the account is not connected, propose to place a regular call.
+
+= 3.9.7 (4.0 alpha) =
 
 Bugs fixed:
    * background support (TCP)

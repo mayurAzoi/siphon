@@ -13,7 +13,7 @@ Bugs fixed:
    * Regression on MagicJack
 
 New features:
-   * Select Codecs with type of connection (issue 178)
+   * Select Codecs with type of connection (issue 178, issue 496)
 
 = 3.9.8 (4.0 alpha) =
 

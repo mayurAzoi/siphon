@@ -10,7 +10,8 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 = 3.9.9 (4.0 alpha) (not yet released) =
 
 Bugs fixed:
-   * Regression on MagicJack
+   * Regression on Magic Jack
+   * Prevent screen lock when on a call (issue 502)
 
 New features:
    * Select Codecs with type of connection (issue 178, issue 496)

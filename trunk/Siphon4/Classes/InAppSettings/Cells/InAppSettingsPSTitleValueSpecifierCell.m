@@ -34,7 +34,8 @@
     
     [self setTitle];
     
-    if([self.setting valueForKey:InAppSettingsSpecifierInAppURL]){
+    if([self.setting valueForKey:InAppSettingsSpecifierInAppURL] ||
+			 [self.setting valueForKey:InAppSettingsSpecifierInAppHTMLFile]){
         [self setDisclosure:YES];
         self.canSelectCell = YES;
     }

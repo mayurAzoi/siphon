@@ -78,7 +78,8 @@
 }
 
 - (void)setValue:(id)newValue{
-    [[NSUserDefaults standardUserDefaults] setObject:newValue forKey:[self.setting getKey]];
+    //[[NSUserDefaults standardUserDefaults] setObject:newValue forKey:[self.setting getKey]];
+		[self.setting setValue:newValue];
 }
 
 #pragma mark Table view methods

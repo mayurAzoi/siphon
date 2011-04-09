@@ -8,6 +8,7 @@
 
 #import "InAppSettings.h"
 #import "InAppSettingsPSMultiValueSpecifierTable.h"
+#import "InAppSettingsWebViewController.h"
 
 @implementation InAppSettings
 
@@ -383,7 +384,28 @@ static InAppSettings *sharedInstance = nil;
         [self.navigationController pushViewController:childPane animated:YES];
         [childPane release];
     }else if([setting isType:InAppSettingsPSTitleValueSpecifier]){
+#if 0
         InAppSettingsOpenUrl([NSURL URLWithString:[setting valueForKey:InAppSettingsSpecifierInAppURL]]);
+#else
+			InAppSettingsWebViewController *webViewController = nil;
+			if ([[setting valueForKey:InAppSettingsSpecifierInAppHTMLFile] length])
+				webViewController = [[InAppSettingsWebViewController alloc] initWithFile:
+															 [setting valueForKey:InAppSettingsSpecifierInAppHTMLFile]];
+			if ([[setting valueForKey:InAppSettingsSpecifierInAppURL] length])
+			{
+				NSURL *url = [NSURL URLWithString:[setting valueForKey:InAppSettingsSpecifierInAppURL]];
+				if (webViewController)
+					[webViewController setURL:url];
+				else
+					webViewController = [[InAppSettingsWebViewController alloc] initWithURL:url];
+			}
+			
+			if (webViewController)
+			{
+				webViewController.title = [setting localizedTitle];
+				[self.navigationController pushViewController:webViewController animated:YES];
+			}
+#endif
     }
 }
 

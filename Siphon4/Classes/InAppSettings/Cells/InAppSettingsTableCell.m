@@ -55,8 +55,18 @@
     
     CGRect valueFrame = self.valueLabel.frame;
     CGFloat titleRightSide = self.titleLabel.frame.size.width+InAppSettingsTablePadding;
-    if([self.setting isType:InAppSettingsPSMultiValueSpecifier] && [[self.setting localizedTitle] length] == 0){
-            valueFrame.origin.x = InAppSettingsCellPadding;
+#if 1 // Rev 57
+	CGFloat valueMaxWidth = InAppSettingsScreenWidth-(titleRightSide+InAppSettingsTablePadding+InAppSettingsCellPadding*3);
+	if(self.accessoryType == UITableViewCellAccessoryDisclosureIndicator){
+		valueMaxWidth -= InAppSettingsCellDisclosureIndicatorWidth+InAppSettingsCellPadding;
+	}
+	if(valueSize.width > valueMaxWidth){
+		valueSize.width = valueMaxWidth;
+	}
+#endif
+
+		if(!InAppSettingsUseNewMultiValueLocation && [self.setting isType:InAppSettingsPSMultiValueSpecifier] && [[self.setting localizedTitle] length] == 0){
+				valueFrame.origin.x = InAppSettingsCellPadding;
     }else{
         valueFrame.origin.x = (InAppSettingsScreenWidth-(InAppSettingsTotalTablePadding+InAppSettingsCellPadding))-valueSize.width;
         if(self.accessoryType == UITableViewCellAccessoryDisclosureIndicator){

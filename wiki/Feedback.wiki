@@ -12,6 +12,7 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 Bugs fixed:
    * Regression on Magic Jack
    * Prevent screen lock when on a call (issue 502)
+   * Doesn't start on iPhone 4 and iPod Touch 4 with iOS 4.3.1 (issue 504)
 
 New features:
    * Select Codecs with type of connection (issue 178, issue 496)

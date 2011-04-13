@@ -15,7 +15,7 @@ If you installed Siphon 3.9.0/3.9.1, you have to delete file:
     `/User/Documents/CoreDataSiphon.sqlite`
 
 Bugs fixed:
-   * Regression on Magic Jack
+   * Regression on Magic Jack (issue 498)
    * Prevent screen lock when on a call (issue 502)
    * Doesn't start on iPhone 4 and iPod Touch 4 with iOS 4.3.1 (issue 504)
 

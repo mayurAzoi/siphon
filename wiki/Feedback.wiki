@@ -7,12 +7,16 @@ If you are a beta-testers of Siphon, you can describe the results of your tests 
 
 For problems and enhancements, you should add [http://code.google.com/p/siphon/issues/list issues].
 
-= 3.9.9 (4.0 alpha) =
-
+= 3.9.10 (4.0 alpha) =
 
 Add the source http://svsip.free.fr/repository/cydia in Cydia.
 If you installed Siphon 3.9.0/3.9.1, you have to delete file:
     `/User/Documents/CoreDataSiphon.sqlite`
+
+Bugs fixed:
+   * Doesn't start on iPhone 4 and iPod Touch 4 with iOS 4.3.1 (issue 504)
+
+= 3.9.9 (4.0 alpha) =
 
 Bugs fixed:
    * Regression on Magic Jack (issue 498)

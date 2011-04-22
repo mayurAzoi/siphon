@@ -7,6 +7,16 @@ If you are a beta-testers of Siphon, you can describe the results of your tests 
 
 For problems and enhancements, you should add [http://code.google.com/p/siphon/issues/list issues].
 
+
+= 3.9.11 (4.0 alpha) =
+
+Bugs fixed:
+   * Fatal database error (issue 511)
+
+New features:
+   * last version of pjsip
+   * the date in Recent Calls is correctly displayed
+
 = 3.9.10 (4.0 alpha) =
 
 Add the source http://svsip.free.fr/repository/cydia in Cydia.

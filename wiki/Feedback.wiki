@@ -13,6 +13,7 @@ Bugs fixed:
    * icons (removed white corners)
    * if network is unreachable at launching, display a message 
    * in some cases the save button, in new account view, is enabled and it should not be it.
+   * continue a call in background when UDP connection is used.
 
 = 3.9.11 (4.0 alpha) =
 

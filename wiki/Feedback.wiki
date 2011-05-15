@@ -18,6 +18,7 @@ Bugs fixed:
 New features:
    * support the compact forms of SIP headers
    * g722 and g722.1 support (not tested)
+   * receive a second call
 
 = 3.9.11 (4.0 alpha) =
 

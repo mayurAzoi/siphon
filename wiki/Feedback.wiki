@@ -7,6 +7,12 @@ If you are a beta-testers of Siphon, you can describe the results of your tests 
 
 For problems and enhancements, you should add [http://code.google.com/p/siphon/issues/list issues].
 
+= 3.9.13 (4.0 alpha) (Not released yet) =
+
+Bugs fixed:
+   * memory leaks
+   * fix the background of dual button (In call view).
+
 = 3.9.12 (4.0 alpha) =
 
 Bugs fixed:

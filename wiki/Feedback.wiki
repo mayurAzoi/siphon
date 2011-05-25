@@ -10,8 +10,9 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 = 3.9.13 (4.0 alpha) (Not released yet) =
 
 Bugs fixed:
-   * memory leaks
+   * memory leaks.
    * fix the background of dual button (In call view).
+   * fix the issue about settings displaying under the keyboard .
 
 = 3.9.12 (4.0 alpha) =
 

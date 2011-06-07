@@ -9,6 +9,9 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 
 = 3.9.15 (4.0 alpha) (not released yet)  =
 
+Bugs fixed:
+   * Button save is disabled (issue 522)
+
 New features:
    * Cellular button (enable in phone advanced settings)
 

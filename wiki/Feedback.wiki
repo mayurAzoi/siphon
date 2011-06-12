@@ -11,6 +11,7 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 
 Bugs fixed:
    * Button save is disabled (issue 522)
+   * Potential leak fixes
 
 New features:
    * Cellular button (enable in phone advanced settings)

@@ -9,6 +9,9 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 
 = 3.9.16 (4.0 alpha) (not released yet) =
 
+New features:
+   * Display missed or all recent calls.
+
 = 3.9.15 (4.0 alpha) =
 
 Bugs fixed:

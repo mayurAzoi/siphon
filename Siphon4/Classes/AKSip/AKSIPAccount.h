@@ -2,6 +2,7 @@
 //  AKSIPAccount.h
 //  Telephone
 //
+//  Modified by Samuel Vinson 2010-2011 - GPL
 //  Copyright (c) 2008-2009 Alexei Kuznetsov. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
@@ -71,7 +72,8 @@ extern NSString * const AKSIPAccountIdentifier;
 	BOOL      usesTCP_;
 	NSArray  *proxies_;
   NSUInteger reregistrationTime_;
-  
+  BOOL      usesMWI_;
+	
   NSInteger identifier_;
   
   NSMutableArray *calls_;
@@ -114,6 +116,10 @@ extern NSString * const AKSIPAccountIdentifier;
 // A boolean value indicating whether it will use TCP protocol.
 // Default: NO.
 @property(nonatomic, assign) BOOL usesTCP;
+
+// A boolean value indicating whether it will enable MWI protocol.
+// Default: YES.
+@property(nonatomic, assign) BOOL usesMWI;
 
 // An array of proxy servers to use by the receiver. Only first 
 // kAKSIPAccountProxiesMax are used.

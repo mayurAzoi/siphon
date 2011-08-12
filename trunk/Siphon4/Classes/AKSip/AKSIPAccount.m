@@ -2,6 +2,7 @@
 //  AKSIPAccount.m
 //  Telephone
 //
+//  Modified by Samuel Vinson 2010-2011 - GPL
 //  Copyright (c) 2008-2009 Alexei Kuznetsov. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
@@ -42,6 +43,7 @@ static const NSInteger kAKSIPAccountProxiesMax = PJSUA_ACC_MAX_PROXIES;
 const NSInteger kAKSIPAccountDefaultReregistrationTime = 300;
 static const BOOL kAKSIPAccountDefaultAllowContactRewrite = YES;
 static const BOOL kAKSIPAccountDefaultUsesTCP = NO;
+static const BOOL kAKSIPAccountDefaultUsesMWI = YES;
 static const BOOL kAKSIPAccountDefaultUsesMJAuth = NO;
 
 NSString * const AKSIPAccountRegistrationDidChangeNotification
@@ -64,6 +66,7 @@ NSString * const AKSIPAccountIdentifier = @"AKSIPAccountIdentifier";
 @synthesize allowContactRewrite = allowContactRewrite_;
 @synthesize proxies = proxies_;
 @synthesize reregistrationTime = reregistrationTime_;
+@synthesize usesMWI = usesMWI_;
 @synthesize identifier = identifier_;
 @dynamic registered;
 @dynamic registrationStatus;
@@ -252,6 +255,7 @@ NSString * const AKSIPAccountIdentifier = @"AKSIPAccountIdentifier";
 	[self setAllowContactRewrite:kAKSIPAccountDefaultAllowContactRewrite];
 	[self setUsesTCP:kAKSIPAccountDefaultUsesTCP];
   [self setReregistrationTime:kAKSIPAccountDefaultReregistrationTime];
+	[self setUsesMWI:kAKSIPAccountDefaultUsesMWI];
   [self setIdentifier:kAKSIPUserAgentInvalidIdentifier];
   
   calls_ = [[NSMutableArray alloc] init];
@@ -278,7 +282,7 @@ NSString * const AKSIPAccountIdentifier = @"AKSIPAccountIdentifier";
   [realm_ release];
   [username_ release];
 	
-	[proxies_ release];
+  [proxies_ release];
   
   [calls_ release];
   

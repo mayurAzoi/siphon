@@ -56,7 +56,7 @@
   // in case the parent view draws with a custom color or gradient, use a transparent color
 	button.backgroundColor = [UIColor clearColor];
   
-	return button;
+	return [button autorelease]; // CLANG
 }
 
 + (UIImage *)backgroundImage
@@ -82,7 +82,7 @@
   
   //[self addSubview:imageView];
   //[imageView release];
-  return imageView;
+  return [imageView autorelease]; // CLANG
 }
 
 - (id)initWithDefaultSize
@@ -94,7 +94,8 @@
   {
     //[self addBackgroundWithRect:rect];
     rect.origin.y = 0.0;
-    [self addSubview:[[BottomButtonBar backgroundViewWithRect:rect] autorelease]];
+    [self addSubview:[BottomButtonBar backgroundViewWithRect:rect]];
+		//self.backgroundColor = [UIColor redColor];
   }
   return self;
 }

@@ -2,6 +2,7 @@
 //  AKNetworkReachability.h
 //  Telephone
 //
+//  Modified by Samuel Vinson 2010-2011 - GPL
 //  Copyright (c) 2008-2009 Alexei Kuznetsov. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
@@ -31,6 +32,13 @@
 #import <Foundation/Foundation.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 
+enum  
+{
+	kAKNotReachable = 0,
+	kAKReachableViaWiFi,
+	kAKReachableViaWWAN
+};
+typedef NSUInteger AKNetworkReachabilityStatus;
 
 // Notifications.
 //
@@ -62,6 +70,8 @@ extern NSString * const AKNetworkReachabilityDidBecomeUnreachableNotification;
 // Returns nil when |nameOrAddress| is nil or @"".
 - (id)initWithHost:(NSString *)nameOrAddress;
 
+// Returns current reachability status.
+- (AKNetworkReachabilityStatus)reachabilityStatus;
 
 // Indicates whether the WWAN connection is active.
 - (BOOL) activeWWAN;

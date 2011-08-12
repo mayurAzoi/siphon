@@ -2,7 +2,7 @@
 //  InAppSettingsTableCell.m
 //  InAppSettingsTestApp
 //
-//  Modified by Samuel Vinson on 01/21/11.
+//  Modified by Samuel Vinson 2010-2011 - GPL
 //  Created by David Keegan on 11/21/09.
 //  Copyright 2009 InScopeApps{+}. All rights reserved.
 //
@@ -55,7 +55,7 @@
     
     CGRect valueFrame = self.valueLabel.frame;
     CGFloat titleRightSide = self.titleLabel.frame.size.width+InAppSettingsTablePadding;
-#if 1 // Rev 57
+
 	CGFloat valueMaxWidth = InAppSettingsScreenWidth-(titleRightSide+InAppSettingsTablePadding+InAppSettingsCellPadding*3);
 	if(self.accessoryType == UITableViewCellAccessoryDisclosureIndicator){
 		valueMaxWidth -= InAppSettingsCellDisclosureIndicatorWidth+InAppSettingsCellPadding;
@@ -63,7 +63,6 @@
 	if(valueSize.width > valueMaxWidth){
 		valueSize.width = valueMaxWidth;
 	}
-#endif
 
 		if(!InAppSettingsUseNewMultiValueLocation && [self.setting isType:InAppSettingsPSMultiValueSpecifier] && [[self.setting localizedTitle] length] == 0){
 				valueFrame.origin.x = InAppSettingsCellPadding;
@@ -188,6 +187,7 @@
 																																													self.setting.stringsTable)
 																						 destructiveButtonTitle:(isDestructive ? okButton : nil) 
 																									otherButtonTitles:(isDestructive ? nil : okButton), nil];
+	[actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
 	[actionSheet showInView:self];
 	[actionSheet release];
 }

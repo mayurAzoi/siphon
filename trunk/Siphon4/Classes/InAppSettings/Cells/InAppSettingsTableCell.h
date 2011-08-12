@@ -2,6 +2,7 @@
 //  InAppSettingsTableCell.h
 //  InAppSettingsTestApp
 //
+//  Modified by Samuel Vinson 2010-2011 - GPL
 //  Created by David Keegan on 11/21/09.
 //  Copyright 2009 InScopeApps{+}. All rights reserved.
 //

@@ -2,6 +2,7 @@
 //  AKNetworkReachability.m
 //  Telephone
 //
+//  Modified by Samuel Vinson 2010-2011 - GPL
 //  Copyright (c) 2008-2009 Alexei Kuznetsov. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
@@ -34,13 +35,6 @@
 #import <arpa/inet.h>
 
 #import "AKNSString+Scanning.h"
-
-
-typedef enum {
-	NotReachable = 0,
-	ReachableViaWiFi,
-	ReachableViaWWAN
-} NetworkStatus;
 
 NSString * const AKNetworkReachabilityDidBecomeReachableNotification
  = @"AKNetworkReachabilityDidBecomeReachable";
@@ -140,23 +134,21 @@ static void AKReachabilityChanged(SCNetworkReachabilityRef target,
   return [NSString stringWithFormat:@"%@ reachability", [self host]];
 }
 
-- (NetworkStatus) networkStatus
+#pragma mark -
+- (AKNetworkReachabilityStatus) _networkStatusForFlags:(SCNetworkReachabilityFlags) flags
 {
-  SCNetworkConnectionFlags flags;
-  Boolean flagsValid = SCNetworkReachabilityGetFlags(reachability_, &flags);
-	if (!flagsValid || (flags & kSCNetworkReachabilityFlagsReachable) == 0)
+	AKNetworkReachabilityStatus retVal = kAKNotReachable;
+	if ((flags & kSCNetworkReachabilityFlagsReachable) == 0)
 	{
 		// if target host is not reachable
-		return NotReachable;
+		return retVal;
 	}
-	
-	BOOL retVal = NotReachable;
 	
 	if ((flags & kSCNetworkReachabilityFlagsConnectionRequired) == 0)
 	{
 		// if target host is reachable and no connection is required
 		//  then we'll assume (for now) that your on Wi-Fi
-		retVal = ReachableViaWiFi;
+		retVal = kAKReachableViaWiFi;
 	}
 	
 	
@@ -169,7 +161,7 @@ static void AKReachabilityChanged(SCNetworkReachabilityRef target,
 		if ((flags & kSCNetworkReachabilityFlagsInterventionRequired) == 0)
 		{
 			// ... and no [user] intervention is needed
-			retVal = ReachableViaWiFi;
+			retVal = kAKReachableViaWiFi;
 		}
 	}
 	
@@ -177,21 +169,32 @@ static void AKReachabilityChanged(SCNetworkReachabilityRef target,
 	{
 		// ... but WWAN connections are OK if the calling application
 		//     is using the CFNetwork (CFSocketStream?) APIs.
-		retVal = ReachableViaWWAN;
+		retVal = kAKReachableViaWWAN;
 	}
 	return retVal;
 }
 
+- (AKNetworkReachabilityStatus) networkStatus
+{
+	SCNetworkConnectionFlags flags;
+  Boolean flagsValid = SCNetworkReachabilityGetFlags(reachability_, &flags);
+	if (!flagsValid)
+		// if target host is not reachable
+		return kAKNotReachable;
+	
+	return [self _networkStatusForFlags:flags];
+}
+
 - (BOOL) activeWWAN 
 {
-	NetworkStatus netStatus = [self networkStatus];
-	return (netStatus != NotReachable && netStatus == ReachableViaWWAN);
+	AKNetworkReachabilityStatus netStatus = [self networkStatus];
+	return (netStatus != kAKNotReachable && netStatus == kAKReachableViaWWAN);
 }
 
 - (BOOL) activeWiFi 
 {
-	NetworkStatus netStatus = [self networkStatus];
-	return (netStatus != NotReachable && netStatus == ReachableViaWiFi);
+	AKNetworkReachabilityStatus netStatus = [self networkStatus];
+	return (netStatus != kAKNotReachable && netStatus == kAKReachableViaWiFi);
 }
 
 - (BOOL)connectionRequired
@@ -200,6 +203,17 @@ static void AKReachabilityChanged(SCNetworkReachabilityRef target,
   Boolean flagsValid = SCNetworkReachabilityGetFlags(reachability_, &flags);
   
   return (flagsValid && (flags & kSCNetworkReachabilityFlagsConnectionRequired)) ? YES : NO;
+}
+
+- (AKNetworkReachabilityStatus)reachabilityStatus
+{
+	SCNetworkReachabilityFlags flags;
+	AKNetworkReachabilityStatus retVal = kAKNotReachable;
+
+	if (SCNetworkReachabilityGetFlags(reachability_, &flags))
+		retVal = [self _networkStatusForFlags: flags];
+
+	return retVal;
 }
 
 @end

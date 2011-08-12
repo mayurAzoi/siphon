@@ -42,20 +42,27 @@
   if (image == nil)
   {
     _displayedName.textAlignment = UITextAlignmentCenter;
-    _status.textAlignment = UITextAlignmentCenter;
+    //_status.textAlignment = UITextAlignmentCenter;
 		_imageView.hidden = YES;
+		[_imageView removeFromSuperview];
   }
   else
   {
-    _displayedName.textAlignment =  UITextAlignmentLeft;
-    _status.textAlignment =  UITextAlignmentLeft;
+    _displayedName.textAlignment =  UITextAlignmentRight;
+    //_status.textAlignment =  UITextAlignmentRight;
 		_imageView.hidden = NO;
+		CGRect iframe = _imageView.frame;
+		CGRect frame = _status.frame;
+		frame.origin.x += iframe.size.width;
+		frame.size.width -= iframe.size.width;
+		_status.frame = frame;
+		//[self addSubview:_imageView];
   }
 }
 
 
 #pragma mark -
-- (UILabel *)createLabel:(CGRect)rect size:(CGFloat)fontSize
+- (UILabel *)newLabel:(CGRect)rect size:(CGFloat)fontSize // CLANG rename
 {
   UILabel *label;
   
@@ -67,6 +74,7 @@
   label.font = [UIFont fontWithName:@"Helvetica" size:fontSize];
   label.textAlignment = UITextAlignmentCenter;
   label.textColor = [UIColor whiteColor];
+	//label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin;
   
   return label;
 }
@@ -78,15 +86,17 @@
         // Initialization code
       //self.backgroundColor = [UIColor cyanColor];
       self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"lcdbg.png"]];
-      //self.alpha = 0.7f;
+      self.alpha = 0.7f;
        
       CGRect rect = frame;
+			rect.origin.x += 5.0;
+			rect.size.width -= 10.0;
       //rect.size.height = CGRectGetHeight(frame) / 2;
       rect.size.height = CGRectGetHeight(frame) - 30;
-      _displayedName = [self createLabel:rect size:32];
+      _displayedName = [self newLabel:rect size:32];
       rect.origin.y = CGRectGetHeight(frame) / 2;
       rect.size.height = CGRectGetHeight(frame) / 2;
-      _status = [self createLabel:rect size:20];
+      _status = [self newLabel:rect size:20];
       
       _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5.0f, 5.0f, 
                                                                  frame.size.height - 10.0f, 

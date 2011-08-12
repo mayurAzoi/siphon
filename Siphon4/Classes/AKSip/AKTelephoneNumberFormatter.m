@@ -2,6 +2,7 @@
 //  AKTelephoneNumberFormatter.m
 //  Telephone
 //
+//  Modified by Samuel Vinson 2010-2011 - GPL
 //  Copyright (c) 2008-2009 Alexei Kuznetsov. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
@@ -34,7 +35,28 @@
 @implementation AKTelephoneNumberFormatter
 
 @synthesize splitsLastFourDigits = splitsLastFourDigits_;
+@synthesize substitutesFirstCharacters = substitutesFirstCharacters_;
+@synthesize firstCharactersSubstitution = firstCharactersSubstitution_;
 
+- (id)init
+{
+	if (self = [super init])
+	{
+		substitutesFirstCharacters_  = nil;
+		firstCharactersSubstitution_ = nil;
+	}
+	return self;
+}
+
+- (void)dealloc
+{
+	[substitutesFirstCharacters_ release];
+	[firstCharactersSubstitution_ release];
+	[super dealloc];
+}
+
+#pragma mark -
+#pragma mark NSFormatter implementation
 - (NSString *)stringForObjectValue:(id)anObject {
   if (![anObject isKindOfClass:[NSString class]])
     return nil;
@@ -218,19 +240,33 @@
 
 - (BOOL)getObjectValue:(id *)anObject
              forString:(NSString *)string
-      errorDescription:(NSString **)error {
-  
+      errorDescription:(NSString **)error 
+{
   BOOL returnValue = NO;
   
+#if SCANNER
   NSMutableCharacterSet *phoneNumberCharacterSet
     = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] copy];
-  NSScanner *scanner = [NSScanner scannerWithString:string];
+#else
+	NSMutableCharacterSet *phoneNumberCharacterSet = [[NSCharacterSet decimalDigitCharacterSet] 
+																										copy];
+#endif
+	NSScanner *scanner = [NSScanner scannerWithString:string];
   NSMutableString *telephoneNumber = [[NSMutableString alloc] init];
   
-  if ([string hasPrefix:@"+"]) {
-    [telephoneNumber appendString:@"+"];
+	if ([[self substitutesFirstCharacters] length] > 0 && 
+			[string hasPrefix:[self substitutesFirstCharacters]])
+	{
+		[telephoneNumber appendString:[self firstCharactersSubstitution]];
+		[scanner setScanLocation:[[self substitutesFirstCharacters] length]];
+	}
+	else if ([string hasPrefix:@"+"])
+	{
+		[telephoneNumber appendString:@"+"];
     [scanner setScanLocation:1];
-  } else {
+	}
+	else
+	{
     // If the number is not in the international format, allow asterisk and
     // number sign.
     [phoneNumberCharacterSet addCharactersInString:@"*#"];
@@ -274,5 +310,15 @@
     return nil;
   }
 }
+
+/*
+ + (NSString *) normalizePhoneNumber:(NSString *)number 
+ {
+ // Becareful international prefix '+' is removed.
+ return [[number componentsSeparatedByCharactersInSet:
+ [[NSCharacterSet decimalDigitCharacterSet] invertedSet]] 
+ componentsJoinedByString:@""];
+ }
+ */
 
 @end

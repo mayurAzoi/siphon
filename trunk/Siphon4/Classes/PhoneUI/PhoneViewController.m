@@ -21,32 +21,70 @@
 #import "SiphonAppDelegate.h"
 
 #import "UIScreen+ConvertRect.h"
+#if GSM_BUTTON
+#import "UIDevice+Capabilities.h"
+#import "SettingsController.h"
+#endif /* GSM_BUTTON */
 
 #import "SIPController.h"
 #import "SIPAccountController.h"
 
 #import "AKSIPURI.h"
+#import "AKTelephoneNumberFormatter.h"
+
+#import "CallPickerController.h"
+
+#import "AddressBook.h"
+#import "ABRecord+Private.h"
+
+#if HTTP_REQUEST
+#import "SiphonRequest.h"
+#endif /* HTTP_REQUEST */
 
 static const NSString *forbiddenChars = @",;/?:&=+$";
 
 @interface PhoneViewController ()
 
-- (void)addNewPerson;
-
 #if defined(POPOVER_CALL) && POPOVER_CALL!=0
-@property (nonatomic, retain) CallPickerController *callPicker;
 @property (nonatomic, retain) WEPopoverController  *callPickerPopover;
 #endif /* POPOVER_CALL */
+
+#if HTTP_REQUEST
+@property (nonatomic, retain) NSTimer *balanceTimer; 
+@property (nonatomic, retain) SiphonRequest *balanceRequest;
+@property (nonatomic, retain) SiphonRequest *rateRequest;
+#endif /* HTTP_REQUEST */
+
+- (void)addNewPerson;
 
 @end
 
 @implementation PhoneViewController
 
+@synthesize lcd = _lcd;
+
 #if defined(POPOVER_CALL) && POPOVER_CALL!=0
-@synthesize callPicker = _callPicker;
 @synthesize callPickerPopover = _callPickerPopover;
 #endif /* POPOVER_CALL */
 
+#if HTTP_REQUEST
+@synthesize balanceTimer   = _balanceTimer;
+@synthesize balanceRequest = _balanceRequest;
+@synthesize rateRequest    = _rateRequest;
+#endif /* HTTP_REQUEST */
+
+- (ABPeoplePickerNavigationController *)peoplePickerController
+{
+	if (peoplePickerController_ == nil)
+	{
+		peoplePickerController_ = [[ABPeoplePickerNavigationController alloc] init];
+    peoplePickerController_.navigationBar.barStyle = UIBarStyleBlackOpaque;
+    peoplePickerController_.peoplePickerDelegate = self;
+	}
+	return peoplePickerController_;
+}
+
+#pragma mark -
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil 
 {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -61,21 +99,18 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
     _lcd.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"lcd_top_buttons"]];
     //_lcd.backgroundColor = [UIColor clearColor];
     
-    [_lcd leftText: [[NSUserDefaults standardUserDefaults] stringForKey: 
-                     @"server"]];
-    [_lcd rightText:NSLocalizedString(@"Disconnected", 
-																			@"Initialize with disconnected status because here we don't know the status.")];
-
-#if 0
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(processRegState:)
-                                                 name: kSIPRegState 
-                                               object:nil];
-#endif
+		//AccountController *firstEnabledAccountController = [[[SIPController sharedInstance] 
+		//																										 enabledAccountControllers] objectAtIndex:0];
+		//[_lcd leftText:firstEnabledAccountController.account.registrar];
 		
-    peoplePickerCtrl = [[ABPeoplePickerNavigationController alloc] init];
-    peoplePickerCtrl.navigationBar.barStyle = UIBarStyleBlackOpaque;
-    peoplePickerCtrl.peoplePickerDelegate = self;
+    //[_lcd leftText: [[NSUserDefaults standardUserDefaults] stringForKey: 
+    //                 @"server"]];
+    //[_lcd rightText:NSLocalizedString(@"Disconnected", 
+		//																	@"Initialize with disconnected status because here we don't know the status.")];
+		
+    /*peoplePickerController_ = [[ABPeoplePickerNavigationController alloc] init];
+    peoplePickerController_.navigationBar.barStyle = UIBarStyleBlackOpaque;
+    peoplePickerController_.peoplePickerDelegate = self;*/
 	}
 	return self;
 }
@@ -170,10 +205,12 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
   [_callButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
   [_callButton setTitleColor:[UIColor colorWithWhite:1.0 alpha:0.5]  forState:UIControlStateDisabled];
 
+#if defined(POPOVER_CALL) && POPOVER_CALL!=0
 	[_callButton addTarget:self action:@selector(callButtonDidPress:) 
 				forControlEvents:UIControlEventTouchDown];
 	[_callButton addTarget:self action:@selector(callButtonDidReleaseOutside:) 
 				forControlEvents:UIControlEventTouchUpOutside];
+#endif /* POPOVER_CALL */
 
   [_callButton addTarget:self action:@selector(callButtonDidReleaseInside:) 
                forControlEvents:UIControlEventTouchUpInside];
@@ -196,10 +233,10 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
 	[view addSubview:_lcd];
   [view addSubview:_pad];
 
+#if !GSM_BUTTON
 	[_container addSubview:_addContactButton];
-#if GSM_BUTTON
-	[_container addSubview:_gsmCallButton];
 #endif /* GSM_BUTTON */
+
   [_container addSubview:_callButton];
   [_container addSubview:_deleteButton];
   
@@ -242,18 +279,12 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
 
 	CGRect rect = _container.frame;
 	rect.origin.y = keyboardEndFrame.origin.y - 64.0f;
-#if 0
-	[UIView beginAnimations:@"scroll" context:nil];
-	[UIView setAnimationBeginsFromCurrentState:YES];
-  [UIView setAnimationDuration:0.3];
-	[_container setFrame:rect];
-	[UIView commitAnimations];
-#else
+
 	[UIView animateWithDuration:0.3
 									 animations:^{
 										 _container.frame = rect;
-									 }];
-#endif
+									 }
+	 ];
 }
 
 - (void)keyboardWillHide:(NSNotification*)aNotification
@@ -264,27 +295,31 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
 	CGRect rect = _container.frame;
   rect.origin.y = 347.0f;
 	
-#if 0
-	[UIView beginAnimations:@"scroll" context:nil];
-	[UIView setAnimationBeginsFromCurrentState:YES];
-  [UIView setAnimationDuration:0.3];
-  [_container setFrame:rect];
-  [UIView commitAnimations];
-	
-  _pad.enabled = YES;
-#else
 	[UIView animateWithDuration:0.3
 									 animations:^{
 										 _container.frame = rect;
 									 } 
 									 completion:^(BOOL finished){
-										 _pad.enabled = YES;
+										 [_pad setEnabled:YES];
 									 }];
-#endif
 }
 
 - (void)viewWillAppear:(BOOL)animated 
 {
+#if GSM_BUTTON
+	if (![[UIDevice currentDevice] supportsTelephony] || 
+      ![[NSUserDefaults standardUserDefaults] boolForKey:kCellularButton])
+	{
+		[_gsmCallButton removeFromSuperview];
+    [_container addSubview:_addContactButton];
+	}
+  else
+  { 
+		[_addContactButton removeFromSuperview];
+		[_container addSubview:_gsmCallButton];
+	}
+#endif /* GSM_BUTTON */
+	
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(keyboardWillShow:)
                                                name:UIKeyboardWillShowNotification
@@ -294,6 +329,15 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
                                            selector:@selector(keyboardWillHide:)
                                                name:UIKeyboardWillHideNotification 
                                              object:nil];
+	
+#if HTTP_REQUEST
+	self.balanceRequest = [[SiphonRequest alloc] initWithReceiver:_lcd action:@selector(rightText:)];
+  self.balanceTimer = [NSTimer scheduledTimerWithTimeInterval:600 target:self.balanceRequest 
+																										 selector:@selector(requestBalance) 
+																										 userInfo:nil 
+																											repeats:YES];
+	[self.balanceTimer fire];
+#endif /* HTTP_REQUEST */
 }
 
 - (void)viewWillDisappear:(BOOL)animated 
@@ -312,6 +356,16 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
 		[self.callPickerPopover dismissPopoverAnimated:NO];
 	}
 #endif /* POPOVER_CALL */
+	
+#if HTTP_REQUEST
+	if (_balanceTimer)
+  {
+    [self.balanceTimer invalidate];
+    self.balanceTimer = nil;
+  }
+	self.balanceRequest = nil;
+	self.rateRequest = nil;
+#endif /* HTTP_REQUEST */
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -323,17 +377,15 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
 	// Release anything that's not essential, such as cached data
+	[peoplePickerController_ release];
+	peoplePickerController_ = nil;
 }
 
 
 - (void)dealloc 
 {
-#if 0
-  [[NSNotificationCenter defaultCenter] removeObserver:self 
-                                                  name: kSIPRegState 
-                                                object:nil];
-#endif
-  [peoplePickerCtrl release];
+  [peoplePickerController_ release];
+	peoplePickerController_ = nil;
 
   [_textfield release];
   [_lcd release];
@@ -344,9 +396,6 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
   [_gsmCallButton release];
 #endif /* GSM_BUTTON */
 #if defined(POPOVER_CALL) && POPOVER_CALL!=0
-	[_callButtonTimer invalidate];
-	[_callButtonTimer release];
-	
 	[_callPickerPopover release];
 #endif /* POPOVER_CALL */
   [_callButton release];
@@ -361,10 +410,19 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
   //NSTimer *_deleteTimer;
   //NSString *_lastNumber;
   
+#if HTTP_REQUEST
+	[self.balanceTimer invalidate];
+	[_balanceTimer release];
+	
+  [_rateRequest release];
+  [_balanceRequest release];
+#endif /* HTTP_REQUEST */
+	
 	[super dealloc];
 }
 
-/*** Buttons callback ***/
+#pragma mark -
+#pragma mark PhonePadDelegate
 - (void)phonePad:(id)phonepad appendString:(NSString *)string
 {
   NSString *curText = [_textfield text];
@@ -376,7 +434,17 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
     _gsmCallButton.enabled = YES;
 #endif /* GSM_BUTTON */
   _lcd.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"lcd_top"]];
+	
+#if HTTP_REQUEST
+	//if ([curText length] >= 3 && _rateRequest == nil)
+	if ([curText length] >= 3 && ![_rateRequest isActive])
+	{
+		self.rateRequest = [[SiphonRequest alloc] initWithReceiver:_lcd action:@selector(topText:)];
+		[self.rateRequest requestRate:[_textfield text]];
+	}
+#endif /* HTTP_REQUEST */
 }
+
 - (void)phonePad:(id)phonepad replaceLastDigitWithString:(NSString *)string
 {
   NSString *curText = [_textfield text];
@@ -384,16 +452,18 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
   [_textfield setText: [curText stringByAppendingString: string]];
 }
 
+
+#pragma mark -
+#pragma mark Buttons callback
 #if defined(POPOVER_CALL) && POPOVER_CALL!=0
-- (void)callButtonDidLongPress:(NSTimer *)timer
+- (void)callButtonDidLongPress:(UIButton *)button
 {
-	//UIButton *button = [timer userInfo];
-	
+	consumedTap_ = YES;
 	if (_callPickerPopover == nil)
 	{
-		self.callPicker = [[CallPickerController alloc] initWithStyle:UITableViewStylePlain];
+		CallPickerController *callPicker = [[CallPickerController alloc] initWithStyle:UITableViewStylePlain];
 		self.callPickerPopover = [[WEPopoverController alloc]
-															initWithContentViewController:self.callPicker];
+															initWithContentViewController:callPicker];
 		//CGRect rect = _callButton.frame;
 		//rect = _container.frame;
 	}
@@ -406,30 +476,30 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
 - (void)callButtonDidPress:(UIButton *)button
 {
 	if ([[_textfield text] length] > 0)
-		_callButtonTimer = [[NSTimer scheduledTimerWithTimeInterval:0.5 target:self 
-																											 selector:@selector(callButtonDidLongPress:) 
-																											 userInfo:button 
-																												repeats:NO] retain];
-	else 
-		_callButtonTimer = nil;
+	{
+		consumedTap_ = NO;
+		[self performSelector:@selector(callButtonDidLongPress:)
+							 withObject:button 
+							 afterDelay:0.5];
+	}
 }
 
 - (void)callButtonDidReleaseOutside:(UIButton *)button
 {
-	[_callButtonTimer invalidate];
-	[_callButtonTimer release];
-	_callButtonTimer = nil;
+	[NSObject cancelPreviousPerformRequestsWithTarget:self
+																					 selector:@selector(callButtonDidLongPress:)
+																						 object:button];
 }
 #endif /* POPOVER_CALL */
 
 - (void)callButtonDidReleaseInside:(UIButton*)button
 {
 #if defined(POPOVER_CALL) && POPOVER_CALL!=0
-	if (![self.callPickerPopover isPopoverVisible])
+	[NSObject cancelPreviousPerformRequestsWithTarget:self
+																					 selector:@selector(callButtonDidLongPress:)
+																						 object:button];
+	if (!consumedTap_ && ![self.callPickerPopover isPopoverVisible])
 	{
-		[_callButtonTimer invalidate];
-		[_callButtonTimer release];
-		_callButtonTimer = nil;
 #endif /* POPOVER_CALL */
 	
 	if ([[_textfield text] length] > 0)
@@ -437,22 +507,152 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
 		_lastNumber = [[NSString alloc] initWithString: [_textfield text]];
     [_textfield setText:@""];
 		_lcd.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"lcd_top_buttons"]];
+
+#if 0
+		// Search Address Book for caller's name.
+		ABAddressBook *AB = [ABAddressBook sharedAddressBook];
+		NSArray *records = nil;
+		NSString *finalDisplayedName = nil;
+		NSString *localizedLabel = nil;
+		BOOL recordFound = NO;
+		// Look for the whole phone number match first.
+    ABSearchElement *phoneNumberMatch = [ABPerson searchElementForProperty:kABPersonPhoneProperty
+																																		 label:nil
+																																			 key:nil
+																																		 value:_lastNumber
+																																comparison:kABEqual];
 		
-		AccountController *firstEnabledAccountController = [[[SIPController sharedInstance] 
-																												 enabledAccountControllers] objectAtIndex:0];
+		records = [AB recordsMatchingSearchElement:phoneNumberMatch];
+		if ([records count] > 0) 
+		{
+			recordFound = YES;
+			ABRecord *theRecord = [records objectAtIndex:0];
+			finalDisplayedName = (NSString *)ABRecordCopyCompositeName([theRecord recordRef]);
+			// Find the exact phone number match.
+			ABMultiValueRef multiValue = ABRecordCopyValue([theRecord recordRef],
+																										 kABPersonPhoneProperty);
+			NSArray* phoneNumbers = (NSArray*)ABMultiValueCopyArrayOfAllValues(multiValue);
+			for ( NSString *aNumber in phoneNumbers)
+			{
+				if ([aNumber isEqualToString:_lastNumber])
+				{
+					CFIndex valueIdx = ABMultiValueGetFirstIndexOfValue (multiValue, aNumber);
+					CFStringRef label = ABMultiValueCopyLabelAtIndex(multiValue, valueIdx);
+					localizedLabel = (NSString *)ABAddressBookCopyLocalizedLabel(label);
+					CFRelease(label);
+					break;
+				}
+			}
+			CFRelease(multiValue);
+		}
 		
-		AKSIPURI *destinationURI = [AKSIPURI SIPURIWithUser:_lastNumber
-																									 host:firstEnabledAccountController.account.registrar
-																						displayName:_lastNumber /*[dictionnary valueForKey:@"name"]*/];
+		[[SIPController sharedInstance] makeCall:_lastNumber
+																 displayName:finalDisplayedName
+																	phoneLabel:localizedLabel
+																			 image:nil];
+#else
+		// Search Address Book for caller's name.
+		ABAddressBook *AB = [ABAddressBook sharedAddressBook];
+		NSArray *records = nil;
+
+		// Look for the whole phone number match first.
+    ABSearchElement *phoneNumberMatch = [ABPerson searchElementForProperty:kABPersonPhoneProperty
+																																		 label:nil
+																																			 key:nil
+																																		 value:_lastNumber
+																																comparison:kABEqual];
 		
-		[firstEnabledAccountController makeCallToURI:destinationURI
-																			phoneLabel:nil/*[dictionnary valueForKey:@"label"]*/];
+		records = [AB recordsMatchingSearchElement:phoneNumberMatch];
+		ABRecord *theRecord = nil;
+		if ([records count] > 0)
+			theRecord = [records objectAtIndex:0];
 		
+		NSUInteger significantPhoneNumberLength = 6;
+		//= [defaults integerForKey:kSignificantPhoneNumberLength];
+		
+		// Get the significant phone suffix if the phone number length is greater
+    // than we defined.
+    NSString *significantPhoneSuffix;
+    if ([_lastNumber length] > significantPhoneNumberLength) 
+		{
+      significantPhoneSuffix = [_lastNumber substringFromIndex:
+																([_lastNumber length] - significantPhoneNumberLength)];
+      
+      // If the the record hasn't been found with the whole number, look for
+      // significant suffix match.
+      if (!theRecord) 
+			{
+        ABSearchElement *phoneNumberSuffixMatch =
+					[ABPerson searchElementForProperty:kABPersonPhoneProperty
+																			 label:nil
+																				 key:nil
+																			 value:significantPhoneSuffix
+																	comparison:kABSuffixMatch];
+        
+        records = [AB recordsMatchingSearchElement:phoneNumberSuffixMatch];
+        if ([records count] > 0) 
+					// TODO check the correct number!!!
+					theRecord = [records objectAtIndex:0];
+      }
+    }
+		
+		// If still not found, search phone numbers that contain spaces, dashes, etc.
+		if (!theRecord)
+		{
+			AKTelephoneNumberFormatter *telephoneNumberFormatter = [[AKTelephoneNumberFormatter alloc] init];
+			
+			NSArray *people = (NSArray*)ABAddressBookCopyArrayOfAllPeople([AB addressBook]);
+
+			ABRecordRef record = nil;
+			NSEnumerator *enumerator = [people objectEnumerator];
+			while (record = [enumerator nextObject])
+			{
+				ABMultiValueRef phoneNumberProperty = ABRecordCopyValue(record, kABPersonPhoneProperty);
+				NSArray* phoneNumbers = (NSArray*)ABMultiValueCopyArrayOfAllValues(phoneNumberProperty);
+				//for ( NSString *aNumber in phoneNumbers)
+				for (int i = [phoneNumbers count] - 1; i >=0 ; --i)
+				{
+					NSString *aNumber = [phoneNumbers objectAtIndex:i];
+					NSString *normalizedNumber = [telephoneNumberFormatter telephoneNumberFromString:aNumber];
+					//NSLog(@"number %@", normalizedNumber);
+					if ([_lastNumber compare:normalizedNumber] == NSOrderedSame)
+					{
+						theRecord = [[[ABRecord alloc] initWithRecord:record] autorelease];
+						[theRecord setProperty:kABPersonPhoneProperty];
+						ABMultiValueIdentifier identifier = ABMultiValueGetIdentifierAtIndex(phoneNumberProperty, i);
+						[theRecord setIdentifier:identifier];
+						break;
+					}
+				}
+				CFRelease(phoneNumberProperty);
+				[phoneNumbers release];
+				if (theRecord)
+					break;
+			}
+			[people release]; // CLANG
+			[telephoneNumberFormatter release];
+		}
+		
+		[[SIPController sharedInstance] makeCall:_lastNumber
+															 displayPerson:[theRecord recordRef]
+																		property:[theRecord property]
+																	identifier:[theRecord identifier]];
+#endif		
 	}
 	else
   {
     _lcd.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"lcd_top"]];
     [_textfield setText:_lastNumber];
+		
+#if HTTP_REQUEST
+		//if ([_lastNumber length] >= 3 && _rateRequest == nil)
+		if ([_lastNumber length] >= 3)
+		{
+			self.rateRequest = [[SiphonRequest alloc] initWithReceiver:_lcd action:@selector(topText:)];
+			[self.rateRequest requestRate:_lastNumber];
+		}
+#endif /* HTTP_REQUEST */
+		
     [_lastNumber release];
   }
 #if defined(POPOVER_CALL) && POPOVER_CALL!=0
@@ -465,7 +665,9 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
   if ([[_textfield text] length] < 1) 
     return;
 
-  if (ABAddressBookGetPersonCount(ABAddressBookCreate ()) == 0)
+	ABAddressBookRef AB = [[ABAddressBook sharedAddressBook] addressBook];
+	CFIndex count = ABAddressBookGetPersonCount(AB);
+	if (count == 0)
   {
     // Create a new contact
     [self addNewPerson];
@@ -482,6 +684,7 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
 
 		SiphonAppDelegate *appDelegate = (SiphonAppDelegate *)[[UIApplication sharedApplication] delegate];
 		[actionSheet showFromTabBar:appDelegate.tabBarController.tabBar];
+		[actionSheet release];
   }
 }
 
@@ -542,6 +745,13 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
     {
       [_textfield setText: [curText substringToIndex:(length-1)]];
     }
+#if HTTP_REQUEST
+		if (length <= 4)
+		{
+			self.rateRequest = nil;
+			[_lcd topText:@""];
+		}
+#endif /* HTTP_REQUEST */
   }
   else
   {
@@ -571,16 +781,17 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
   ABRecordRef person = ABPersonCreate ();
   
   // Add phone number
-  ABMutableMultiValueRef multiValue = 
-  ABMultiValueCreateMutable(kABStringPropertyType);
+  ABMutableMultiValueRef multiValue = ABMultiValueCreateMutable(kABStringPropertyType);
   
   ABMultiValueAddValueAndLabel(multiValue, [_textfield text], kABPersonPhoneMainLabel, 
                                NULL);  
   
   ABRecordSetValue(person, kABPersonPhoneProperty, multiValue, &error);
   
+	CFRelease(multiValue); // CLANG
   
   ABNewPersonViewController *newPersonCtrl = [[ABNewPersonViewController alloc] init];
+	newPersonCtrl.addressBook = [[ABAddressBook sharedAddressBook] addressBook];
   newPersonCtrl.newPersonViewDelegate = self;
   newPersonCtrl.displayedPerson = person;
   CFRelease(person); // TODO check
@@ -607,7 +818,7 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
       shouldContinueAfterSelectingPerson:(ABRecordRef)person
 {
   CFErrorRef error = NULL;
-  BOOL status;
+  //BOOL status;
   ABMutableMultiValueRef multiValue;
   // Inserer le numéro dans la fiche de la personne
   // Add phone number
@@ -616,14 +827,16 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
     multiValue = ABMultiValueCreateMutable(kABStringPropertyType);
   else
     multiValue = ABMultiValueCreateMutableCopy (typeRef);
+	CFRelease(typeRef); // CLANG
   
   // TODO type (mobile, main...)
   // TODO manage URI
-  status = ABMultiValueAddValueAndLabel(multiValue, [_textfield text], kABPersonPhoneMainLabel, 
+  /*status = */ABMultiValueAddValueAndLabel(multiValue, [_textfield text], kABPersonPhoneMainLabel, 
                                NULL);  
   
-  status = ABRecordSetValue(person, kABPersonPhoneProperty, multiValue, &error);
-  status = ABAddressBookSave(peoplePicker.addressBook, &error);
+  /*status = */ABRecordSetValue(person, kABPersonPhoneProperty, multiValue, &error);
+  /*status = */ABAddressBookSave(peoplePicker.addressBook, &error);
+	CFRelease(multiValue); // CLANG
   [peoplePicker dismissModalViewControllerAnimated:YES];
   return NO;
 }
@@ -652,39 +865,12 @@ static const NSString *forbiddenChars = @",;/?:&=+$";
       [self addNewPerson];
       break;
     case 1: // Add to existing Contact
-      [self presentModalViewController:peoplePickerCtrl animated:YES];
+      [self presentModalViewController:[self peoplePickerController] animated:YES];
 			break;
     default:
       break;
   }
 }
-
-#if 0
-- (void)cancelAddPerson:(id)unused
-{
-  [self.parentViewController dismissModalViewControllerAnimated:YES];
-}
-#endif
-
-- (void)reachabilityChanged:(NSNotification *)notification
-{
-  [_lcd rightText:@"Service Unavailable"];
-}
-
-#if 0
-- (void)processRegState:(NSNotification *)notification
-{
-  //pjsua_acc_info info;
-  //pjsua_acc_id acc_id;
-  //NSString *status;
-  //acc_id = [[[ notification userInfo ] objectForKey: @"AccountID"] intValue];
-  NSDictionary *dictionary = [notification userInfo];
-  if ([[dictionary objectForKey:@"Status"] intValue] == 200)
-    [_lcd rightText:@"Connected"];
-  else
-    [_lcd rightText:[dictionary objectForKey:@"StatusText"]];
-}
-#endif
 
 #pragma mark -
 #pragma mark TextFieldDelegate

@@ -23,13 +23,17 @@
 #import "DialerPhonePad.h"
 #import "LCDPhoneView.h"
 
-#define GSM_BUTTON 0
+#define GSM_BUTTON 1
 #define POPOVER_CALL 0
+#define HTTP_REQUEST 0
 
 #if defined(POPOVER_CALL) && POPOVER_CALL!=0
 #import "WEPopoverController.h"
-#import "CallPickerController.h"
 #endif /* POPOVER_CALL */
+
+#if HTTP_REQUEST
+@class SiphonRequest;
+#endif /* HTTP_REQUEST */
 
 @interface PhoneViewController : UIViewController <
           UITextFieldDelegate,
@@ -38,6 +42,7 @@
           ABNewPersonViewControllerDelegate,
           ABPeoplePickerNavigationControllerDelegate>
 {
+	@private
   UITextField *_textfield;
   LCDPhoneView  *_lcd;
 
@@ -56,15 +61,24 @@
   
   NSString *_lastNumber;
 
-  ABPeoplePickerNavigationController *peoplePickerCtrl;
+  ABPeoplePickerNavigationController *peoplePickerController_;
 	
 #if defined(POPOVER_CALL) && POPOVER_CALL!=0
-	NSTimer  *_callButtonTimer;
+	BOOL consumedTap_;
 	
-	CallPickerController *_callPicker;
 	WEPopoverController *_callPickerPopover;
 #endif /* POPOVER_CALL */
+	
+#if HTTP_REQUEST
+	NSTimer        *_balanceTimer; 
+	SiphonRequest  *_balanceRequest;
+  SiphonRequest  *_rateRequest;
+#endif /* HTTP_REQUEST */
 }
+
+// FIXME we use it to display the registration status. We should define a new view to manage the 
+// different account.
+@property(nonatomic, readonly) LCDPhoneView *lcd;
 
 @end
 

@@ -49,7 +49,7 @@ static SystemSoundID sounds[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
    forControlEvents:UIControlEventTouchUpInside|UIControlEventTouchUpOutside];
     
     // Init
-		_topHeight = 58.0;
+    _topHeight = 58.0;
     _midHeight = 56.0;
     _bottomHeight = 59.0;
     _leftWidth = 95.0;
@@ -133,13 +133,10 @@ static SystemSoundID sounds[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 }
 
 - (void)handleKeyUp:(id)sender forEvent:(UIEvent *)event
-{
-  
+{  
   NSSet *set = [event touchesForView:self];
-  NSEnumerator *enumerator = [set objectEnumerator];
-  UITouch *touch;
-  
-  while ((touch = [enumerator nextObject])) 
+
+  for (int i = [set count] ; i ; --i) 
   {    
     if (_downKey == 0)
       //return;
@@ -177,7 +174,7 @@ static SystemSoundID sounds[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 - (int)keyForPoint:(CGPoint)point
 {
   int pos = 0;
-	CGSize size = [[self keypadImage] size];
+  CGSize size = [[self keypadImage] size];
   CGRect bounds = [self bounds];
   
   point.x = point.x - (CGRectGetMidX(bounds) - size.width/2.);
@@ -244,7 +241,7 @@ static SystemSoundID sounds[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
       height = _midHeight;
       break;
     case 3:
-      y += _topHeight + 2.0 * _midHeight;
+      y = _topHeight + 2.0 * _midHeight;
       height = _bottomHeight;
       break;
     default:
@@ -264,14 +261,17 @@ static SystemSoundID sounds[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
   b = [self bounds];
   r.origin.x = (b.size.width - r.size.width) / 2;
   r.origin.y = (b.size.height - r.size.height) / 2;
-	[[self keypadImage] drawInRect:r];
+  [[self keypadImage] drawInRect:r];
   
   if (_downKey != 0)
   {
     //NSLog(@"drawButton %d", _downKey);
     CGRect ri = [self rectForKey:_downKey];
-    CGImageRef cgImg = CGImageCreateWithImageInRect([[self pressedImage] CGImage], ri);
-    UIImage *img = [UIImage imageWithCGImage:cgImg];
+    CGFloat scale = [[self pressedImage] scale];
+    CGRect ris = CGRectMake(ri.origin.x * scale,  ri.origin.y * scale,
+														ri.size.width * scale, ri.size.height * scale);
+    CGImageRef cgImg = CGImageCreateWithImageInRect([[self pressedImage] CGImage], ris);
+    UIImage *img = [UIImage imageWithCGImage:cgImg scale:scale orientation:UIImageOrientationUp];
     ri.origin.x += r.origin.x;
     ri.origin.y += r.origin.y;
     [img drawInRect:ri];

@@ -33,7 +33,6 @@
   id<PhonePadDelegate> _delegate;
   int _downKey;
   
-  CFDictionaryRef _keyToRect;
   BOOL _soundsActivated;
 #if LONG_DTMF
   void *_aqPlayer;

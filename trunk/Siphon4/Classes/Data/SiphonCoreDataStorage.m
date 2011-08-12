@@ -81,7 +81,7 @@
  */
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator 
 {
-	
+	static BOOL firstPass = YES;
 	if (persistentStoreCoordinator_ == nil) 
 	{
 		NSString *storePath = [[self applicationDocumentsDirectory] stringByAppendingPathComponent: @"CoreDataSiphon.sqlite"];
@@ -112,16 +112,40 @@
 																												 options:options 
 																													 error:&error]) 
 		{
-			// Update to handle the error appropriately.
-			//NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-			//exit(-1);  // Fail
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Fatal database error", @"Fatal database error")
-																											message:[NSString stringWithFormat:NSLocalizedString(@"Unable to initialize database: %@", @"Unable to initialize database"), [error localizedDescription]]
-																										 delegate:nil
-																						cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
-																						otherButtonTitles:nil];
-			[alert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:YES];
-			[alert release];
+			if (firstPass &&
+					[fileManager fileExistsAtPath:storePath])
+			{
+				firstPass = NO;
+				
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Database Changed", @"Database Changed")
+																												message:NSLocalizedString(@"The local database metadata changed, we clean the previous version.", @"The local database metadata changed, we clean the previous versionx@")
+																											 delegate:nil
+																							cancelButtonTitle:@"OK"
+																							otherButtonTitles:nil];
+				[alert show];
+				[alert release];
+				
+				/* Delete the data store and try again */
+				[fileManager removeItemAtPath:storePath error:nil];
+				
+				[persistentStoreCoordinator_ release];
+				persistentStoreCoordinator_ = nil;
+				
+				return [self persistentStoreCoordinator];
+			}
+			else 
+			{
+				// Update to handle the error appropriately.
+				//NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+				//exit(-1);  // Fail
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Fatal database error", @"Fatal database error")
+																												message:[NSString stringWithFormat:NSLocalizedString(@"Unable to initialize database: %@", @"Unable to initialize database"), [error localizedDescription]]
+																											 delegate:nil
+																							cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+																							otherButtonTitles:nil];
+				[alert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:YES];
+				[alert release];
+			}
 		} 
 	}
 	

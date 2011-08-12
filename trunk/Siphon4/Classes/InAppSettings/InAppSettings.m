@@ -2,6 +2,7 @@
 //  InAppSettingsViewController.m
 //  InAppSettings
 //
+//  Modified by Samuel Vinson 2010-2011 - GPL
 //  Created by David Keegan on 11/21/09.
 //  Copyright 2009 InScopeApps{+}. All rights reserved.
 //
@@ -10,9 +11,11 @@
 #import "InAppSettingsPSMultiValueSpecifierTable.h"
 #import "InAppSettingsWebViewController.h"
 
+#import <objc/runtime.h> // For optimized singleton
+
 @implementation InAppSettings
 
-static InAppSettings *sharedInstance = nil;
+static InAppSettings *sharedInstance_ = nil;
 
 + (void)registerDefaults{
     [[[InAppSettingsReaderRegisterDefaults alloc] init] release];
@@ -21,41 +24,72 @@ static InAppSettings *sharedInstance = nil;
 #pragma mark -
 #pragma mark Singleton
 
-+ (void)initialize{
-    if(!sharedInstance){
-        [[[self alloc] init] release];
+#pragma mark -
+#pragma mark InAppSettings singleton instance
+
+#ifndef __clang_analyzer__
++ (InAppSettings *)sharedManagerSync {
+  @synchronized(self) {
+    if (sharedInstance_ == nil)
+      [[self alloc] init];  // Assignment not done here.
+  }
+  
+  return (InAppSettings *)sharedInstance_;
+}
+#endif // __clang_analyzer__
+
++ (InAppSettings *)sharedManagerNoSync {
+	return (InAppSettings *)sharedInstance_;
+}
+
++ (InAppSettings *)sharedManager {
+	return [self sharedManagerSync];
+}
+
++ (id)allocWithZone:(NSZone *)zone {
+  @synchronized(self) {
+    if (sharedInstance_ == nil) {
+      sharedInstance_ = [super allocWithZone:zone];
+			Method newSharedInstanceMethod = class_getClassMethod(self, @selector(sharedManagerNoSync));
+			method_setImplementation(class_getClassMethod(self, @selector(sharedManager)), method_getImplementation(newSharedInstanceMethod));
     }
+  }
+  
+  return sharedInstance_;  // On subsequent allocation attempts return nil.
 }
 
-+ (id)sharedManager{
-    return sharedInstance;
+- (id)copyWithZone:(NSZone *)zone {
+  return self;
 }
 
-+ (id)allocWithZone:(NSZone *)zone{
-    return [sharedInstance retain] ?: [super allocWithZone:zone];
+- (id)retain {
+  return self;
 }
 
-- (id)init{
-    if(!sharedInstance){
-        if ((self = [super init])){
-            //initialize ivars
-        }
-        sharedInstance = [self retain];
-    }else if(self != sharedInstance){
-        [self release];
-        self = [sharedInstance retain];
-    }
-    
-    return self;
+- (NSUInteger)retainCount {
+  return NSUIntegerMax;  // Denotes an object that cannot be released.
+}
+
+- (void)release {
+  // Do nothing.
+}
+
+- (id)autorelease {
+  return self;
 }
 
 @end
 
+#pragma mark -
 @implementation InAppSettingsModalViewController
 
 - (id)init{
+#if InAppSettingsUseUITableViewController
+	InAppSettingsViewController *settings = [[InAppSettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
+#else
     InAppSettingsViewController *settings = [[InAppSettingsViewController alloc] init];
-    self = [[UINavigationController alloc] initWithRootViewController:settings];
+#endif
+		self = [[UINavigationController alloc] initWithRootViewController:settings];
     [settings addDoneButton];
     [settings release];
     return self;
@@ -66,8 +100,10 @@ static InAppSettings *sharedInstance = nil;
 @implementation InAppSettingsViewController
 
 @synthesize file;
+#if !InAppSettingsUseUITableViewController
 @synthesize settingsTableView;
 @synthesize firstResponder;
+#endif
 @synthesize settingsReader;
 
 #pragma mark modal view
@@ -88,7 +124,11 @@ static InAppSettings *sharedInstance = nil;
 #pragma mark setup view
 
 - (id)initWithFile:(NSString *)inputFile{
+#if InAppSettingsUseUITableViewController
+	self = [super initWithStyle:UITableViewStyleGrouped];
+#else
     self = [super init];
+#endif
     if (self != nil){
         self.file = inputFile;
     }
@@ -96,12 +136,16 @@ static InAppSettings *sharedInstance = nil;
 }
 
 - (void)viewDidLoad{
+#if InAppSettingsUseUITableViewController
+	[super viewDidLoad];
+#else
     //setup the table
     self.settingsTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     self.settingsTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
     self.settingsTableView.delegate = self;
     self.settingsTableView.dataSource = self;
     [self.view addSubview:self.settingsTableView];
+#endif
     
     //if the title is nil set it to Settings
     if(!self.title){
@@ -115,11 +159,20 @@ static InAppSettings *sharedInstance = nil;
     
     self.settingsReader = [[InAppSettingsReader alloc] initWithFile:self.file];
     
+#if !InAppSettingsUseUITableViewController
     //setup keyboard notification
     self.firstResponder = nil;
     [self registerForKeyboardNotifications];
+#endif
 }
 
+#if InAppSettingsUseUITableViewController
+- (void)viewWillAppear:(BOOL)animated 
+{
+	[self.tableView reloadData];
+	[super viewWillAppear:animated];
+}
+#else
 - (void)viewWillAppear:(BOOL)animated {
     self.firstResponder = nil;
     
@@ -134,16 +187,28 @@ static InAppSettings *sharedInstance = nil;
     self.firstResponder = nil;
     [super viewWillDisappear:animated];
 }
+#endif
 
 - (void)dealloc{
+	
+#if !InAppSettingsUseUITableViewController
     self.firstResponder = nil;
-    
+#endif
     [file release];
+#if !InAppSettingsUseUITableViewController
     [settingsTableView release];
+#endif
     [settingsReader release];
     [super dealloc];
 }
 
+#if InAppSettingsUseUITableViewController
+#pragma mark text field cell delegate
+- (BOOL)textFieldShouldReturn:(UITextField *)cellTextField{
+	[cellTextField resignFirstResponder];
+	return YES;
+}
+#else /* InAppSettingsUseUITableViewController */
 #pragma mark text field cell delegate
 
 - (void)textFieldDidBeginEditing:(UITextField *)cellTextField{
@@ -206,6 +271,8 @@ static InAppSettings *sharedInstance = nil;
     }
 }
 
+#endif /* InAppSettingsUseUITableViewController */
+
 #pragma mark Table view methods
 #if defined(DYNAMIC_CONTENT_CELLS) && DYNAMIC_CONTENT_CELLS!=0
 - (NSArray *)dynamicContentsFromSettings:(InAppSettingsSpecifier *)settingsSpecifier {
@@ -239,6 +306,7 @@ static InAppSettings *sharedInstance = nil;
 			if (row < num + [anArray count])
 				return [anArray objectAtIndex:row-num];
 			num += [anArray count];
+			//[anArray release]; // CLANG
 		}
 		else {
 			if (num == row)
@@ -276,6 +344,7 @@ static InAppSettings *sharedInstance = nil;
 			NSArray *anArray = [self dynamicContentsFromSettings:settingSpecifier];
 			count -= 1; // FIXME What happen if anArray is undefined or empty
 			count += [anArray count];
+			//[anArray release]; // CLANG
 		}
 	}
 	return count;
@@ -284,9 +353,9 @@ static InAppSettings *sharedInstance = nil;
 #endif /* DYNAMIC_CONTENT_CELLS */
 }
 
-#if 0 /* InAppSettingsDisplayPowered == NO */
+#if InAppSettingsDisplayPowered
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    if(InAppSettingsDisplayPowered && [self.file isEqualToString:InAppSettingsRootFile] && section == (NSInteger)[self.settingsReader.headers count]-1){
+    if(/*InAppSettingsDisplayPowered &&*/ [self.file isEqualToString:InAppSettingsRootFile] && section == (NSInteger)[self.settingsReader.headers count]-1){
         return InAppSettingsPowerFooterHeight;
     }
 	return 0.0f;
@@ -294,7 +363,7 @@ static InAppSettings *sharedInstance = nil;
 
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    if(InAppSettingsDisplayPowered && [self.file isEqualToString:InAppSettingsRootFile] && section == (NSInteger)[self.settingsReader.headers count]-1){
+    if(/*InAppSettingsDisplayPowered &&*/ [self.file isEqualToString:InAppSettingsRootFile] && section == (NSInteger)[self.settingsReader.headers count]-1){
         UIView *powerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, InAppSettingsScreenWidth, InAppSettingsPowerFooterHeight)];
         
         //InAppSettings label
@@ -332,7 +401,7 @@ static InAppSettings *sharedInstance = nil;
     }
     return nil;
 }
-#endif
+#endif /* InAppSettingsDisplayPowered */
 
 - (UITableViewCell *)tableView:(UITableView *)tableView 
 				 cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -384,9 +453,6 @@ static InAppSettings *sharedInstance = nil;
         [self.navigationController pushViewController:childPane animated:YES];
         [childPane release];
     }else if([setting isType:InAppSettingsPSTitleValueSpecifier]){
-#if 0
-        InAppSettingsOpenUrl([NSURL URLWithString:[setting valueForKey:InAppSettingsSpecifierInAppURL]]);
-#else
 			InAppSettingsWebViewController *webViewController = nil;
 			if ([[setting valueForKey:InAppSettingsSpecifierInAppHTMLFile] length])
 				webViewController = [[InAppSettingsWebViewController alloc] initWithFile:
@@ -404,8 +470,8 @@ static InAppSettings *sharedInstance = nil;
 			{
 				webViewController.title = [setting localizedTitle];
 				[self.navigationController pushViewController:webViewController animated:YES];
+				[webViewController release]; // CLANG
 			}
-#endif
     }
 }
 
@@ -415,7 +481,9 @@ static InAppSettings *sharedInstance = nil;
     if([cell.setting isType:@"PSTextFieldSpecifier"]){
         [cell.valueInput becomeFirstResponder];
     }else if(cell.canSelectCell){
+#if !InAppSettingsUseUITableViewController
         [self.firstResponder resignFirstResponder];
+#endif
         return indexPath;
     }
     return nil;
@@ -423,6 +491,7 @@ static InAppSettings *sharedInstance = nil;
 
 @end
 
+#if InAppSettingsDisplayPowered
 @implementation InAppSettingsLightningBolt
 
 @synthesize flip;
@@ -465,3 +534,4 @@ static InAppSettings *sharedInstance = nil;
 }
 
 @end
+#endif /* InAppSettingsDisplayPowered */

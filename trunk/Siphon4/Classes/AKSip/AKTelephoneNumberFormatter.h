@@ -2,6 +2,7 @@
 //  AKTelephoneNumberFormatter.h
 //  Telephone
 //
+//  Modified by Samuel Vinson 2010-2011 - GPL
 //  Copyright (c) 2008-2009 Alexei Kuznetsov. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
@@ -37,12 +38,22 @@
 @interface AKTelephoneNumberFormatter : NSFormatter {
  @private
   BOOL splitsLastFourDigits_;
+	
+	NSString *substitutesFirstCharacters_;
+	NSString *firstCharactersSubstitution_;
 }
 
 // A Boolean value that determines whether the receiver should separate last two
 // digits when formatting a telephone number.
 // When YES, |+11234567890| becomes |+1 (123) 456-78-90|.
 @property(nonatomic, assign) BOOL splitsLastFourDigits;
+
+// The first character to substitute.
+@property(nonatomic, retain) NSString *substitutesFirstCharacters;
+
+// A replacement for the first characters (substitutesFirstCharacters)
+// in the phone number.
+@property(nonatomic, retain) NSString *firstCharactersSubstitution;
 
 // Wrapper for |getObjectValue:forString:errorDescription:|. Scans |string| for
 // numbers and returns them as a contiguous digits string.

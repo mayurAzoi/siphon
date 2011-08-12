@@ -2,6 +2,7 @@
 //  InAppSetting.m
 //  InAppSettingsTestApp
 //
+//  Modified by Samuel Vinson 2010-2011 - GPL
 //  Created by David Keegan on 11/21/09.
 //  Copyright 2009 InScopeApps{+}. All rights reserved.
 //
@@ -49,21 +50,40 @@
 }
 
 - (id)getValue{
-    id value = [[NSUserDefaults standardUserDefaults] valueForKey:[self getKey]];
-    if(value == nil){
-        value = [self valueForKey:InAppSettingsSpecifierDefaultValue];
-    }
-    return value;
+	NSString *anActionSelector = [self valueForKey:InAppSettingsSpecifierInAppGet];
+	if ([anActionSelector length]) {
+		SEL aSelector = NSSelectorFromString(anActionSelector);
+		if ([self.object respondsToSelector:aSelector])
+			return [self.object performSelector:aSelector 
+																	withObject:self];
+	}
+	
+	id value = [[NSUserDefaults standardUserDefaults] valueForKey:[self getKey]];
+	if(value == nil){
+			value = [self valueForKey:InAppSettingsSpecifierDefaultValue];
+	}
+	return value;
 }
 
 - (void)setValue:(id)newValue{
-    NSString *key = [self getKey];
-    [[NSUserDefaults standardUserDefaults] setObject:newValue forKey:key];
-	  [[NSUserDefaults standardUserDefaults] synchronize];
+	NSString *anActionSelector = [self valueForKey:InAppSettingsSpecifierInAppSet];
+	if ([anActionSelector length]) {
+		SEL aSelector = NSSelectorFromString(anActionSelector);
+		if ([self.object respondsToSelector:aSelector]) {
+			[self.object performSelector:aSelector 
+															 withObject:newValue
+															 withObject:self];
+			return;
+		}
+	}
 	
-    NSNotification *notification = [NSNotification notificationWithName:InAppSettingsNotificationName 
-																																 object:key];
-    [[NSNotificationCenter defaultCenter] postNotification:notification];
+	NSString *key = [self getKey];
+	[[NSUserDefaults standardUserDefaults] setObject:newValue forKey:key];
+	//[[NSUserDefaults standardUserDefaults] synchronize];
+
+	NSNotification *notification = [NSNotification notificationWithName:InAppSettingsNotificationName 
+																															 object:key];
+	[[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
 #pragma mark validation

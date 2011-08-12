@@ -2,6 +2,7 @@
 //  AKSIPUserAgent.m
 //  Telephone
 //
+//  Modified by Samuel Vinson 2010-2011 - GPL
 //  Copyright (c) 2008-2009 Alexei Kuznetsov. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
@@ -27,6 +28,7 @@
 //  OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 //  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
+#import <objc/runtime.h> // For optimized singleton
 
 #import "AKSIPUserAgent.h"
 
@@ -35,6 +37,7 @@
 #import "AKSIPCall.h"
 #import "AKSIPURI.h"
 #import "AKSIPCodec.h"
+#import "AKSIPMwiInfo.h"
 
 #import <UIKit/UIKit.h>
 
@@ -81,7 +84,7 @@ static const BOOL kAKSIPUserAgentDefaultCancelsEcho = YES;
 static const BOOL kAKSIPUserAgentDefaultUsesICE = NO;
 static const NSInteger kAKSIPUserAgentDefaultTransportPort = 0;
 
-static AKSIPUserAgent *sharedUserAgent = nil;
+static volatile AKSIPUserAgent *sharedUserAgent_ = nil;
 
 // Callbacks from PJSUA.
 //
@@ -107,6 +110,9 @@ static void AKSIPAccountRegistrationStateChanged(pjsua_acc_id accountIdentifier)
 //
 // Sent when NAT type is detected.
 static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
+//
+// Sent when mwi info is received.
+static void AKSIPMwiInfoReceived(pjsua_acc_id accountIdentifier, pjsua_mwi_info *mwiInfo);
 
 @interface AKSIPUserAgent ()
 
@@ -150,6 +156,7 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
 @synthesize STUNServers = STUNServers_;
 
 @synthesize userAgentString = userAgentString_;
+@dynamic    useCompactForm;
 @synthesize logFileName = logFileName_;
 @synthesize logLevel = logLevel_;
 @synthesize consoleLogLevel = consoleLogLevel_;
@@ -161,6 +168,7 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
 @synthesize transportPublicHost = transportPublicHost_;
 
 @dynamic codecs;
+@dynamic defaultAccount;
 
 - (void)setDelegate:(id <AKSIPUserAgentDelegate>)aDelegate {
   if (delegate_ == aDelegate)
@@ -283,6 +291,24 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
   }
 }
 
+extern pj_bool_t pjsip_use_compact_form;
+extern pj_bool_t pjsip_include_allow_hdr_in_dlg;
+extern pj_bool_t pjmedia_add_rtpmap_for_static_pt;
+
+- (BOOL)useCompactForm
+{
+	return pjsip_use_compact_form;
+}
+
+- (void)setUseCompactForm:(BOOL)compact
+{
+	pjsip_use_compact_form = compact;
+	/* do not transmit Allow header */
+	pjsip_include_allow_hdr_in_dlg = !compact;
+	/* Do not include rtpmap for static payload types (<96) */
+	pjmedia_add_rtpmap_for_static_pt = !compact;
+}
+
 - (void)setLogFileName:(NSString *)pathToFile {
   if (logFileName_ != pathToFile) {
     if ([pathToFile length] > 0) {
@@ -293,6 +319,32 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
       logFileName_ = nil;
     }
   }
+}
+
+- (void)setLogLevel:(NSUInteger)logLevel
+{	
+	if ([self state] == kAKSIPUserAgentStarted)
+	{
+		pjsua_logging_config loggingConfig;
+		pjsua_logging_config_default(&loggingConfig);
+		
+		if ([[self logFileName] length] > 0) {
+			loggingConfig.log_filename
+			= [[[self logFileName] stringByExpandingTildeInPath]
+				 pjString];
+		}
+		
+		loggingConfig.level = logLevel;
+		loggingConfig.console_level = [self consoleLogLevel];
+		loggingConfig.log_file_flags |= PJ_O_APPEND;
+		
+		pj_status_t status = pjsua_reconfigure_logging(&loggingConfig);
+		if (status != PJ_SUCCESS) {
+			NSLog(@"Error defining log level %d", status);
+			return ;
+		}
+	}
+	logLevel_ = logLevel;
 }
 
 - (void)setTransportPort:(NSUInteger)port {
@@ -307,6 +359,9 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
 	pjsua_codec_info c[32];
 	unsigned i, count = PJ_ARRAY_SIZE(c);
 	
+	if (![self isStarted])
+		return nil;
+	
 	pjsua_enum_codecs(c, &count);
 
 	[codecs_ removeAllObjects];
@@ -315,32 +370,68 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
 		AKSIPCodec *aCodec = [[AKSIPCodec alloc] initWithIdentifier:[NSString stringWithPJString:c[i].codec_id]
 																											 priority:(AKSIPCodecPriority)c[i].priority];
 		[codecs_ addObject:aCodec];
+		[aCodec release];
 	}
 	
 	return codecs_;
 }
 
+- (void)setDefaultAccount:(AKSIPAccount *)anAccount
+{
+	if ([self state] != kAKSIPUserAgentStarted)
+		return;
+		
+	pj_status_t status = pjsua_acc_set_default([anAccount identifier]);
+	if (status != PJ_SUCCESS) {
+    NSLog(@"Error defining default account %@", [anAccount description]);
+	}
+}
+
+- (AKSIPAccount *)defaultAccount
+{
+	if ([self state] != kAKSIPUserAgentStarted)
+		return nil;
+		
+	pjsua_acc_id identifier = pjsua_acc_get_default();
+	if (identifier == kAKSIPUserAgentInvalidIdentifier)
+		return nil;
+	
+	return [self accountByIdentifier:identifier];
+}
+
 #pragma mark -
 #pragma mark AKSIPUserAgent singleton instance
 
-+ (AKSIPUserAgent *)sharedUserAgent {
+#ifndef __clang_analyzer__
++ (AKSIPUserAgent *)sharedUserAgentSync {
   @synchronized(self) {
-    if (sharedUserAgent == nil)
+    if (sharedUserAgent_ == nil)
       [[self alloc] init];  // Assignment not done here.
   }
   
-  return sharedUserAgent;
+  return (AKSIPUserAgent *)sharedUserAgent_;
+}
+#endif // __clang_analyzer__
+
++ (AKSIPUserAgent *)sharedUserAgentNoSync {
+	return (AKSIPUserAgent *)sharedUserAgent_;
+}
+
++ (AKSIPUserAgent *)sharedUserAgent {
+	return [self sharedUserAgentSync];
 }
 
 + (id)allocWithZone:(NSZone *)zone {
   @synchronized(self) {
-    if (sharedUserAgent == nil) {
-      sharedUserAgent = [super allocWithZone:zone];
-      return sharedUserAgent;  // Assignment and return on first allocation.
+    if (sharedUserAgent_ == nil) {
+      sharedUserAgent_ = [super allocWithZone:zone];
+
+			Method newSharedInstanceMethod = class_getClassMethod(self, @selector(sharedUserAgentNoSync));
+			method_setImplementation(class_getClassMethod(self, @selector(sharedUserAgent)), method_getImplementation(newSharedInstanceMethod));
     }
   }
   
-  return nil;  // On subsequent allocation attempts return nil.
+  return sharedUserAgent_;  // On subsequent allocation attempts return nil.
 }
 
 - (id)copyWithZone:(NSZone *)zone {
@@ -352,7 +443,7 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
 }
 
 - (NSUInteger)retainCount {
-  return UINT_MAX;  // Denotes an object that cannot be released.
+  return NSUIntegerMax;  // Denotes an object that cannot be released.
 }
 
 - (void)release {
@@ -401,7 +492,8 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
   [pjsuaLock_ release];
 
   [nameservers_ release];
-	[outboundProxies_ release];
+  [outboundProxies_ release];
+  [STUNServers_ release];
 
   [userAgentString_ release];
   [logFileName_ release];
@@ -479,7 +571,7 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
   }
   
 	if ([[self outboundProxies] count] > 0) {
-		userAgentConfig.outbound_proxy_cnt = [[self nameservers] count];
+		userAgentConfig.outbound_proxy_cnt = [[self outboundProxies] count];
     for (NSUInteger i = 0; i < [[self outboundProxies] count]; ++i)
       userAgentConfig.outbound_proxy[i] = [[NSString stringWithFormat:@"sip:%@;lr", 
 																						[[self outboundProxies] objectAtIndex:i]]
@@ -523,13 +615,16 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
   userAgentConfig.cb.on_call_transfer_status = &AKSIPCallTransferStatusChanged;
   userAgentConfig.cb.on_reg_state = &AKSIPAccountRegistrationStateChanged;
   userAgentConfig.cb.on_nat_detect = &AKSIPUserAgentDetectedNAT;
-  
+	
+	userAgentConfig.cb.on_mwi_info = &AKSIPMwiInfoReceived;
+	userAgentConfig.enable_unsolicited_mwi = PJ_FALSE;
+	
   // Initialize PJSUA.
   status = pjsua_init(&userAgentConfig, &loggingConfig, &mediaConfig);
   if (status != PJ_SUCCESS) {
     NSLog(@"Error initializing PJSUA");
     //[self stop];
-		[self stopInBackground:YES];
+    [self stopInBackground:YES];
     [[self pjsuaLock] unlock];
     [pool release];
     return;
@@ -554,7 +649,7 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
   if (status != PJ_SUCCESS) {
     NSLog(@"Error creating ringback tones");
     //[self stop];
-		[self stopInBackground:YES];
+    [self stopInBackground:YES];
     [[self pjsuaLock] unlock];
     [pool release];
     return;
@@ -578,7 +673,7 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
   if (status != PJ_SUCCESS) {
     NSLog(@"Error adding media port for ringback tones");
     //[self stop];
-		[self stopInBackground:YES];
+    [self stopInBackground:YES];
     [[self pjsuaLock] unlock];
     [pool release];
     return;
@@ -593,7 +688,7 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
   if (status != PJ_SUCCESS) {
     NSLog(@"Error creating transport");
     //[self stop];
-		[self stopInBackground:YES];
+    [self stopInBackground:YES];
     [[self pjsuaLock] unlock];
     [pool release];
     return;
@@ -622,7 +717,7 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
   if (status != PJ_SUCCESS) {
     NSLog(@"Error starting PJSUA");
     //[self stop];
-		[self stopInBackground:YES];
+    [self stopInBackground:YES];
     [[self pjsuaLock] unlock];
     [pool release];
     return;
@@ -681,7 +776,6 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
 		[self ak_stop];
 }
 
-
 - (void)ak_stop {
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   
@@ -738,6 +832,15 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
   [pool release];
 }
 
+- (void)flushLogFile {
+	if ([self state] == kAKSIPUserAgentStarted) {
+		pj_status_t status = pjsua_logging_flush();
+		if (status != PJ_SUCCESS)
+			NSLog(@"Error flushing log file (%d)", status);
+	}
+}
+
+#pragma mark -
 - (BOOL)addAccount:(AKSIPAccount *)anAccount
       withPassword:(NSString *)aPassword {
   
@@ -779,12 +882,12 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
   
 	if ([[anAccount proxies] count] > 0) {
     accountConfig.proxy_cnt = [[anAccount proxies] count];
-		for (NSUInteger i = 0; i < [[anAccount proxies] count]; ++i) {
+		for (NSUInteger i = 0; i < accountConfig.proxy_cnt; ++i) {
 			NSString *proxy = [NSString stringWithFormat:@"sip:%@", [[anAccount proxies] objectAtIndex:i]];
 			if ([anAccount usesTCP])
 				proxy = [proxy stringByAppendingString:@";transport=tcp"];
 			
-			accountConfig.proxy[i++] = [[proxy stringByAppendingString:@";lr"] pjString];
+			accountConfig.proxy[i] = [[proxy stringByAppendingString:@";lr"] pjString];
 		}
 	}
 	else if ([anAccount usesTCP])
@@ -793,8 +896,17 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
 		accountConfig.proxy[0] = [[NSString stringWithFormat:@"sip:%@;transport=tcp;lr",
 															 [anAccount registrar]] pjString] ;
 	}
+#if 0
+	else
+	{
+		accountConfig.proxy_cnt = 1;
+		accountConfig.proxy[0] = [[NSString stringWithFormat:@"sip:%@;transport=udp;lr",
+															 [anAccount registrar]] pjString] ;
+	}
+#endif
   
   accountConfig.reg_timeout = [anAccount reregistrationTime];
+	accountConfig.mwi_enabled = [anAccount usesMWI];
   
 	if (([self usesICE] && [[self STUNServers] count] > 0) ||
 			[anAccount allowContactRewrite])		
@@ -958,6 +1070,31 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result);
     NSLog(@"Error disabling bluetooth headset");
 	return (status == PJ_SUCCESS ? YES : NO);
 }
+
+- (void)clearLogFile
+{	
+	if ([self state] == kAKSIPUserAgentStarted)
+	{
+		pjsua_logging_config loggingConfig;
+		pjsua_logging_config_default(&loggingConfig);
+		
+		if ([[self logFileName] length] > 0) {
+			loggingConfig.log_filename
+			= [[[self logFileName] stringByExpandingTildeInPath]
+				 pjString];
+		}
+		
+		loggingConfig.level = [self logLevel];
+		loggingConfig.console_level = [self consoleLogLevel];
+		
+		pj_status_t status = pjsua_reconfigure_logging(&loggingConfig);
+		if (status != PJ_SUCCESS) {
+			NSLog(@"Error defining log level %d", status);
+			return ;
+		}
+	}
+}
+
 
 - (NSString *)stringForSIPResponseCode:(NSInteger)responseCode {
   NSString *theString = nil;
@@ -1193,7 +1330,7 @@ static void AKSIPCallIncomingReceived(pjsua_acc_id accountIdentifier,
 	}
 	else 
 	{
-		[app cancelAllLocalNotifications];
+		[app cancelAllLocalNotifications]; // FIXME 
 		UILocalNotification *alarm = [[UILocalNotification alloc] init];
 		if (alarm)
 		{
@@ -1215,8 +1352,7 @@ static void AKSIPCallIncomingReceived(pjsua_acc_id accountIdentifier,
 			// FIXME background timer to decline the call ?
 		}
 	}
-
-  
+	[theCall release]; // CLANG
   [pool release];
 }
 
@@ -1264,7 +1400,9 @@ static void AKSIPCallStateChanged(pjsua_call_id callIdentifier,
 							 callInfo.last_status_text.ptr));
 		
 		UIApplication *app = [UIApplication sharedApplication];
-		if (app.applicationState != UIApplicationStateActive)
+		// FIXME audio background with UDP connection. Maybe TCP
+		if (app.applicationState != UIApplicationStateActive &&
+				callInfo.last_status != PJSIP_SC_OK) // FIXME background disconnection ?
     {
       [app cancelAllLocalNotifications]; // FIXME
       
@@ -1521,4 +1659,47 @@ static void AKSIPUserAgentDetectedNAT(const pj_stun_nat_detect_result *result) {
   }
   
   [pool release];
+}
+
+static void AKSIPMwiInfoReceived(pjsua_acc_id accountIdentifier, pjsua_mwi_info *mwiInfo)
+{
+	
+	if (mwiInfo->rdata->msg_info.ctype) {
+    const pjsip_ctype_hdr *ctype = mwiInfo->rdata->msg_info.ctype;
+    
+    PJ_LOG(3,(THIS_FILE, " Content-Type: %.*s/%.*s",
+              (int)ctype->media.type.slen,
+              ctype->media.type.ptr,
+              (int)ctype->media.subtype.slen,
+              ctype->media.subtype.ptr));
+    // TODO vérifier si bien : application/simple-message-summary
+  }
+	
+	if (!mwiInfo->rdata->msg_info.msg->body ||
+			mwiInfo->rdata->msg_info.msg->body->len == 0) {
+    PJ_LOG(3,(THIS_FILE, "  no message body"));
+    return;
+  }
+
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	AKSIPAccount *theAccount = [[AKSIPUserAgent sharedUserAgent]
+															accountByIdentifier:accountIdentifier];
+	
+	pj_str_t body;
+	pj_strset(&body, 
+						mwiInfo->rdata->msg_info.msg->body->data, 
+						mwiInfo->rdata->msg_info.msg->body->len);
+	
+	AKSIPMwiInfo *theMwiInfo = [[AKSIPMwiInfo alloc] initWithSIPAccount:theAccount
+																														 withBody:[NSString stringWithPJString:body]];
+	
+	NSNotification *notification = [NSNotification notificationWithName:AKSIPMwiInfoNotification
+																	object:theMwiInfo];
+	
+	[[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:)
+																												 withObject:notification
+																											waitUntilDone:NO];
+	[theMwiInfo release];
+	[pool release];
 }

@@ -34,6 +34,7 @@
   self = [super initWithFrame:rect];
   if (self)
   {
+		self.opaque = NO;
     _background = nil;
     //[self backgroundImage];
   }
@@ -74,7 +75,6 @@
                                                     background: buttonBackground
                                              backgroundPressed: buttonBackgroundPressed];
     [self setButton:decline];
-    [decline release];
     
     buttonBackground = [UIImage imageNamed:@"bottombargreen"];
     buttonBackgroundPressed = [UIImage imageNamed:@"bottombargreen_pressed"];
@@ -86,14 +86,12 @@
                                                     background: buttonBackground
                                              backgroundPressed: buttonBackgroundPressed];
     [self setButton2: answer];
-    [answer release];
   }
   return self;
 }
 
 - (void)dealloc
 {
-  [_background release];
   [_button  release];
   [_button2 release];
 	[super dealloc];
@@ -136,51 +134,35 @@
 {
   if (_background == nil)
   {
-#if 1
     UIImage *bg = [BottomButtonBar backgroundImage];
     NSInteger width = bg.size.width;
     bg = [bg stretchableImageWithLeftCapWidth:width/2 topCapHeight:0.0];
 
     CGRect buttonRect = CGRectMake(0.0, 0.0, 160.0 + 12.0, bg.size.height);
     //buttonRect.size.width = rect.size.width / 2 + 12.0;
-    UIGraphicsBeginImageContext(buttonRect.size);
+		
+    // Create a graphics context with the target size
+    // On iOS 4 and later, use UIGraphicsBeginImageContextWithOptions to take 
+		// the scale into consideration
+    // On iOS prior to 4, fall back to use UIGraphicsBeginImageContext
+		if (NULL != UIGraphicsBeginImageContextWithOptions)
+			//UIGraphicsBeginImageContextWithOptions(buttonRect.size, NO, 0.);
+			UIGraphicsBeginImageContextWithOptions(buttonRect.size, NO, 1.);
+    else
+			UIGraphicsBeginImageContext(buttonRect.size);
+		
+		CGContextRef context = UIGraphicsGetCurrentContext();
+		
+		// Flip the context because UIKit coordinate system is upside down to 
+		// Quartz coordinate system
+		CGContextTranslateCTM(context, 0.0, buttonRect.size.height);
+		CGContextScaleCTM(context, 1.0, -1.0);
+		
+		// Draw the original image to the context
     [bg drawInRect:buttonRect];
+
     _background = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    //[bg release];
-#else
-    CGImageRef cgImg;
-
-    UIImage *bg = [BottomButtonBar backgroundImage];
-
-    CGRect buttonRect = CGRectMake(0.0, 0.0, 160.0 + 12.0, bg.size.height);
-    //buttonRect.size.width = rect.size.width / 2 + 12.0;
-    UIGraphicsBeginImageContext(buttonRect.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGRect left; left.size = bg.size; left.size.width = left.size.width/2;
-    CGRect right = left; right.origin.x = right.size.width + 1;
-    CGRect center = CGRectMake(left.size.width , 0.0, 1.0, left.size.height);
-    
-    // Left
-    cgImg = CGImageCreateWithImageInRect([bg CGImage], left);
-    CGContextDrawImage(context, left,cgImg);
-    CGImageRelease (cgImg);
-    // Center
-    cgImg = CGImageCreateWithImageInRect([bg CGImage], center);
-    center.size.width = buttonRect.size.width - left.size.width * 2;
-    CGContextDrawImage(context, center,cgImg);
-    CGImageRelease (cgImg);
-    // Right
-    cgImg = CGImageCreateWithImageInRect([bg CGImage], right);
-    right.origin.x = left.size.width + center.size.width;
-    CGContextDrawImage(context, right ,cgImg);
-    CGImageRelease (cgImg);
-    
-    _background = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-#endif
   }
 }
 

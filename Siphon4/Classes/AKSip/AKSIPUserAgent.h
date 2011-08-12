@@ -2,6 +2,7 @@
 //  AKSIPUserAgent.h
 //  Telephone
 //
+//  Modified by Samuel Vinson 2010-2011 - GPL
 //  Copyright (c) 2008-2009 Alexei Kuznetsov. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
@@ -189,6 +190,9 @@ extern NSString * const AKSIPUserAgentWillRemoveAccountNotification;
 // User agent string.
 @property(nonatomic, copy) NSString *userAgentString;
 
+// Use compact form of SIP headers to minimize the packet size.
+@property(nonatomic, assign) BOOL useCompactForm;
+
 // Path to the log file.
 @property(nonatomic, copy) NSString *logFileName;
 
@@ -227,6 +231,9 @@ extern NSString * const AKSIPUserAgentWillRemoveAccountNotification;
 // Enum all supported codecs in the system.
 @property(nonatomic, readonly) NSArray *codecs;
 
+// Default account to be used when incoming and outgoing.
+@property(nonatomic, assign) AKSIPAccount *defaultAccount;
+
 // Returns the shared SIP user agent object.
 + (AKSIPUserAgent *)sharedUserAgent;
 
@@ -239,6 +246,9 @@ extern NSString * const AKSIPUserAgentWillRemoveAccountNotification;
 // Stops user agent.
 //- (void)stop;
 - (void)stopInBackground:(BOOL)inBackground;
+
+// Flush/Synchronize on disk the log file.
+- (void)flushLogFile;
 
 // Adds an account to the user agent.
 - (BOOL)addAccount:(AKSIPAccount *)anAccount withPassword:(NSString *)aPassword;
@@ -276,6 +286,9 @@ extern NSString * const AKSIPUserAgentWillRemoveAccountNotification;
 
 // Disables bluetooth headset
 - (BOOL)disableBluetoothHeadset;
+
+// Clears the log file.
+- (void)clearLogFile;
 
 // Updates list of audio devices.
 // You might want to call this method when system audio devices are changed.

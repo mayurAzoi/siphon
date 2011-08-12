@@ -2,6 +2,7 @@
 //  InAppSettingsReader.m
 //  InAppSettingsTestApp
 //
+//  Modified by Samuel Vinson 2010-2011 - GPL
 //  Created by David Keegan on 1/19/10.
 //  Copyright 2010 InScopeApps{+}. All rights reserved.
 //
@@ -16,7 +17,7 @@
 @synthesize values;
 
 - (void)loadFile:(NSString *)file{
-    //if the file is not in the files list we havn't read it yet
+    //if the file is not in the files list we haven't read it yet
     NSInteger fileIndex = [self.files indexOfObject:file];
     if(fileIndex == NSNotFound){
         [self.files addObject:file];
@@ -47,15 +48,20 @@
     }
 }
 
+- (id)initWithRootFile:(NSString *)rootFile{
+	self = [super init];
+	if (self != nil) {
+		self.files = [[NSMutableArray alloc] init];
+		self.values = [[NSMutableDictionary alloc] init];
+		[self loadFile:rootFile];
+		[[NSUserDefaults standardUserDefaults] registerDefaults:self.values];
+	}
+	return self;
+}
+
+
 - (id)init{
-    self = [super init];
-    if (self != nil) {
-        self.files = [[NSMutableArray alloc] init];
-        self.values = [[NSMutableDictionary alloc] init];
-        [self loadFile:InAppSettingsRootFile];
-        [[NSUserDefaults standardUserDefaults] registerDefaults:self.values];
-    }
-    return self;
+	return [self initWithRootFile:InAppSettingsRootFile];
 }
 
 

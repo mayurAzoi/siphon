@@ -2,6 +2,7 @@
 //  InAppSettingsReader.h
 //  InAppSettingsTestApp
 //
+//  Modified by Samuel Vinson 2010-2011 - GPL
 //  Created by David Keegan on 1/19/10.
 //  Copyright 2010 InScopeApps{+}. All rights reserved.
 //
@@ -18,13 +19,15 @@
 @property (nonatomic, retain) NSMutableArray *files;
 @property (nonatomic, retain) NSMutableDictionary *values;
 
+- (id)initWithRootFile:(NSString *)rootFile;
+
 @end
 
 @interface InAppSettingsReader : NSObject {
     NSString *file;
     NSMutableArray *headers, *settings, *footers;
 #if defined(DYNAMIC_CONTENT_CELLS) && DYNAMIC_CONTENT_CELLS!=0
-		NSMutableArray * hasDynamicContents;
+		NSMutableArray *hasDynamicContents;
 #endif /* DYNAMIC_CONTENT_CELLS */
 }
 

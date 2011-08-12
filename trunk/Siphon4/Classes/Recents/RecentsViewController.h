@@ -21,23 +21,24 @@
 #import <AddressBookUI/AddressBookUI.h>
 #import <CoreData/CoreData.h>
 
-
 @interface RecentsViewController : UITableViewController <ABPersonViewControllerDelegate,
 	ABUnknownPersonViewControllerDelegate, NSFetchedResultsControllerDelegate,
 	UIActionSheetDelegate>
 {
 	@private
-	NSFetchedResultsController *fetchedResultsController_;
+	NSFetchedResultsController *currentFetchedResultsController_;
 	NSManagedObjectContext     *managedObjectContext_;
 	
 	NSDateFormatter *dateFormatter_;
+	NSDateFormatter *weekdayFormatter_;
 	NSDateFormatter *hourFormatter_;
 }
 
-@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, retain) NSFetchedResultsController *currentFetchedResultsController;
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
 @property (nonatomic, readonly) NSDateFormatter *dateFormatter;
+@property (nonatomic, readonly) NSDateFormatter *weekdayFormatter;
 @property (nonatomic, readonly) NSDateFormatter *hourFormatter;
 
 @end

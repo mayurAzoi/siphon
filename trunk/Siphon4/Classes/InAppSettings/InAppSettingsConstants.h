@@ -2,6 +2,7 @@
 //  InAppSettingsConstants.h
 //  InAppSettingsTestApp
 //
+//  Modified by Samuel Vinson 2010-2011 - GPL
 //  Created by David Keegan on 11/21/09.
 //  Copyright 2009 InScopeApps{+}. All rights reserved.
 //
@@ -92,8 +93,11 @@
 // test if the new keyboard calls should be used
 #define InAppSettingsUseNewKeyboard __IPHONE_3_2 && __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_3_2
 
+// test if UITableViewController should be used
+#define InAppSettingsUseUITableViewController __IPHONE_3_0 && __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_3_0
+
 // test if the value of PSMultiValueSpecifier should be on the right or left if there is no title
 #define InAppSettingsUseNewMultiValueLocation [[[UIDevice currentDevice] systemVersion] doubleValue] >= 4.0
 
-// if you dont want to display the footer set this to NO
-#define InAppSettingsDisplayPowered NO
+// if you dont want to display the footer set this to 0
+#define InAppSettingsDisplayPowered 0

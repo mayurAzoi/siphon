@@ -2,7 +2,7 @@
 //  PSToggleSwitchSpecifier.m
 //  InAppSettingsTestApp
 //
-//  Modified by Samuel Vinson on 01/21/11
+//  Modified by Samuel Vinson 2010-2011 - GPL
 //  Copyright 2011 Samuel Vinson. All rights reserved.
 //  Created by David Keegan on 11/21/09.
 //  Copyright 2009 InScopeApps{+}. All rights reserved.

@@ -2,6 +2,7 @@
 //  PSToggleSwitchSpecifier.m
 //  InAppSettingsTestApp
 //
+//  Modified by Samuel Vinson 2010-2011 - GPL
 //  Created by David Keegan on 11/21/09.
 //  Copyright 2009 InScopeApps{+}. All rights reserved.
 //
@@ -101,8 +102,9 @@
 			self.textField.text = value;
 		else 
 			self.textField.text = [value stringValue];
-		self.textField.placeholder = [self.setting valueForKey:InAppSettingsSpecifierInAppPlaceholder];
-    
+		self.textField.placeholder = InAppSettingsLocalize([self.setting valueForKey:InAppSettingsSpecifierInAppPlaceholder],
+																											 self.setting.stringsTable);
+
     //keyboard traits
     self.textField.secureTextEntry = [self isSecure];
     self.textField.keyboardType = [self getKeyboardType];

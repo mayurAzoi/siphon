@@ -21,7 +21,6 @@
 
 #define LONG_TAP_TIME 0.8
 
-
 @implementation MenuCallView
 
 @synthesize delegate;
@@ -55,14 +54,11 @@
     //button.backgroundColor = [UIColor clearColor];
     
     [button setTag:i];
-#if 1
+
 		[button addTarget:self action:@selector(buttonDown:) forControlEvents:UIControlEventTouchDown];
 		[button addTarget:self action:@selector(buttonDidReleaseInside:)  forControlEvents:UIControlEventTouchUpInside];
 		[button addTarget:self action:@selector(buttonDidReleaseOutside:) forControlEvents:UIControlEventTouchUpOutside];
-#else
-    [button addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
-#endif
-		
+    
     CGRect content = CGRectMake(11.0, 11.0, 72.0, 75.0);
     if (i == 0 || i == 3)
       content.origin.x += 5.;
@@ -95,7 +91,6 @@
     return self;
 }
 
-#if 1
 - (void)detecetedLongTap:(UIButton *)button
 {
 	consumedTap_ = YES;
@@ -131,16 +126,6 @@
 																						 object:button];
 }
 
-#else
-- (void)clicked:(UIButton *)button
-{
-  if ([delegate respondsToSelector:@selector(menuButtonClicked:)])
-  {
-    [delegate menuButtonClicked:[button tag]];
-  }
-}
-#endif
-
 - (void)dealloc 
 {
   int i;
@@ -169,8 +154,7 @@
   {
 #ifdef __IPHONE_3_0
     _buttons[pos].titleLabel.font = [UIFont systemFontOfSize:[UIFont buttonFontSize] - 5.];
-		_buttons[pos].titleLabel.clipsToBounds = NO;
-		//_buttons[pos].titleLabel.lineBreakMode = 
+	_buttons[pos].titleLabel.clipsToBounds = NO;
 #else
     [_buttons[pos] setFont:[UIFont systemFontOfSize:[UIFont buttonFontSize] - 5.]];
 #endif

@@ -24,7 +24,7 @@
 
 @interface MenuCallView : UIView 
 {
-	@private
+@private
   PushButton *_buttons[6];
   id<MenuCallViewDelegate> delegate;
 	

@@ -27,17 +27,26 @@
 #import "SiphonAppDelegate.h"
 #import "SiphonCoreDataStorage.h"
 
+#import "AddressBook.h"
+
+#import "SettingsController.h"
+
 @interface RecentsViewController ()
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+- (void)segmentAction:(UISegmentedControl *)segmentedControl;
 
 @end
 
 
 @implementation RecentsViewController
 
-@synthesize fetchedResultsController = fetchedResultsController_;
+@synthesize currentFetchedResultsController = currentFetchedResultsController_;
 @synthesize managedObjectContext = managedObjectContext_;
+
+@dynamic dateFormatter;
+@dynamic weekdayFormatter;
+@dynamic hourFormatter;
 
 - (NSDateFormatter *)dateFormatter 
 {	
@@ -51,6 +60,17 @@
 	return dateFormatter_;
 }
 
+- (NSDateFormatter *)weekdayFormatter
+ {
+	 if (weekdayFormatter_ == nil)
+	 {
+		 weekdayFormatter_ = [[NSDateFormatter alloc] init];
+		 [weekdayFormatter_ setDateFormat:@"EEEE"];
+		 // Maybe we should call setDefaultDate too
+	 }
+	 return weekdayFormatter_;
+ }
+
 - (NSDateFormatter *)hourFormatter
 {
 	if (hourFormatter_ == nil)
@@ -58,18 +78,48 @@
 		hourFormatter_ = [[NSDateFormatter alloc] init];
 		[hourFormatter_ setDateStyle:NSDateFormatterNoStyle];
 		[hourFormatter_ setTimeStyle:NSDateFormatterShortStyle];
-		[hourFormatter_ setDoesRelativeDateFormatting:YES];
 	}
 	return hourFormatter_;
 }
 
+- (NSString *)stringFromDate:(NSDate *)aDate
+{
+	// TODO manage the future
+	NSDate *today = [NSDate date];
+	NSCalendar *calendar = [NSCalendar currentCalendar];
+	NSDateComponents *offsetComponents = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) 
+																									 fromDate:today];
+	
+	NSDate *midnight = [calendar dateFromComponents:offsetComponents];
+	if ([aDate compare:midnight] == NSOrderedDescending)
+		return [[self hourFormatter] stringFromDate:aDate];
+	else 
+	{
+		// check if date is between yesterday and 7 last days.
+		NSDateComponents *componentsToSubtract = [[NSDateComponents alloc] init];
+		[componentsToSubtract setDay:-1];
+		NSDate *yesterday = [calendar dateByAddingComponents:componentsToSubtract 
+																									toDate:midnight options:0];
+		[componentsToSubtract setDay:-6];
+		NSDate *lastweek = [calendar dateByAddingComponents:componentsToSubtract 
+																								 toDate:midnight options:0];
+		[componentsToSubtract release];
+
+		if ([aDate compare:lastweek] == NSOrderedDescending &&
+				[aDate compare:yesterday] == NSOrderedAscending)
+			return [[self weekdayFormatter] stringFromDate:aDate];
+	}
+	return [[self dateFormatter] stringFromDate:aDate];
+}
+
+#pragma mark -
 /**
  Returns the fetched results controller. Creates and configures the controller if necessary.
  */
-- (NSFetchedResultsController *)fetchedResultsController 
+- (NSFetchedResultsController *)currentFetchedResultsController 
 {
-	if (fetchedResultsController_ != nil) 
-		return fetchedResultsController_;
+	if (currentFetchedResultsController_ != nil) 
+		return currentFetchedResultsController_;
 	
 	// Create and configure a fetch request with the RecentCall entity.
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -78,9 +128,6 @@
 	
 	// Create the sort descriptors array.
 	NSSortDescriptor *dateDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:NO];
-	//NSSortDescriptor *authorDescriptor = [[NSSortDescriptor alloc] initWithKey:@"author" ascending:YES];
-	//NSSortDescriptor *titleDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
-	//NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:authorDescriptor, titleDescriptor, nil];
 	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:dateDescriptor, nil];
 	[fetchRequest setSortDescriptors:sortDescriptors];
 	
@@ -89,19 +136,17 @@
 																																															managedObjectContext:self.managedObjectContext
 																																																sectionNameKeyPath:nil 
 																																																				 cacheName:@"Root"];
-	self.fetchedResultsController = aFetchedResultsController;
-	fetchedResultsController_.delegate = self;
+	self.currentFetchedResultsController = aFetchedResultsController;
+	currentFetchedResultsController_.delegate = self;
 	
 	// Memory management.
 	[aFetchedResultsController release];
 	[fetchRequest release];
-	//[authorDescriptor release];
-	//[titleDescriptor release];
 	[dateDescriptor release];
 	[sortDescriptors release];
 	
-	return fetchedResultsController_;
-} 
+	return currentFetchedResultsController_;
+}
 
 - (NSManagedObjectContext *)managedObjectContext
 {
@@ -111,18 +156,6 @@
 
 #pragma mark -
 #pragma mark Initialization
-
-/*
-- (id)initWithStyle:(UITableViewStyle)style {
-    // Override initWithStyle: if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization.
-    }
-    return self;
-}
-*/
-
 - (id)initWithStyle:(UITableViewStyle)style
 {
 	if (self = [super initWithStyle:style]) 
@@ -143,7 +176,6 @@
                                               autorelease];*/
     
     // segmented control as the custom title view
-#if 0
     NSArray *segmentTextContent = [NSArray arrayWithObjects:
                                    NSLocalizedString(@"All", @"Recents View"),
                                    NSLocalizedString(@"Missed", @"Recents View"),
@@ -156,7 +188,6 @@
     
     self.navigationItem.titleView = segmentedControl;
     [segmentedControl release];
-#endif
 	}
 	return self;
 }
@@ -178,15 +209,6 @@
 																						 style:UIBarButtonItemStylePlain
 																						 target:self action:@selector(clearAll:)]
 																						autorelease];
-	
-	NSError *error;
-	if (![[self fetchedResultsController] performFetch:&error]) 
-	{
-		// Update to handle the error appropriately.
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-		[error release];
-		//exit(-1);  // Fail
-	}
 }
 
 /*
@@ -195,9 +217,11 @@
 {
 	// Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
 	// For example: self.myOutlet = nil;
-	self.fetchedResultsController = nil;
+	self.currentFetchedResultsController = nil;
 	[dateFormatter_ release];
 	dateFormatter_ = nil;
+	[weekdayFormatter_ release];
+	weekdayFormatter_ = nil;
 	[hourFormatter_ release];
 	hourFormatter_ = nil;
 }
@@ -207,8 +231,15 @@
 - (void)viewWillAppear:(BOOL)animated 
 {
 	[super viewWillAppear:animated];
-	[self.tableView reloadData];
-	id <NSFetchedResultsSectionInfo> sectionInfo = [[fetchedResultsController_ sections] objectAtIndex:0];
+
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+	NSInteger segment = [userDefaults integerForKey:kMissedAllSegmentIndex];
+	UISegmentedControl *segmentedControl = (UISegmentedControl *)self.navigationItem.titleView;
+	segmentedControl.selectedSegmentIndex = segment;
+	
+	[self segmentAction:segmentedControl];
+	
+	id <NSFetchedResultsSectionInfo> sectionInfo = [[self.currentFetchedResultsController sections] objectAtIndex:0];
 	int count = [sectionInfo numberOfObjects];
 	if (count)
   {
@@ -220,6 +251,21 @@
     self.navigationItem.rightBarButtonItem.enabled = NO;
     self.navigationItem.leftBarButtonItem = nil;
   }
+	// Subscribe to the significant time change notifications.
+	[[NSNotificationCenter defaultCenter]	addObserver:self
+											   selector:@selector(applicationSignificantTimeDidChange:)
+												name:UIApplicationSignificantTimeChangeNotification
+											  object:nil];
+}
+
+/*
+ */
+- (void)viewDidDisappear:(BOOL)animated
+{	
+	[[NSNotificationCenter defaultCenter] removeObserver:self
+																									name:UIApplicationSignificantTimeChangeNotification
+																								object:nil];
+	[super viewDidDisappear:animated];
 }
 
 // Invoked when the user touches Edit.
@@ -236,7 +282,7 @@
   } 
   else 
   {
-		id <NSFetchedResultsSectionInfo> sectionInfo = [[fetchedResultsController_ sections] objectAtIndex:0];
+		id <NSFetchedResultsSectionInfo> sectionInfo = [[self.currentFetchedResultsController sections] objectAtIndex:0];
 		int count = [sectionInfo numberOfObjects];
     if (count)
 			self.navigationItem.rightBarButtonItem.enabled = YES;
@@ -258,11 +304,7 @@
     [super viewWillDisappear:animated];
 }
 */
-/*
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-}
-*/
+
 /*
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -274,22 +316,19 @@
 
 #pragma mark -
 #pragma mark Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView 
 {
     // Return the number of sections.
-    return [[fetchedResultsController_ sections] count];
+    return [[self.currentFetchedResultsController sections] count];
 }
-
 
 - (NSInteger)tableView:(UITableView *)tableView 
  numberOfRowsInSection:(NSInteger)section 
 {
     // Return the number of rows in the section.
-	id <NSFetchedResultsSectionInfo> sectionInfo = [[fetchedResultsController_ sections] objectAtIndex:section];
+	id <NSFetchedResultsSectionInfo> sectionInfo = [[self.currentFetchedResultsController sections] objectAtIndex:section];
 	return [sectionInfo numberOfObjects];
 }
-
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath 
@@ -313,18 +352,18 @@
 {
 	// Configure the cell...
 	// Configure the cell to show the caller/callee
-	RecentCall *aCall = [fetchedResultsController_ objectAtIndexPath:indexPath];
+	RecentCall *aCall = [self.currentFetchedResultsController objectAtIndexPath:indexPath];
 	
 	cell.textLabel.text = aCall.displayName;
 	if (aCall.isMissed)
 		cell.textLabel.textColor = [UIColor redColor];
 	else
 		cell.textLabel.textColor = [UIColor blackColor];
+
+	cell.detailTextLabel.text = [self stringFromDate:aCall.date];
+
+	// TODO display source (mobile, work, ...)
 	
-	if ([aCall.date timeIntervalSinceNow] > -86400.0)
-		cell.detailTextLabel.text = [self.hourFormatter stringFromDate:aCall.date];
-	else 
-		cell.detailTextLabel.text = [self.dateFormatter stringFromDate:aCall.date];
 	cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
 }
 
@@ -347,8 +386,8 @@
 	if (editingStyle == UITableViewCellEditingStyleDelete) 
 	{	
 		// Delete the managed object.
-		NSManagedObjectContext *context = [fetchedResultsController_ managedObjectContext];
-		[context deleteObject:[fetchedResultsController_ objectAtIndexPath:indexPath]];
+		NSManagedObjectContext *context = [self.currentFetchedResultsController managedObjectContext];
+		[context deleteObject:[self.currentFetchedResultsController objectAtIndexPath:indexPath]];
 		
 		NSError *error;
 		if (![context save:&error]) 
@@ -360,14 +399,11 @@
 	}   
 }
 
-
-
 /*
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
 }
 */
-
 
 /*
 // Override to support conditional rearranging of the table view.
@@ -376,7 +412,6 @@
     return YES;
 }
 */
-
 
 #pragma mark -
 #pragma mark Table view delegate
@@ -391,36 +426,36 @@
     [self.navigationController pushViewController:detailViewController animated:YES];
     [detailViewController release];
     */
-	RecentCall *selectedCall = (RecentCall *)[[self fetchedResultsController] objectAtIndexPath:indexPath];
+	RecentCall *selectedCall = (RecentCall *)[[self currentFetchedResultsController] objectAtIndexPath:indexPath];
 
-	// TODO call
-	AccountController *firstEnabledAccountController = [[[SIPController sharedInstance] 
-																											 enabledAccountControllers] objectAtIndex:0];
+	ABRecordRef person = NULL;
+	if ([selectedCall.uid intValue] != kABRecordInvalidID)
+	{
+		ABAddressBookRef AB = [[ABAddressBook sharedAddressBook] addressBook];
+		person = ABAddressBookGetPersonWithRecordID(AB, [selectedCall.uid intValue]);
+	}
 	
-	AKSIPURI *destinationURI = [AKSIPURI SIPURIWithUser:selectedCall.phoneNumber
-																								 host:firstEnabledAccountController.account.registrar
-																					displayName:selectedCall.displayName];
-	
-	// TODO find the label
-	[firstEnabledAccountController makeCallToURI:destinationURI
-																		phoneLabel:@""];
+	[[SIPController sharedInstance] makeCall:selectedCall.phoneNumber
+														 displayPerson:person
+																	property:person ? kABPersonPhoneProperty : kABPropertyInvalidID // TODO test before 
+																identifier:person ? [[selectedCall identifier] intValue] : kABMultiValueInvalidIdentifier];
 }
 
 - (void)tableView:(UITableView *)tableView 
 accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-	RecentCall *selectedCall = (RecentCall *)[[self fetchedResultsController] objectAtIndexPath:indexPath];
+	RecentCall *selectedCall = (RecentCall *)[[self currentFetchedResultsController] objectAtIndexPath:indexPath];
   if ([selectedCall.uid intValue] != kABRecordInvalidID)
   {
-    ABAddressBookRef addressBook = ABAddressBookCreate();
+		ABAddressBookRef addressBook = [[ABAddressBook sharedAddressBook] addressBook]; // CLANG
     ABRecordRef person = ABAddressBookGetPersonWithRecordID(addressBook,
                                                             [selectedCall.uid intValue]);
-    //CFRelease(addressBook);
     if (person)
     {
       ABPersonViewController *personCtrl = [[ABPersonViewController alloc] init];
+			personCtrl.addressBook = [[ABAddressBook sharedAddressBook] addressBook];
       personCtrl.displayedPerson = person;
-      personCtrl.allowsEditing = NO;
+      personCtrl.allowsEditing = YES;
       personCtrl.personViewDelegate = self;
       //[self setTitle:call.type forUIViewController:personCtrl];
       
@@ -452,8 +487,10 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
     ABMultiValueAddValueAndLabel(multiValue, selectedCall.phoneNumber, kABPersonPhoneMainLabel, 
                                  NULL);
     ABRecordSetValue(person, kABPersonPhoneProperty, multiValue, error);
+		CFRelease(multiValue);
   }
   ABUnknownPersonViewController *unknownCtrl = [[ABUnknownPersonViewController alloc] init];
+	unknownCtrl.addressBook = [[ABAddressBook sharedAddressBook] addressBook];
   unknownCtrl.displayedPerson = person;
   unknownCtrl.allowsActions = YES;
   unknownCtrl.allowsAddingToAddressBook = true;
@@ -463,15 +500,13 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
   CFRelease(person);
   [self.navigationController pushViewController:unknownCtrl animated:YES];
   [unknownCtrl release];
-	
 }
 
 #pragma mark -
 #pragma mark NSFetchedResultsControllerDelegate
 /**
- Delegate methods of NSFetchedResultsController to respond to additions, removals and so on.
+ * Delegate methods of NSFetchedResultsController to respond to additions, removals and so on.
  */
-
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller 
 {
 	// The fetch controller is about to start sending change notifications, 
@@ -479,13 +514,12 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 	[self.tableView beginUpdates];
 }
 
-
 - (void)controller:(NSFetchedResultsController *)controller 
 	 didChangeObject:(id)anObject 
 			 atIndexPath:(NSIndexPath *)indexPath 
 		 forChangeType:(NSFetchedResultsChangeType)type 
 			newIndexPath:(NSIndexPath *)newIndexPath
-{	
+{			
 	UITableView *tableView = self.tableView;
 	
 	switch(type) 
@@ -509,9 +543,9 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 	}
 }
 
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type 
-{
+- (void)controller:(NSFetchedResultsController *)controller 
+	didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type 
+{	
 	switch(type) 
 	{
 		case NSFetchedResultsChangeInsert:
@@ -544,7 +578,7 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 
 - (void)dealloc 
 {
-	[fetchedResultsController_ release];
+	[currentFetchedResultsController_ release];
 	[managedObjectContext_ release];
 	[dateFormatter_ release];
 	[hourFormatter_ release];
@@ -557,36 +591,22 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 shouldPerformDefaultActionForPerson:(ABRecordRef)person 
 										property:(ABPropertyID)property 
 									identifier:(ABMultiValueIdentifier)identifierForValue
-{
-	CFTypeRef multiValue;
-  CFIndex valueIdx;
-  
+{  
   if (kABPersonPhoneProperty == property)
   {
-    multiValue = ABRecordCopyValue(person, property);
-    valueIdx = ABMultiValueGetIndexForIdentifier(multiValue,identifierForValue);
+    CFTypeRef multiValue = ABRecordCopyValue(person, property);
+    CFIndex valueIdx = ABMultiValueGetIndexForIdentifier(multiValue,identifierForValue);
     NSString *phoneNumber = (NSString *)ABMultiValueCopyValueAtIndex(multiValue, valueIdx);
 
 		if ([phoneNumber length])
 		{
-			NSString *name = (NSString *)ABRecordCopyCompositeName(person);
-			if ([name length] == 0)
-				//name = (NSString *)ABMultiValueCopyValueAtIndex(multiValue, valueIdx);
-				name = [phoneNumber retain];
-			NSString *label = (NSString *)ABMultiValueCopyLabelAtIndex(multiValue, valueIdx);			
-			
-			AccountController *firstEnabledAccountController = [[[SIPController sharedInstance] 
-																													 enabledAccountControllers] objectAtIndex:0];
-			
-			AKSIPURI *destinationURI = [AKSIPURI SIPURIWithUser:phoneNumber
-																										 host:firstEnabledAccountController.account.registrar
-																							displayName:name];
-			
-			[firstEnabledAccountController makeCallToURI:destinationURI
-																				phoneLabel:label];
-		
+			[[SIPController sharedInstance] makeCall:phoneNumber
+																 displayPerson:person
+																			property:property
+																		identifier:identifierForValue];
 		}
-		
+		CFRelease(phoneNumber); // CLANG
+		CFRelease(multiValue); // CLANG
     return NO;
   }
   return YES;
@@ -609,7 +629,11 @@ shouldPerformDefaultActionForPerson:(ABRecordRef)person
 													 property:(ABPropertyID)property 
 												 identifier:(ABMultiValueIdentifier)identifier
 {
-	return NO;
+	return [self personViewController:nil
+shouldPerformDefaultActionForPerson:person 
+													 property:property
+												 identifier:identifier];
+	//return NO;
 }
 
 #pragma mark -
@@ -621,12 +645,9 @@ shouldPerformDefaultActionForPerson:(ABRecordRef)person
                                                   cancelButtonTitle:NSLocalizedString(@"Cancel",@"Recents View") 
                                              destructiveButtonTitle:NSLocalizedString(@"Clear All Recents",@"Recents View") 
                                                   otherButtonTitles:nil];
-  actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
-  //[actionSheet showFromTabBar:self.view.superview];
-  //[actionSheet showFromTabBar:self.parentViewController.tabBarController.view];
-  //SiphonApplication *app = (SiphonApplication *)[SiphonApplication sharedApplication];
-  //[actionSheet showInView:[app window]];
-	[actionSheet showInView:self.navigationController.view];
+  actionSheet.actionSheetStyle = UIBarStyleBlackTranslucent;
+	[actionSheet showFromBarButtonItem:(UIBarButtonItem *)sender animated:YES];
+	[actionSheet release];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet 
@@ -648,9 +669,47 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
 			[self.managedObjectContext deleteObject:aCall];
 		
 		[self.managedObjectContext save:nil];
+		self.navigationItem.rightBarButtonItem.enabled = NO;
+    self.navigationItem.leftBarButtonItem = nil;
 	}
 }
 
+#pragma mark -
+#pragma mark UIApplicationSignificantTimeChangeNotification
+- (void)applicationSignificantTimeDidChange:(NSNotification *)notification
+{
+	//[self.tableView reloadData];
+	[self.tableView reloadRowsAtIndexPaths:[self.tableView indexPathsForVisibleRows]
+												withRowAnimation:UITableViewRowAnimationNone];
+}
+
+#pragma mark -
+#pragma mark Segmented Control
+- (void)segmentAction:(UISegmentedControl *)segmentedControl
+{
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+	[userDefaults setInteger:segmentedControl.selectedSegmentIndex forKey:kMissedAllSegmentIndex];
+	
+	NSFetchRequest *fetchRequest = self.currentFetchedResultsController.fetchRequest;
+	[NSFetchedResultsController deleteCacheWithName:@"Root"];
+	
+	NSPredicate *predicate = nil;
+	if (segmentedControl.selectedSegmentIndex == 1)
+		predicate = [NSPredicate predicateWithFormat:@"(incoming == YES) AND (duration == 0)"];
+
+	[fetchRequest setPredicate:predicate];
+	
+	NSError *error = nil;
+	if (![self.currentFetchedResultsController performFetch:&error]) 
+	{
+		// Update to handle the error appropriately.
+		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		[error release];
+		//exit(-1);  // Fail
+	}
+	
+	[self.tableView reloadData];
+}
 
 @end
 

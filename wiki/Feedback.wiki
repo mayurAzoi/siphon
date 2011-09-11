@@ -10,6 +10,7 @@ For problems and enhancements, you should add [http://code.google.com/p/siphon/i
 = 3.9.18 (4.0 alpha) (Not release yet) =
 
 Bugs fixed:
+   * change codec priorities, when the settings are changed
 
 New features:
    * last revision of pjsip 1.x and multi-architecture (armv6/armv7)

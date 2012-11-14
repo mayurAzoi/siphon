@@ -5,9 +5,10 @@
 
 Currently, pjsip 2.0 includes the video support, also we will use it. And we won't backport video support in pjsip 1.x branch.
 
-We use two external library :
+We use two external libraries :
   * [http://ffmpeg.org/ ffmpeg]
   * [http://www.videolan.org/developers/x264.html libx264]
+The statement to compile these two libraries are given on this [https://github.com/rodisbored/ffmpeg_x264_iOS5_build site].
 
 = libx264 compilation =
 

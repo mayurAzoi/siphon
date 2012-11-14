@@ -40,4 +40,58 @@ echo "Installed: $DEST"
 }}}
 = ffmpeg compilation =
 
+{{{
+#!/bin/sh
+
+DEST=../iOS/video/iOS
+
+VERSION=5.1
+IPHONEOS_DEPLOYMENT_TARGET=5.1  
+
+X264INCLUDE=${DEST}/include
+X264LIB=${DEST}/lib
+
+COMMONFLAGS="-miphoneos-version-min=$IPHONEOS_DEPLOYMENT_TARGET -arch armv7 "
+CFLAGS="$CFLAGS $COMMONFLAGS -I$X264INCLUDE"
+LDFLAGS="$LDFLAGS -L${DEVPATH}/SDKs/iPhoneOS${VERSION}.sdk/usr/lib/system $COMMONFLAGS -L$X264LIB"
+
+export CC=${DEVPATH}/usr/bin/llvm-gcc
+export RANLIB=${DEVPATH}/usr/bin/ranlib
+
+./configure \
+    --cpu=cortex-a8 \
+    --extra-cflags="$CFLAGS" \
+    --extra-ldflags="$LDFLAGS" \
+    --enable-cross-compile \
+    --arch=arm \
+    --target-os=darwin \
+    --cc=${CC} \
+    --sysroot=${DEVPATH}/SDKs/iPhoneOS${VERSION}.sdk \
+    --prefix=${DEST} \
+    --enable-gpl \
+    --disable-network \
+    --disable-decoders \
+    --disable-muxers \
+    --disable-demuxers \
+    --disable-devices \
+    --disable-parsers \
+    --disable-encoders \
+    --disable-protocols \
+    --disable-filters \
+    --disable-bsfs \
+    --enable-libx264 \
+    --enable-encoder=libx264 \
+    --enable-encoder=libx264rgb \
+    --enable-decoder=h264 \
+    --enable-encoder=h263 \
+    --enable-decoder=h263 \
+    --enable-gpl \
+    --enable-pic \
+    --disable-doc \
+    --disable-ffplay \
+    --disable-ffprobe
+    
+    make & make install
+}}}
+
 = pjsip compilation =

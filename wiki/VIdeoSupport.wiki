@@ -95,3 +95,8 @@ export RANLIB=${DEVPATH}/usr/bin/ranlib
 }}}
 
 = pjsip compilation =
+{{{
+./configure-iphone --prefix=./iOS --with-ffmpeg=../iOS/video/iOS
+
+make & make install
+}}}

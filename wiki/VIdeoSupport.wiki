@@ -91,7 +91,7 @@ export RANLIB=${DEVPATH}/usr/bin/ranlib
     --disable-ffplay \
     --disable-ffprobe
     
-    make & make install
+make & make install
 }}}
 
 = pjsip compilation =

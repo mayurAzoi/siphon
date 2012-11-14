@@ -11,7 +11,33 @@ We use two external libraries :
 The statement to compile these two libraries are given on this [https://github.com/rodisbored/ffmpeg_x264_iOS5_build site].
 
 = libx264 compilation =
+{{{
+#!/bin/sh
 
+DEST=../iOS/video/iOS
+
+VERSION="5.1"
+SDK_VERSION="5.1"
+
+DEVPATH=/Applications/XCode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer
+
+
+echo "Building armv7..."
+
+export CC=${DEVPATH}/usr/bin/llvm-gcc
+
+./configure --host=arm-apple-darwin \
+    --sysroot=${DEVPATH}/SDKs/iPhoneOS${VERSION}.sdk \
+    --prefix=$DEST \
+    --extra-cflags='-arch armv7' \
+    --extra-ldflags="-L${DEVPATH}/SDKs/iPhoneOS${SDK_VERSION}.sdk/usr/lib/system -arch armv7" \
+    --enable-pic \
+    --enable-static 
+
+make && make install
+
+echo "Installed: $DEST"
+}}}
 = ffmpeg compilation =
 
 = pjsip compilation =

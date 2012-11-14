@@ -1,0 +1,16 @@
+#summary Statement to add video support
+#labels Phase-Implementation
+
+= Introduction =
+
+Currently, pjsip 2.0 includes the video support, also we will use it. And we won't backport video support in pjsip 1.x branch.
+
+We use two external library :
+  * [http://ffmpeg.org/ ffmpeg]
+  * [http://www.videolan.org/developers/x264.html libx264]
+
+= libx264 compilation =
+
+= ffmpeg compilation =
+
+= pjsip compilation =

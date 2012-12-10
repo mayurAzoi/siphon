@@ -20,6 +20,7 @@ VERSION="5.1"
 SDK_VERSION="5.1"
 
 DEVPATH=/Applications/XCode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer
+#DEVPATH=/Developer/Platforms/iPhoneOS.platform/Developer
 
 
 echo "Building armv7..."
@@ -48,6 +49,9 @@ DEST=../iOS/video/iOS
 VERSION=5.1
 IPHONEOS_DEPLOYMENT_TARGET=5.1  
 
+DEVPATH=/Applications/XCode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer
+#DEVPATH=/Developer/Platforms/iPhoneOS.platform/Developer
+
 X264INCLUDE=${DEST}/include
 X264LIB=${DEST}/lib
 
@@ -57,6 +61,9 @@ LDFLAGS="$LDFLAGS -L${DEVPATH}/SDKs/iPhoneOS${VERSION}.sdk/usr/lib/system $COMMO
 
 export CC=${DEVPATH}/usr/bin/llvm-gcc
 export RANLIB=${DEVPATH}/usr/bin/ranlib
+
+
+echo "Building armv7..."
 
 ./configure \
     --cpu=cortex-a8 \
@@ -92,6 +99,8 @@ export RANLIB=${DEVPATH}/usr/bin/ranlib
     --disable-ffprobe
     
 make & make install
+
+echo "Installed: $DEST"
 }}}
 
 = pjsip compilation =

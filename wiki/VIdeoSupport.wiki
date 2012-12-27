@@ -1,4 +1,4 @@
-#summary Statement to add video support
+#summary Statements to add video support
 #labels Phase-Implementation
 
 = Introduction =
@@ -8,7 +8,7 @@ Currently, pjsip 2.0 includes the video support, also we will use it. And we won
 We use two external libraries :
   * [http://ffmpeg.org/ ffmpeg]
   * [http://www.videolan.org/developers/x264.html libx264]
-The statement to compile these two libraries are given on this [https://github.com/rodisbored/ffmpeg_x264_iOS5_build site].
+The statements to compile these two libraries are given on this [https://github.com/rodisbored/ffmpeg_x264_iOS5_build site].
 
 = libx264 compilation =
 {{{
@@ -101,6 +101,21 @@ echo "Building armv7..."
 make & make install
 
 echo "Installed: $DEST"
+}}}
+
+= vpx compilation =
+{{{
+#!/bin/sh
+
+DEST=../iOS/video/iOS
+
+mkdir armv7_build
+
+cd armv7_build
+
+../configure --target=armv7-darwin-gcc --prefix=${DEST} --disable-install-bins
+
+make & make install
 }}}
 
 = pjsip compilation =

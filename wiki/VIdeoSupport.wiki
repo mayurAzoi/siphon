@@ -11,7 +11,7 @@ We use two external libraries :
   * [http://www.webmproject.org/code/releases/ libvpx] (optional)
 The statements to compile these two libraries are given on this [https://github.com/rodisbored/ffmpeg_x264_iOS5_build site].
 
-Some statements to include VP8 support in pjsip qre given on this [http://lists.pjsip.org/pipermail/pjsip_lists.pjsip.org/2012-November/015489.html page].
+Some statements to include VP8 support in pjsip are given on this [http://lists.pjsip.org/pipermail/pjsip_lists.pjsip.org/2012-November/015489.html page].
 
 = libx264 compilation =
 {{{
@@ -129,6 +129,11 @@ make & make install
 }}}
 
 = pjsip compilation =
+
+You have to enable video support in _config_site.h_:
+{{{
+#define PJMEDIA_HAS_VIDEO 1
+}}}
 
 == iOS ==
 {{{

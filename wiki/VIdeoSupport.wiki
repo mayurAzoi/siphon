@@ -5,11 +5,14 @@
 
 Currently, pjsip 2.0 includes the video support, also we will use it. And we won't backport video support in pjsip 1.x branch.
 
-We use two external libraries :
+We use three external libraries :
+  * [http://code.google.com/p/libyuv/ libyuv]
   * [http://ffmpeg.org/ ffmpeg]
   * [http://www.videolan.org/developers/x264.html libx264]
   * [http://www.webmproject.org/code/releases/ libvpx] (optional)
-The statements to compile these two libraries are given on this [https://github.com/rodisbored/ffmpeg_x264_iOS5_build site].
+The statements to compile libyuv are described in this [http://code.google.com/p/libyuv/wiki/GettingStarted site]. Maybe your svn version is too old, in this case you can update svn by following the statements of [http://jason.pureconcepts.net/2012/10/updating-svn-mac-os-x/ Jason McCreary]'s blog.
+The statements to compile ffmpeg and x264 libraries are given on this [https://github.com/rodisbored/ffmpeg_x264_iOS5_build site].
+
 
 Some statements to include VP8 support in pjsip are given on this [http://lists.pjsip.org/pipermail/pjsip_lists.pjsip.org/2012-November/015489.html page].
 

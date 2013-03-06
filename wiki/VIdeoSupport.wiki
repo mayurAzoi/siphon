@@ -11,6 +11,7 @@ We use three external libraries :
   * [http://www.videolan.org/developers/x264.html libx264]
   * [http://www.webmproject.org/code/releases/ libvpx] (optional)
 The statements to compile libyuv are described in this [http://code.google.com/p/libyuv/wiki/GettingStarted site]. Maybe your svn version is too old, in this case you can update svn by following the statements of [http://jason.pureconcepts.net/2012/10/updating-svn-mac-os-x/ Jason McCreary]'s blog.
+
 The statements to compile ffmpeg and x264 libraries are given on this [https://github.com/rodisbored/ffmpeg_x264_iOS5_build site].
 
 

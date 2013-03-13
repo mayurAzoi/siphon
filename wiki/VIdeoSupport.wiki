@@ -231,7 +231,7 @@ if test "$enable_video" = "no"; then
 
 == iOS ==
 {{{
-./configure-iphone --prefix=./iOS --with-ffmpeg=../iOS/video/iOS
+./configure-iphone --prefix=./iOS --with-ffmpeg=../iOS/video/iOS  --with-libyuv=../iOS/video/iOS
 
 make & make install
 }}}
@@ -245,7 +245,7 @@ export CC=${DEVPATH}/usr/bin/llvm-gcc
 export CFLAGS="-O2 -m32 -miphoneos-version-min=5.0 -fobjc-abi-version=2 -fobjc-legacy-dispatch"
 export LDFLAGS="-O2 -m32"
 
-./configure-iphone --prefix=./Simulator --with-ffmpeg=../iOS/video/iOS
+./configure-iphone --prefix=./Simulator --with-ffmpeg=../iOS/video/iOS --with-libyuv=../iOS/video/iOS
 
 make & make install
 }}}

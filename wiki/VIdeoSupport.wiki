@@ -158,6 +158,7 @@ $(OBJDIR)/%$(OBJEXT): $(SRCDIR)/%.mm
 Check the availability of libyuv and disable video support if libyuv is unavailable.
 
 {{{
+[line 641]
  *darwin*)
  	LIBS="$LIBS -framework Foundation -framework AppKit"
 	;;
@@ -209,6 +210,23 @@ esac
 
 if test "$enable_video" = "no"; then
   true;
+}}}
+
+{{{
+[line 653]
+	AC_SUBST(ac_ios_cflags)
++	if test "$ac_libyuv" = "yes"; then
+	  SAVED_LIBS="$LIBS"
+
+[line 665]
+	    AC_MSG_RESULT([Checking if AVFoundation framework is available... no])
+	  fi
++	else
++	  ac_pjmedia_video_has_ios=no
++	  AC_MSG_RESULT([libyuv library not found, video support disabled])
++	fi
+	;;
+  *darwin*)
 }}}
 
 == iOS ==

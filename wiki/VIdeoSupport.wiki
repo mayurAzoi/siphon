@@ -183,25 +183,25 @@ esac
 +	   SAVED_LDFLAGS="$LDFLAGS"
 +	   SAVED_LIBS="$LIBS"
 +	
-+       if test "x$with_libyuv" != "xno" -a "x$with_libyuv" != "x"; then
-+         CFLAGS="$CFLAGS -I$with_libyuv/include"
-+         CPPFLAGS="$CFLAGS"
-+         LDFLAGS="$LDFLAGS -L$with_libyuv/lib"
-+         AC_MSG_RESULT([Using libyuv prefix... $with_libyuv])
-+       fi  
-+       AC_LANG(C++)              
++          if test "x$with_libyuv" != "xno" -a "x$with_libyuv" != "x"; then
++            CFLAGS="$CFLAGS -I$with_libyuv/include"
++            CPPFLAGS="$CFLAGS"
++            LDFLAGS="$LDFLAGS -L$with_libyuv/lib"
++            AC_MSG_RESULT([Using libyuv prefix... $with_libyuv])
++          fi  
++          AC_LANG(C++)              
 +	   AC_SUBST(libyuv_h_present)
 +	   AC_SUBST(libyuv_present)
 +	   AC_CHECK_HEADER(libyuv.h,[libyuv_h_present=1])
 +	   AC_CHECK_LIB(yuv,InitCpuFlags,[libyuv_present=1 && LIBS="$LIBS -lyuv"])
-+       AC_LANG(C) 
++          AC_LANG(C) 
 +	   if test "x$libyuv_h_present" = "x1" -a "x$libyuv_present" = "x1"; then
 +	     AC_MSG_RESULT([Checking if libyuv library is available... yes])
-+         [ac_libyuv=yes]
++            [ac_libyuv=yes]
 +	   else
-+		 AC_MSG_RESULT([Checking if libyuv library is available... no])
-+		 [ac_libyuv=no]
-+		 CFLAGS="$SAVED_CFLAGS"
++	     AC_MSG_RESULT([Checking if libyuv library is available... no])
++            [ac_libyuv=no]
++	     CFLAGS="$SAVED_CFLAGS"
 +	     CPPFLAGS="$SAVED_CPPFLAGS"
 +	     LDFLAGS="$SAVED_LDFLAGS"
 +	     LIBS="$SAVED_LIBS"

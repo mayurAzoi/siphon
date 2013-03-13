@@ -139,6 +139,78 @@ You have to enable video support in _config_site.h_:
 #define PJMEDIA_HAS_VIDEO 1
 }}}
 
+== pjsip updates ==
+
+=== rules.mak ===
+
+Add the directive for .mm files (line 147, after the .cpp directive) :
+
+{{{
+
+$(OBJDIR)/%$(OBJEXT): $(SRCDIR)/%.mm
+	$(CC) $($(APP)_CFLAGS) \
+		$(CC_OUT)$(subst /,$(HOST_PSEP),$@) \
+		$(subst /,$(HOST_PSEP),$<)
+}}}
+
+=== aconfigure.ac ===
+
+Check the availability of libyuv and disable video support if libyuv is unavailable.
+
+{{{
+ *darwin*)
+ 	LIBS="$LIBS -framework Foundation -framework AppKit"
+	;;
+esac
+
++AC_ARG_WITH(libyuv,
++    AC_HELP_STRING([--with-libyuv=DIR],
++		   [Specify libyuv location (iOS only)]),
++    [],
++    [with_libyuv=no]
++    )
++    
++AC_ARG_ENABLE(libyuv,
++	AC_HELP_STRING([--disable-libyuv],
++			[Exclude libyuv support from the build (default: autodetect)]),
++	[if test "$enable_libyuv" = "no"; then
++	   AC_MSG_RESULT([Checking if libyuv support is disabled... yes])
++	   [ac_libyuv=no]
++	 fi],
++	[AC_MSG_RESULT([checking for libyuv installations...])
++	   SAVED_CFLAGS="$CFLAGS"
++	   SAVED_CPPFLAGS="$CPPFLAGS"
++	   SAVED_LDFLAGS="$LDFLAGS"
++	   SAVED_LIBS="$LIBS"
++	
++       if test "x$with_libyuv" != "xno" -a "x$with_libyuv" != "x"; then
++         CFLAGS="$CFLAGS -I$with_libyuv/include"
++         CPPFLAGS="$CFLAGS"
++         LDFLAGS="$LDFLAGS -L$with_libyuv/lib"
++         AC_MSG_RESULT([Using libyuv prefix... $with_libyuv])
++       fi  
++       AC_LANG(C++)              
++	   AC_SUBST(libyuv_h_present)
++	   AC_SUBST(libyuv_present)
++	   AC_CHECK_HEADER(libyuv.h,[libyuv_h_present=1])
++	   AC_CHECK_LIB(yuv,InitCpuFlags,[libyuv_present=1 && LIBS="$LIBS -lyuv"])
++       AC_LANG(C) 
++	   if test "x$libyuv_h_present" = "x1" -a "x$libyuv_present" = "x1"; then
++	     AC_MSG_RESULT([Checking if libyuv library is available... yes])
++         [ac_libyuv=yes]
++	   else
++		 AC_MSG_RESULT([Checking if libyuv library is available... no])
++		 [ac_libyuv=no]
++		 CFLAGS="$SAVED_CFLAGS"
++	     CPPFLAGS="$SAVED_CPPFLAGS"
++	     LDFLAGS="$SAVED_LDFLAGS"
++	     LIBS="$SAVED_LIBS"
++	   fi])
+
+if test "$enable_video" = "no"; then
+  true;
+}}}
+
 == iOS ==
 {{{
 ./configure-iphone --prefix=./iOS --with-ffmpeg=../iOS/video/iOS

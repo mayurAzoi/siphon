@@ -229,6 +229,15 @@ if test "$enable_video" = "no"; then
   *darwin*)
 }}}
 
+Don't forget to rebuild aconfigure script:
+{{{
+autoconf aconfigure.ac > aconfigure
+}}}
+
+===  iOS video device implementation ===
+
+Remove ios_dev.m file and download [http://siphon.googlecode.com/files/ios_dev.mm ios_dev.mm].
+
 == iOS ==
 {{{
 ./configure-iphone --prefix=./iOS --with-ffmpeg=../iOS/video/iOS  --with-libyuv=../iOS/video/iOS

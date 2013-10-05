@@ -158,7 +158,11 @@ $(OBJDIR)/%$(OBJEXT): $(SRCDIR)/%.mm
 Check the availability of libyuv and disable video support if libyuv is unavailable.
 
 {{{
-[line 641]
+[line 637]
+case $target in
++ arm-apple-darwin*)
++ 	LIBS="$LIBS -framework UIKit -framework OpenGLES"
++	;;
  *darwin*)
  	LIBS="$LIBS -framework Foundation -framework AppKit"
 	;;

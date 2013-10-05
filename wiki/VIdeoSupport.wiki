@@ -236,7 +236,7 @@ autoconf aconfigure.ac > aconfigure
 
 ===  iOS video device implementation ===
 
-Remove ios_dev.m file and download [http://siphon.googlecode.com/files/ios_dev.mm ios_dev.mm].
+Remove ios_dev.m file and download [http://siphon.googlecode.com/files/pjmedia.zip pjmedia.zip].
 
 == iOS ==
 {{{

@@ -255,6 +255,24 @@ ifeq ($(AC_PJMEDIA_VIDEO),iphone_os)
 endif
 }}}
 
+=== pjmedia/src/pjmedia_videodev/videodev.c ===
+
+{{{
+[line 96]
+#if PJMEDIA_VIDEO_DEV_HAS_IOS
+- pjmedia_vid_dev_factory* pjmedia_ios_factory(pj_pool_factory *pf);
++ pjmedia_vid_dev_factory* pjmedia_ios_rend_factory(pj_pool_factory *pf);
++ pjmedia_vid_dev_factory* pjmedia_ios_cap_factory(pj_pool_factory *pf);
+#endif
+
+[line 379]
+#if PJMEDIA_VIDEO_DEV_HAS_IOS
+-    vid_subsys.drv[vid_subsys.drv_cnt++].create = &pjmedia_ios_factory;
++    vid_subsys.drv[vid_subsys.drv_cnt++].create = &pjmedia_ios_cap_factory;
++    vid_subsys.drv[vid_subsys.drv_cnt++].create = &pjmedia_ios_rend_factory;
+#endif
+}}}
+
 == iOS ==
 {{{
 ./configure-iphone --prefix=./iOS --with-ffmpeg=../iOS/video/iOS  --with-libyuv=../iOS/video/iOS

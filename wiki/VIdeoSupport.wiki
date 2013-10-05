@@ -236,7 +236,20 @@ autoconf aconfigure.ac > aconfigure
 
 ===  iOS video device implementation ===
 
-Remove ios_dev.m file and download [http://siphon.googlecode.com/files/pjmedia.zip pjmedia.zip].
+Remove ios_dev.m file and download [http://siphon.googlecode.com/files/pjmedia.zip pjmedia.zip] and unzip it into pjsip folder.
+
+=== pjmedia/build/os-auto.mak.in ===
+
+{{{
+#
+# iOS video device
+#
+ifeq ($(AC_PJMEDIA_VIDEO),iphone_os)
+- export PJMEDIA_VIDEODEV_OBJS += ios_dev.o
++ export PJMEDIA_VIDEODEV_OBJS += ShaderUtilities.o ios_rend_dev_gl.o
++ export PJMEDIA_VIDEODEV_OBJS += ios_cap_dev.o
+endif
+}}}
 
 == iOS ==
 {{{
